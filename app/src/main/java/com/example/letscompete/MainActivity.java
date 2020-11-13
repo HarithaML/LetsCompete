@@ -11,10 +11,7 @@ import com.example.letscompete.Activities.LoginActivity;
 import com.example.letscompete.Activities.RegisterActivity;
 
 public class MainActivity extends AppCompatActivity {
-
-
     Button mRegisterBtn,mLoginBtn;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
