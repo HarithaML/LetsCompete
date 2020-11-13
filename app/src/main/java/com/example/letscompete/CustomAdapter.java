@@ -1,9 +1,11 @@
 package com.example.letscompete;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -59,12 +61,29 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         // contents of the view with that element
         viewHolder.getTextView().setText(localDataSet[position]);
         viewHolder.getSub().setText(desc[position]);
+        decideOnClick(viewHolder.itemView, position);
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
         return localDataSet.length;
+    }
+
+    private void decideOnClick(View view, final int position)
+    {
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sometext(view);
+            }
+        });
+    }
+    private void sometext(View view)
+    {
+        Log.i("S", "yay");
+        Toast yay = Toast.makeText(view.getContext(), "ok", Toast.LENGTH_SHORT);
+        yay.show();
     }
 }
 
