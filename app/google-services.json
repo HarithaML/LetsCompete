@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "685651254618",
+    "firebase_url": "https://letscompete-209e6.firebaseio.com",
+    "project_id": "letscompete-209e6",
+    "storage_bucket": "letscompete-209e6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:685651254618:android:5b3471898c815a00dd6763",
+        "android_client_info": {
+          "package_name": "com.example.letscompete"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "685651254618-uo6um68elkb12f7m925jkr469hn5ci8o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCUat6PfdHRaWvXK2Nm40bUIwbuMtSakYA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "685651254618-uo6um68elkb12f7m925jkr469hn5ci8o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
