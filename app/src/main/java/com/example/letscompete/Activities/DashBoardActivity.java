@@ -13,7 +13,6 @@ import android.view.MenuItem;
 import com.example.letscompete.Fragments.HomeFragment;
 import com.example.letscompete.Fragments.ProfileFragment;
 import com.example.letscompete.Fragments.UsersFragment;
-import com.example.letscompete.MainActivity;
 import com.example.letscompete.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;

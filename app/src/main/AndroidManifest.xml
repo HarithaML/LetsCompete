@@ -12,10 +12,10 @@
         <activity android:name=".Activities.LoginActivity"></activity>
         <activity android:name=".Activities.DashBoardActivity"></activity>
         <activity
-            android:name=".Setting_Activity"
+            android:name=".Activities.Setting_Activity"
             android:label="@string/title_activity_setting_">
         </activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".Activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
