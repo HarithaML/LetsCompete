@@ -78,8 +78,9 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         //inflating menu
-        inflater.inflate(R.menu.menu_main,menu);
-        menu.findItem(R.id.action_Search).setVisible(false);
+        inflater.inflate(R.menu.menu_home,menu);
+        //HomeView
+        menu.findItem(R.id.action_add_challenge).setVisible(true);
         super.onCreateOptionsMenu(menu,inflater);
     }
     /* handle menu item clicks*/
