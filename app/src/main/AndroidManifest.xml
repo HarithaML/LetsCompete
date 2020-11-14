@@ -9,7 +9,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.LetsCompete">
-        <activity android:name=".Activities.LeaderboardActivity"></activity>
         <activity android:name=".Activities.LoginActivity" />
         <activity android:name=".Activities.DashBoardActivity" />
         <activity

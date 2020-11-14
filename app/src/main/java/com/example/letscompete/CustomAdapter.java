@@ -1,9 +1,15 @@
 package com.example.letscompete;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -72,18 +78,48 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
 
     private void decideOnClick(View view, final int position)
     {
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sometext(view);
-            }
-        });
+        switch(position)
+        {
+            case 3:
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        sometext(view);
+                    }
+                });
+                break;
+            default:
+                break;
+        }
     }
     private void sometext(View view)
     {
-        Log.i("S", "yay");
-        Toast yay = Toast.makeText(view.getContext(), "ok", Toast.LENGTH_SHORT);
-        yay.show();
+        Context context = view.getContext();
+        AlertDialog.Builder bdialog = new AlertDialog.Builder(context);
+        bdialog.setTitle("Change Privacy");
+
+        String []choices = {"Public", "Friends Only", "Private"};
+        bdialog.setItems(choices, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        switch (i)
+                        {
+                            case 0:
+                                break;
+                            case 1:
+                                break;
+                            case 2:
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+        );
+        AlertDialog dialog = bdialog.create();
+        Window window = dialog.getWindow();
+        window.setGravity(Gravity.BOTTOM);
+        dialog.show();
     }
 }
 
