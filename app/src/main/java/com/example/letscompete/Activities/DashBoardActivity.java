@@ -1,23 +1,18 @@
 package com.example.letscompete.Activities;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.MenuItem;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.SearchView;
-
 import com.example.letscompete.Fragments.ChatListFragment;
+import com.example.letscompete.Fragments.ContactsFragment;
 import com.example.letscompete.Fragments.HomeFragment;
 import com.example.letscompete.Fragments.ProfileFragment;
-import com.example.letscompete.Fragments.ContactsFragment;
-import com.example.letscompete.MainActivity;
 import com.example.letscompete.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;

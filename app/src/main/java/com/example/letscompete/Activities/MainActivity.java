@@ -1,4 +1,4 @@
-package com.example.letscompete;
+package com.example.letscompete.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,8 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.letscompete.Activities.LoginActivity;
-import com.example.letscompete.Activities.RegisterActivity;
+import com.example.letscompete.R;
 
 public class MainActivity extends AppCompatActivity {
     Button mRegisterBtn,mLoginBtn;
@@ -16,7 +15,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+    /*
+        Button button = (Button) findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                something();
+            }
+        });
+*/
         //init views
         mRegisterBtn = findViewById(R.id.register_btn);
         mLoginBtn = findViewById(R.id.login_btn);
@@ -36,7 +43,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    public void something() {
+        Intent intent = new Intent(this, Setting_Activity.class);
+        startActivity(intent);
+    }
 }
+
 
 /*Day-1
 * 01-Add Internet permission (required for firebase)
