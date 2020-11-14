@@ -105,8 +105,10 @@ public class RegisterActivity extends AppCompatActivity {
                             hashMap.put("email",email);
                             hashMap.put("uid",uid);
                             hashMap.put("name","");// will add later e.g. edit profile
+                            hashMap.put("onlineStatus","online");
                             hashMap.put("phone","");// will add later e.g. edit profile
                             hashMap.put("image","");// will add later e.g. edit profile
+                            hashMap.put("cover","");// will add later e.g. edit profile
                             // Firebase database instance
                             FirebaseDatabase databse = FirebaseDatabase.getInstance();
                             //path to store user data named "Users"

@@ -1,18 +1,18 @@
 package com.example.letscompete.Activities;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.MenuItem;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-
+import com.example.letscompete.Fragments.ChatListFragment;
+import com.example.letscompete.Fragments.ContactsFragment;
 import com.example.letscompete.Fragments.HomeFragment;
 import com.example.letscompete.Fragments.ProfileFragment;
-import com.example.letscompete.Fragments.UsersFragment;
 import com.example.letscompete.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -34,7 +34,7 @@ public class DashBoardActivity extends AppCompatActivity {
 
         //ActionBar and its title
         actionBar = getSupportActionBar();
-        actionBar.setTitle("Profile");
+        actionBar.setTitle("Home");
 
         //init
         firebaseAuth = FirebaseAuth.getInstance();
@@ -68,7 +68,7 @@ public class DashBoardActivity extends AppCompatActivity {
                         case R.id.nav_users:
 
                             actionBar.setTitle("Users");
-                            UsersFragment fragment2 = new UsersFragment();
+                            ContactsFragment fragment2 = new ContactsFragment();
                             FragmentTransaction ft2 = getSupportFragmentManager().beginTransaction();
                             ft2.replace(R.id.content,fragment2,"");
                             ft2.commit();
@@ -79,6 +79,13 @@ public class DashBoardActivity extends AppCompatActivity {
                             FragmentTransaction ft3 = getSupportFragmentManager().beginTransaction();
                             ft3.replace(R.id.content,fragment3,"");
                             ft3.commit();
+                            return true;
+                        case R.id.nav_chat:
+                            actionBar.setTitle("Chats");
+                            ChatListFragment fragment4 = new ChatListFragment();
+                            FragmentTransaction ft4 = getSupportFragmentManager().beginTransaction();
+                            ft4.replace(R.id.content,fragment4,"");
+                            ft4.commit();
                             return true;
                     }
                     return false;
@@ -112,22 +119,5 @@ public class DashBoardActivity extends AppCompatActivity {
     }
     /*inflate options menu*/
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        //inflating menu
-        getMenuInflater().inflate(R.menu.menu_main,menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-    /* handle menu item clicks*/
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        //get item id
-        int id= item.getItemId();
-        if(id == R.id.action_logout){
-            firebaseAuth.signOut();
-            checkUserStatus();
-        }
-        return super.onOptionsItemSelected(item);
-    }
 }
