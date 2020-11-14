@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
 * in firebase realtime Database
 Requirements:
 1)Add Firebase RealTime database
-2) Cahnge Firebase realtime Database rules
+2) Change Firebase realtime Database rules
 Add bottom navigation in Profile Activity having three menus
 3) Home
 4) Profile (User info like name,email,uid,phonr,image)
@@ -89,3 +89,56 @@ Add bottom navigation in Profile Activity having three menus
 * Show user info
 * for setting image we will use picasso library
 * */
+
+/*Day-6
+->Edit Profile
+1)Name
+2)Phone
+3)Profile Picture
+4)Cover Photo
+--> Requirements
+1)Camera & Storage Permissions (to pick image from Camera or gallery)
+2) FireBase Storage libraries (to upload a profile/cover photo)
+--> Ui Update:
+1)Image View for Cover Photo
+2)Add Floating ActionButton to show dialog containing options to edit profile
+3)Add default image for profile picture
+ */
+
+/*Day-7
+->Search Users(Case Sensitive) User from User List
+1) By Name
+2) By Email
+
+*First Add SearchView in menu_main.xml
+*Move Options menu from DashBoard activity to each fragment
+ */
+
+/*Day-8
+*-> Deign a Chat Activity [Create a new Empty Activity]
+* Toolbar will contain receiver icon, name and status like online/offline.
+* ->Add new Fragment For Chats list
+* Add this fragment to BottomNavigation*/
+
+
+/*Day-9
+*-> Show reciever profile picture and name in toolbar
+* ->send message to any user
+* First Add Firebase Auth with logout in ChatActivity too
+ */
+
+/*Day-10
+*->Show sent messages
+* -Design different layouts for sender and receiver
+* -I'll use custom background for sender and receiver you can download using link in description
+* -Reciever layout(on left) will contain profile image, message and time
+* -Sender Layout(on right) will contain message and time
+* */
+
+/*Day-11
+->Last seen/online
+
+ */
+
+
+
