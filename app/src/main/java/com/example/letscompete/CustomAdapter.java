@@ -1,0 +1,125 @@
+package com.example.letscompete;
+
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.recyclerview.widget.RecyclerView;
+
+import org.w3c.dom.Text;
+
+public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder> {
+    private String[] localDataSet;
+    private String[] desc;
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        private final TextView main;
+        private final TextView sub;
+
+
+        public ViewHolder(View view) {
+            super(view);
+            // Define click listener for the ViewHolder's View
+
+            main = (TextView) view.findViewById(R.id.Main);
+            sub = (TextView) view.findViewById(R.id.Sub);
+
+        }
+
+        public TextView getTextView() {
+            return main;
+        }
+
+        public TextView getSub() {
+            return sub;
+        }
+
+    }
+    public CustomAdapter(String[] dataSet, String[] des) {
+        localDataSet = dataSet;
+        desc = des;
+    }
+
+    // Create new views (invoked by the layout manager)
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+        // Create a new view, which defines the UI of the list item
+        View view = LayoutInflater.from(viewGroup.getContext())
+                .inflate(R.layout.setting_row_layout, viewGroup, false);
+
+        return new ViewHolder(view);
+    }
+
+    // Replace the contents of a view (invoked by the layout manager)
+    @Override
+    public void onBindViewHolder(ViewHolder viewHolder, final int position) {
+
+        // Get element from your dataset at this position and replace the
+        // contents of the view with that element
+        viewHolder.getTextView().setText(localDataSet[position]);
+        viewHolder.getSub().setText(desc[position]);
+        decideOnClick(viewHolder.itemView, position);
+    }
+
+    // Return the size of your dataset (invoked by the layout manager)
+    @Override
+    public int getItemCount() {
+        return localDataSet.length;
+    }
+
+    private void decideOnClick(View view, final int position)
+    {
+        switch(position)
+        {
+            case 3:
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        sometext(view);
+                    }
+                });
+                break;
+            default:
+                break;
+        }
+    }
+    private void sometext(View view)
+    {
+        Context context = view.getContext();
+        AlertDialog.Builder bdialog = new AlertDialog.Builder(context);
+        bdialog.setTitle("Change Privacy");
+
+        String []choices = {"Public", "Friends Only", "Private"};
+        bdialog.setItems(choices, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        switch (i)
+                        {
+                            case 0:
+                                break;
+                            case 1:
+                                break;
+                            case 2:
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+        );
+        AlertDialog dialog = bdialog.create();
+        Window window = dialog.getWindow();
+        window.setGravity(Gravity.BOTTOM);
+        dialog.show();
+    }
+}
+
