@@ -1,4 +1,4 @@
-package com.example.letscompete.Activities;
+package com.example.letscompete.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,10 +9,11 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.letscompete.Fragments.ChatListFragment;
-import com.example.letscompete.Fragments.ContactsFragment;
-import com.example.letscompete.Fragments.HomeFragment;
-import com.example.letscompete.Fragments.ProfileFragment;
+import com.example.letscompete.fragments.ChatListFragment;
+import com.example.letscompete.fragments.ContactsFragment;
+import com.example.letscompete.fragments.HomeFragment;
+import com.example.letscompete.fragments.LeaderBoardFragment;
+import com.example.letscompete.fragments.ProfileFragment;
 import com.example.letscompete.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -86,6 +87,13 @@ public class DashBoardActivity extends AppCompatActivity {
                             FragmentTransaction ft4 = getSupportFragmentManager().beginTransaction();
                             ft4.replace(R.id.content,fragment4,"");
                             ft4.commit();
+                            return true;
+                        case R.id.nav_leaderBoard:
+                            actionBar.setTitle("Chats");
+                            LeaderBoardFragment fragment5 = new LeaderBoardFragment();
+                            FragmentTransaction ft5 = getSupportFragmentManager().beginTransaction();
+                            ft5.replace(R.id.content,fragment5,"");
+                            ft5.commit();
                             return true;
                     }
                     return false;

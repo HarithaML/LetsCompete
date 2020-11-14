@@ -1,4 +1,4 @@
-package com.example.letscompete.Fragments;
+package com.example.letscompete.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,9 +17,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
 
-import com.example.letscompete.MainActivity;
-import com.example.letscompete.Adapters.AdapterUsers;
-import com.example.letscompete.Models.ModelUser;
+import com.example.letscompete.activities.MainActivity;
+import com.example.letscompete.adapters.AdapterUsers;
+import com.example.letscompete.models.ModelUser;
 import com.example.letscompete.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

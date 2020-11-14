@@ -1,4 +1,4 @@
-package com.example.letscompete.Activities;
+package com.example.letscompete.activities;
 
 import android.os.Bundle;
 import android.widget.TextView;
@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.letscompete.CustomAdapter;
+import com.example.letscompete.adapters.CustomAdapter;
 import com.example.letscompete.R;
 
 public class Setting_Activity extends AppCompatActivity {

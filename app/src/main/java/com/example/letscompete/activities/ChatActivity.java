@@ -1,4 +1,4 @@
-package com.example.letscompete.Activities;
+package com.example.letscompete.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -6,30 +6,23 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.icu.text.UnicodeSetSpanner;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 
-import com.example.letscompete.Adapters.AdapterChat;
-import com.example.letscompete.Adapters.AdapterUsers;
-import com.example.letscompete.MainActivity;
-import com.example.letscompete.Models.ModelChat;
-import com.example.letscompete.Models.ModelUser;
+import com.example.letscompete.adapters.AdapterChat;
+import com.example.letscompete.models.ModelChat;
 import com.example.letscompete.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

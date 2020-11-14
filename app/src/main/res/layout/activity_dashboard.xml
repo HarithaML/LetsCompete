@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context=".Activities.DashBoardActivity">
+    tools:context=".activities.DashBoardActivity">
     <!--FrameLayout: show Fragment-->
     <FrameLayout
         android:id="@+id/content"

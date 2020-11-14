@@ -16,7 +16,7 @@
         android:title="Chats"
         android:icon="@drawable/ic_chats_black"
         />
-    <item android:id="@+id/leaderBoard"
+    <item android:id="@+id/nav_leaderBoard"
         android:title="LeaderBoard"
         android:icon="@drawable/ic_leaderboard_black"
         />

@@ -1,4 +1,4 @@
-package com.example.letscompete.Activities;
+package com.example.letscompete.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 

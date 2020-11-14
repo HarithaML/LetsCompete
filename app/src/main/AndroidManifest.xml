@@ -13,24 +13,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.LetsCompete">
-        <activity android:name=".Activities.ChatActivity"
+        <activity android:name=".activities.ChatActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
 
-        <activity android:name=".Activities.LoginActivity" />
-        <activity android:name=".Activities.DashBoardActivity" />
+        <activity android:name=".activities.LoginActivity" />
+        <activity android:name=".activities.DashBoardActivity" />
         <activity
-            android:name=".Activities.Setting_Activity"
+            android:name=".activities.Setting_Activity"
             android:label="@string/title_activity_setting_">
 
         </activity>
-        <activity android:name=".Activities.MainActivity">
+        <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.RegisterActivity" />
+        <activity android:name=".activities.RegisterActivity" />
     </application>
 
 </manifest>
