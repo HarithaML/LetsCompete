@@ -1,10 +1,12 @@
 package com.example.letscompete.fragments;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -12,9 +14,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.letscompete.activities.MainActivity;
 import com.example.letscompete.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -30,6 +34,9 @@ public class HomeFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     FirebaseAuth firebaseAuth;
+
+    //View for xml
+    FloatingActionButton fab_add_challenge;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -72,21 +79,61 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+        //init
         firebaseAuth = FirebaseAuth.getInstance();
+        //init views
+        fab_add_challenge = view.findViewById(R.id.fab_add_challenge);
+
+        //todo: get joined challenges
+        //todo: get completed challenges
+        //todo: get suggested challenges
+
+
+        //floating add challenge
+        fab_add_challenge.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                showAddChallengeDialog();
+            }
+        });
         return view;
     }
+
+    private void showAddChallengeDialog() {
+        /* Add challenge options:
+        * 1. create a new challenge
+        * 2. join a current challenge
+        * */
+        String options[] = {"Create your challenge", "Join a challenge"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Add new a challenge");
+        builder.setItems(options, (dialog, which) -> {
+            if(which == 0) {
+                //create a new challenge clicked
+                //transfer to new challenge fragment_Harika
+            } else if(which == 1) {
+                //join a current challenge clicked
+            }
+        });
+        //create and show dialog
+        builder.create().show();
+
+    }
+
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         //inflating menu
-        inflater.inflate(R.menu.menu_home,menu);
-        //HomeView
-        menu.findItem(R.id.action_add_challenge).setVisible(true);
+        inflater.inflate(R.menu.menu_main,menu);
+        menu.findItem(R.id.action_Search).setVisible(false);
         super.onCreateOptionsMenu(menu,inflater);
     }
     /* handle menu item clicks*/
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        //Toast
         //get item id
         int id= item.getItemId();
         if(id == R.id.action_logout){
