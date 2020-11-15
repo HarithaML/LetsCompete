@@ -1,5 +1,4 @@
 package com.example.letscompete.activities;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -304,6 +303,7 @@ public class ChatActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main,menu);
         //hide search option
         menu.findItem(R.id.action_Search).setVisible(false);
+        menu.findItem(R.id.action_search_challenge).setVisible(false);
         return super.onCreateOptionsMenu(menu);
     }
 

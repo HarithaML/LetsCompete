@@ -501,6 +501,7 @@ public class ProfileFragment extends Fragment {
         //inflating menu
         inflater.inflate(R.menu.menu_main,menu);
         menu.findItem(R.id.action_Search).setVisible(false);
+        menu.findItem(R.id.action_search_challenge).setVisible(false);
         super.onCreateOptionsMenu(menu,inflater);
     }
     /* handle menu item clicks*/
