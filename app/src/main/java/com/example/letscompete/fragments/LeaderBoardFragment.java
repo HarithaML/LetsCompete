@@ -1,5 +1,6 @@
 package com.example.letscompete.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -12,11 +13,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.letscompete.AppDatabase;
+import com.example.letscompete.DatabaseService;
 import com.example.letscompete.R;
 import com.example.letscompete.UserLeaderBoardStats;
 import com.example.letscompete.adapters.CustomAdapter;
 import com.example.letscompete.adapters.LeaderBoardAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,6 +34,7 @@ public class LeaderBoardFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private AppDatabase database;
+    private Intent sIntent;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -66,12 +70,14 @@ public class LeaderBoardFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         database = AppDatabase.getInstance(getActivity());
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_leader_board, container, false);
+        sIntent = new Intent(view.getContext(), DatabaseService.class);
         UserLeaderBoardStats user = new UserLeaderBoardStats();
         user.setUsername("ok");
         user.setRank(1);
@@ -79,17 +85,24 @@ public class LeaderBoardFragment extends Fragment {
         database.userDao().insertAll(user);
         // Inflate the layout for this fragment
         setLeaderboardStats(view);
+        getActivity().startService(sIntent);
         return view;
     }
 
     private void setLeaderboardStats(View view)
     {
         RecyclerView content = view.findViewById(R.id.leaderboard_list);
-        List<UserLeaderBoardStats> ok = database.userDao().getAll();
-        Log.i("ok", ok.get(0).stat.toString());
-
+        List<UserLeaderBoardStats> ok = new ArrayList<>();
+        ok.addAll(database.userDao().getAll());
+        //Log.i("ok", ok.get(0).stat.toString());
         LeaderBoardAdapter ad = new LeaderBoardAdapter(ok);
         content.setAdapter(ad);
         content.setLayoutManager(new LinearLayoutManager(view.getContext()));
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        getActivity().stopService(sIntent);
     }
 }
