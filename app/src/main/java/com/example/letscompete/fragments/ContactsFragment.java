@@ -184,6 +184,7 @@ public class ContactsFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         //inflating menu
         inflater.inflate(R.menu.menu_main,menu);
+        menu.findItem(R.id.action_search_challenge).setVisible(false);
         //SearchView
         MenuItem item = menu.findItem(R.id.action_Search);
         SearchView searchView = (SearchView) item.getActionView();

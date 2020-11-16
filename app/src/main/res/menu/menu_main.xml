@@ -8,4 +8,9 @@
         app:showAsAction="always"
         android:title="Search"
         app:actionViewClass="android.widget.SearchView" />
+    <item android:id="@+id/action_search_challenge"
+        android:icon="@drawable/ic_search_white"
+        app:showAsAction="always"
+        android:title="Search challenge"
+        app:actionViewClass="android.widget.SearchView" />
 </menu>
