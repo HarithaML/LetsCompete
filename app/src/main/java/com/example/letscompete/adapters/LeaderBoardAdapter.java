@@ -1,6 +1,7 @@
 package com.example.letscompete.adapters;
 
 import android.media.Image;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,11 +10,13 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.letscompete.R;
+import com.example.letscompete.UserLeaderBoardStats;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class LeaderBoardAdapter extends RecyclerView.Adapter<LeaderBoardAdapter.ViewHolder> {
-    private String[] localDataSet;
-    private String[] desc;
-    private Image[] images;
+    private List<UserLeaderBoardStats> rankings;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView rank;
@@ -27,23 +30,27 @@ public class LeaderBoardAdapter extends RecyclerView.Adapter<LeaderBoardAdapter.
 
             rank = (TextView) view.findViewById(R.id.RankLeader);
             user = (TextView) view.findViewById(R.id.UserLeader);
-            stat = (TextView) view.findViewById(R.id.statLeader);
+            stat = (TextView) view.findViewById(R.id.numberLeader);
             profilePic = null;
         }
 
-        public TextView getTextView() {
+        public TextView getRank() {
             return rank;
         }
 
-        public TextView getSub() {
+        public TextView getUser() {
             return user;
         }
 
+        public TextView getStat() {
+            return stat;
+        }
     }
 
-    public LeaderBoardAdapter(String[] dataSet, String[] des) {
-        localDataSet = dataSet;
-        desc = des;
+    public LeaderBoardAdapter(List<UserLeaderBoardStats> rankings) {
+        this.rankings = new ArrayList<>();
+        this.rankings.addAll(rankings);
+        Log.i("calling", "ok");
     }
 
     // Create new views (invoked by the layout manager)
@@ -62,14 +69,16 @@ public class LeaderBoardAdapter extends RecyclerView.Adapter<LeaderBoardAdapter.
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        viewHolder.getTextView().setText(localDataSet[position]);
-        viewHolder.getSub().setText(desc[position]);
+        Log.i("position", position + "");
+        viewHolder.getRank().setText("Ranking: " + rankings.get(position).getRank() + "");
+        viewHolder.getUser().setText(rankings.get(position).getUsername());
+        viewHolder.getStat().setText(rankings.get(position).getStat());
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return localDataSet.length;
+        return rankings.size();
     }
 
 }

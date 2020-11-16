@@ -13,7 +13,6 @@
         android:layout_height="50dp"
         android:layout_marginTop="10dp"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="20dp"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
@@ -34,7 +33,7 @@
         android:layout_alignStart="@+id/RankLeader"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:text="TextView"
+        android:text="Rank"
         android:textColor="#EE5F02" />
 
     <TextView
