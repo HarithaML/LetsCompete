@@ -148,9 +148,36 @@ Add bottom navigation in Profile Activity having three menus
 * */
 
 /*Day-11
+<<<<<<< Updated upstream
+->Last seen/online and seen/delivered
+---- have to resolve bugs
+ */
+
+/*Day-12
+-> show typing status of user in toolbar of chat_activity
+When user Register and one more key named typing to having value receiver's uid
+Add textChange listener to edit text
+EditText not empty means user is typing something
+so set it's value like receiver's uid
+EditText empty means user is not typing
+so set it's value like noOne
+ */
+
+/*
+Day-13
+-> Delete messages
+Who can delete what?
+1)Delete can delete only his own message or
+2) Sender can delete his and receiver's message
+After clicking delete what will happen?
+1) Remove message OR
+2) Update value of message to "This message was deleted....."
+ */
+=======
 ->Last seen/online
 
  */
 
+>>>>>>> Stashed changes
 
 
