@@ -6,16 +6,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-<<<<<<< Updated upstream
-<<<<<<<< Updated upstream:app/src/main/java/com/example/letscompete/activities/ChatActivity.java
 import android.text.Editable;
-========
->>>>>>>> Stashed changes:app/src/main/java/com/example/letscompete/Activities/ChatActivity.java
 import android.text.TextUtils;
 import android.text.TextWatcher;
-=======
 import android.text.TextUtils;
->>>>>>> Stashed changes
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Menu;
@@ -119,7 +113,6 @@ public class ChatActivity extends AppCompatActivity {
                 for(DataSnapshot ds:  snapshot.getChildren()){
                     String name = ""+ds.child("name").getValue();
                     hisImage = ""+ds.child("image").getValue();
-<<<<<<< Updated upstream
                     String typingStatus = ""+ds.child("typingTo").getValue();
 
                     if(typingStatus.equals(myUid)){
@@ -139,20 +132,6 @@ public class ChatActivity extends AppCompatActivity {
                             userStatusTv.setText(s);
 
                         }
-=======
-                    //get value of onlinestatus
-                    String onlineStatus = ""+ds.child("onlineStatus").getValue();
-                    if(onlineStatus.equals("online")){
-                        userStatusTv.setText(onlineStatus);
-                    }else{
-                        //convert timestamp to dd/mm/yyyy hh:mm am/pm
-                        Calendar cal = Calendar.getInstance(Locale.ENGLISH);
-                        cal.setTimeInMillis(Long.parseLong(onlineStatus));
-                        String dateTime = DateFormat.format("dd/MM/yyyy HH:mm:ss", cal).toString();
-                        String s= "Last seen at:"+dateTime;
-                        userStatusTv.setText(s);
-
->>>>>>> Stashed changes
                     }
                     //set data
                     nameTv.setText(name);
@@ -190,7 +169,6 @@ public class ChatActivity extends AppCompatActivity {
                 }
             }
         });
-<<<<<<< Updated upstream
         //check edit text change listener
         messageEt.addTextChangedListener(new TextWatcher() {
             @Override
@@ -212,8 +190,6 @@ public class ChatActivity extends AppCompatActivity {
 
             }
         });
-=======
->>>>>>> Stashed changes
         
         readMessage();
         seenMessage();
@@ -328,7 +304,6 @@ public class ChatActivity extends AppCompatActivity {
 
     }
 
-<<<<<<< Updated upstream
     private void checkTypingStatus(String typing){
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(myUid);
         HashMap<String,Object> hashMap = new HashMap<>();
@@ -336,9 +311,6 @@ public class ChatActivity extends AppCompatActivity {
         databaseReference.updateChildren(hashMap);
 
     }
-
-=======
->>>>>>> Stashed changes
     @Override
     protected void onStart() {
         checkUserStatus();
@@ -354,10 +326,7 @@ public class ChatActivity extends AppCompatActivity {
         String timestamp = String.valueOf(System.currentTimeMillis());
         //set offline with last seen timestamp
         checkOnlineStatus(timestamp);
-<<<<<<< Updated upstream
         checkTypingStatus("noOne");
-=======
->>>>>>> Stashed changes
         userRefForSeen.removeEventListener(seenListener);
     }
 

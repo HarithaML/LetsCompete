@@ -173,11 +173,6 @@ After clicking delete what will happen?
 1) Remove message OR
 2) Update value of message to "This message was deleted....."
  */
-=======
-->Last seen/online
 
- */
-
->>>>>>> Stashed changes
 
 
