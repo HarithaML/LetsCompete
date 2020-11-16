@@ -1,11 +1,9 @@
 package com.example.letscompete.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,9 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.letscompete.activities.*;
 import com.example.letscompete.models.ModelChallenge;
-import com.example.letscompete.models.ModelUser;
 import com.example.letscompete.R;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -46,7 +42,14 @@ public class AdapterChallenges extends RecyclerView.Adapter<AdapterChallenges.My
         String challengeType = challengeList.get(position).getChallengeType();
         String startdate = challengeList.get(position).getStartdate();
         //set data
+        holder.mTitle.setText(challengeTitle);
+        holder.mDescription.setText(challengeDescription);
 
+        //handle challenge click
+        holder.itemView.setOnClickListener( v -> {
+            /*Click challenge from challenge list to shows up all challenge details
+             */
+        });
     }
 
     @Override
