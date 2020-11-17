@@ -28,8 +28,6 @@
             android:name=".activities.Setting_Activity"
             android:label="@string/title_activity_setting_" />
         <activity android:name=".activities.LoginActivity" >
-            android:label="@string/title_activity_setting_"></activity>
-        <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -37,8 +35,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.DashBoardActivity" />
-        <activity android:name=".activities.RegisterActivity" />
+        <activity android:name=".activities.MainActivity">
 
+        </activity>
+        <activity android:name=".activities.RegisterActivity" />
         <service
             android:name=".notifications.FirebaseMessaging"
             android:enabled="true"
