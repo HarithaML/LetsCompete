@@ -111,7 +111,7 @@ public class DashBoardActivity extends AppCompatActivity {
                             ft4.commit();
                             return true;
                         case R.id.nav_leaderBoard:
-                            actionBar.setTitle("Chats");
+                            actionBar.setTitle("LeaderBoard");
                             LeaderBoardFragment fragment5 = new LeaderBoardFragment();
                             FragmentTransaction ft5 = getSupportFragmentManager().beginTransaction();
                             ft5.replace(R.id.content,fragment5,"");
