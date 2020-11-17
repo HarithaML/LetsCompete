@@ -1,0 +1,168 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".activities.CreatechallengeActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:layout_alignParentBottom="false"
+                android:layout_marginBottom="0dp"
+                android:alpha="0.2"
+                android:scaleType="center"
+                />
+
+            <LinearLayout
+                android:id="@+id/info_selling"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="15dp"
+                tools:context="Fragments.SearchFragment">
+
+                <LinearLayout
+                    android:id="@+id/createchallenge"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:fontFamily="serif"
+                        android:gravity="center_horizontal"
+                        android:text="@string/create_challenge"
+                        android:textColor="@android:color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+                    <EditText
+                        android:id="@+id/challengetitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginBottom="20dp"
+                        android:fontFamily="serif"
+                        android:hint="@string/challenge_title"
+                        android:textSize="16sp" />
+
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
+
+                        app:cardMaxElevation="5dp">
+
+                        <Spinner
+                            android:id="@+id/challengetype"
+                            android:layout_width="match_parent"
+                            android:layout_height="51dp"
+                            android:fontFamily="serif"
+                            android:gravity="center_horizontal"
+                            android:paddingTop="5dp"
+                            android:paddingBottom="5dp"
+                            android:textColor="@color/black"
+                            android:textSize="16sp"
+                            android:entries="@array/challengetypes"
+                            android:theme="@android:style/Theme.Holo.Light.DarkActionBar" />
+                    </androidx.cardview.widget.CardView>
+
+
+                    <EditText
+                        android:id="@+id/challengeduration"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginBottom="20dp"
+                        android:fontFamily="serif"
+                        android:hint="@string/challenge_duration"
+
+                        android:textSize="16sp" />
+
+
+                    <EditText
+                        android:id="@+id/startdate"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginBottom="20dp"
+                        android:fontFamily="serif"
+                        android:hint="Start Date"
+                        android:textSize="16sp" />
+                    <EditText
+                        android:id="@+id/challengedescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginBottom="20dp"
+                        android:fontFamily="serif"
+                        android:hint="@string/challenge_description"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp">
+
+
+                    <Button
+                        android:id="@+id/btnbrowse"
+                        android:text="@string/choose"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content" />
+
+                    <!--Button for uploading image-->
+                    <Button
+                        android:id="@+id/btnUpload"
+                        android:text="@string/upload"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/txtdata"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="@string/image_description"
+                    />
+
+                <ImageView
+                    android:id="@+id/image_view"
+                    android:layout_width="381dp"
+                    android:layout_height="35dp" />
+
+                <Button
+                    android:id="@+id/create"
+                    android:layout_width="100dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginTop="50dp"
+                    android:layout_marginEnd="0dp"
+                    android:layout_marginBottom="322dp"
+                    android:background="@color/black"
+                    android:fontFamily="serif"
+                    android:text="Create"
+                    android:textColor="@color/white" />
+
+
+            </LinearLayout>
+
+        </RelativeLayout>
+    </LinearLayout>
+</ScrollView>

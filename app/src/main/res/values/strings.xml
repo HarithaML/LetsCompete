@@ -20,4 +20,13 @@
     <string name="already_have_account_login">Already have account? Login</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="image_description">image_description</string>
+    <string name="upload">Upload</string>
+    <string name="choose">Choose</string>
+    <string name="challenge_description">challenge_description</string>
+    <string name="challenge_duration">challenge_duration</string>
+    <string name="get_started_with_your_account">Get started with your account</string>
+    <string name="forgot_password_recover">forgot_password_recover</string>
+    <string name="challenge_title">Challenge Title</string>
+    <string name="create_challenge">Create Challenge</string>
 </resources>

@@ -9,26 +9,48 @@
     tools:context=".activities.MainActivity"
     >
 
-   <ImageView
-       android:id="@+id/logo"
-       android:layout_width="250dp"
-       android:layout_height="250dp"
-       android:src="@drawable/logo"
-       android:layout_centerHorizontal="true"
-       android:layout_marginTop="20dp"/>
-
     <!--Button: Register-->
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="70dp"
+        android:gravity="center"
+        android:text="Lets Compete"
+        android:textColor="@color/colorPrimary"
+        android:textSize="40sp" />
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="292dp"
+        android:layout_height="259dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="74dp"
+        android:layout_marginTop="160dp"
+        android:layout_marginEnd="68dp"
+        android:src="@drawable/logo" />
+
     <Button
         android:id="@+id/register_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/logo"
-        android:text="Register"/>
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:text="Register" />
 
     <Button
         android:id="@+id/login_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/register_btn"
+        android:layout_margin="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="9dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
         android:text="Login" />
 </RelativeLayout>
