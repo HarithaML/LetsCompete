@@ -14,10 +14,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.letscompete.activities.DashBoardActivity;
 import com.example.letscompete.activities.MainActivity;
 import com.example.letscompete.R;
+import com.example.letscompete.activities.TimeChallengeActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -83,6 +86,14 @@ public class HomeFragment extends Fragment {
         firebaseAuth = FirebaseAuth.getInstance();
         //init views
         fab_add_challenge = view.findViewById(R.id.fab_add_challenge);
+        Button button = (Button) view.findViewById(R.id.test_btn);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), TimeChallengeActivity.class);
+                startActivity(intent);
+            }
+        });
 
         //todo: get joined challenges
         //todo: get completed challenges

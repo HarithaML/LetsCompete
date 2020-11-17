@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorSecondaryVariant"
+    tools:context=".fragments.InfoFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+      <RelativeLayout
+          android:id="@+id/info_box"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_centerHorizontal="true"
+          android:layout_margin="50dp"
+          android:padding="30dp"
+          android:background="@drawable/rectanglebg">
+          <ImageView
+              android:id="@+id/challenge_image"
+              android:layout_width="50dp"
+              android:layout_height="50dp"
+              android:layout_marginTop="50dp"
+              android:src="@drawable/ic_default_img_black"
+              android:layout_centerHorizontal="true"
+              />
+          <TextView
+              android:id="@+id/challenge_title"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="10dp"
+              android:layout_below="@id/challenge_image"
+              android:textColor="@color/colorPrimary"
+              android:layout_centerHorizontal="true"
+              android:text="Challenge Name" />
+          <TextView
+              android:id="@+id/challenge_description"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="10dp"
+              android:textColor="@color/colorPrimary"
+              android:layout_below="@id/challenge_title"
+              android:layout_centerHorizontal="true"
+              android:text="This challenge is crazy!!" />
+          <TextView
+              android:id="@+id/challenge_type"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="10dp"
+              android:textColor="@color/colorPrimary"
+              android:layout_below="@id/challenge_description"
+              android:layout_centerHorizontal="true"
+              android:text="Time Based Challenge" />
+          <TextView
+              android:id="@+id/challenge_duration"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="10dp"
+              android:textColor="@color/colorPrimary"
+              android:layout_below="@id/challenge_type"
+              android:layout_centerHorizontal="true"
+              android:text="2 days" />
+          <TextView
+              android:id="@+id/challenge_startDate"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="10dp"
+              android:textColor="@color/colorPrimary"
+              android:layout_below="@id/challenge_duration"
+              android:layout_centerHorizontal="true"
+              android:text="12/03/2020" />
+      </RelativeLayout>
+
+      <Button
+          android:id = "@+id/complete_challenge"
+          android:layout_width="250dp"
+          android:layout_height="40dp"
+          android:layout_marginTop="10dp"
+          android:layout_below="@id/info_box"
+          android:background="#C70039"
+          android:text="Complete Challenge"
+          android:layout_centerHorizontal="true"
+          android:visibility="visible"/>
+
+      <Button
+          android:id = "@+id/delete_btn"
+          android:layout_width="250dp"
+          android:layout_height="40dp"
+          android:layout_marginTop="10dp"
+          android:layout_below="@id/complete_challenge"
+          android:background="#C70039"
+          android:text="Delete Challenge"
+          android:layout_centerHorizontal="true"
+          android:visibility="visible"/>
+      <Button
+          android:id = "@+id/leave_btn"
+          android:layout_width="250dp"
+          android:layout_height="40dp"
+          android:layout_marginTop="10dp"
+          android:layout_below="@id/delete_btn"
+          android:background="#C70039"
+          android:text="Leave Challenge"
+          android:layout_centerHorizontal="true"
+          android:visibility="visible"/>
+
+
+  </RelativeLayout>
+
+
+</FrameLayout>

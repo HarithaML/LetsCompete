@@ -47,6 +47,7 @@ public class AdapterChallenges extends RecyclerView.Adapter<AdapterChallenges.My
         String startdate = challengeList.get(position).getStartdate();
         //set data
 
+
     }
 
     @Override
