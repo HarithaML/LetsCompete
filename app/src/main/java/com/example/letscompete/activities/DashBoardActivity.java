@@ -1,6 +1,7 @@
 package com.example.letscompete.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -15,14 +16,19 @@ import com.example.letscompete.fragments.HomeFragment;
 import com.example.letscompete.fragments.LeaderBoardFragment;
 import com.example.letscompete.fragments.ProfileFragment;
 import com.example.letscompete.R;
+import com.example.letscompete.notifications.Token;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 public class DashBoardActivity extends AppCompatActivity {
     // firebase auth
     FirebaseAuth firebaseAuth;
     ActionBar actionBar;
+    String mUID;
 
 
 
@@ -50,7 +56,23 @@ public class DashBoardActivity extends AppCompatActivity {
         ft1.replace(R.id.content,fragment1,"");
         ft1.commit();
 
+        checkUserStatus();
 
+        //update token
+        updateToken(FirebaseInstanceId.getInstance().getToken());
+
+    }
+
+    @Override
+    protected void onResume() {
+        checkUserStatus();
+        super.onResume();
+    }
+
+    public void updateToken(String token){
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Tokens");
+        Token mtoken = new Token(token);
+        ref.child(mUID).setValue(mtoken);
     }
     private BottomNavigationView.OnNavigationItemSelectedListener selectedListener =
             new BottomNavigationView.OnNavigationItemSelectedListener(){
@@ -106,6 +128,13 @@ public class DashBoardActivity extends AppCompatActivity {
             // user is signed in stay here
             //set email of logged in user
 //            mProfileTv.setText(user.getEmail());
+            mUID = user.getUid();
+
+            //save uid of currently signed in user in shared preferences
+            SharedPreferences sp = getSharedPreferences("SP_USER",MODE_PRIVATE);
+            SharedPreferences.Editor editor = sp.edit();
+            editor.putString("Current_USERID",mUID);
+            editor.apply();
         }else{
             // user not signed in go to main activity
             startActivity(new Intent(DashBoardActivity.this, MainActivity.class));
