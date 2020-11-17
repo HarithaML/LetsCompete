@@ -62,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // action bar ad its title
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("Create Account");
+        actionBar.setTitle("Login ");
         // enable back button
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
@@ -80,6 +80,7 @@ public class LoginActivity extends AppCompatActivity {
         mPasswordEt = findViewById(R.id.paswordEt);
         mLoginBtn = findViewById(R.id.loginBtn);
         mRecoverPassTv = findViewById(R.id.recoverPassTv);
+//        notHaveAcccountTv = findViewById(R.id.register_btn);
         //login button click
         mLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,15 +99,15 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
-        /*not have account textview click
-        notHaveAcccountTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
-                finish();
-            }
-        });
-        */
+
+//        notHaveAcccountTv.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+//                finish();
+//            }
+//        });
+
 
         mRecoverPassTv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -224,6 +225,11 @@ public class LoginActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         onBackPressed();// go previous activity
         return super.onSupportNavigateUp();
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(this,MainActivity.class));
     }
 
     @Override

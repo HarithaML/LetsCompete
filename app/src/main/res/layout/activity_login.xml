@@ -29,7 +29,6 @@
         android:layout_marginTop="500dp"
         android:layout_margin="10dp"
         android:id="@+id/emailTIL">
-
         <EditText
             android:id="@+id/emailEt"
             android:layout_width="match_parent"
@@ -72,7 +71,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/passwordTIL"
-
         android:layout_marginTop="3dp"
         android:text="forgot password recover"
         android:textAlignment="center"
@@ -82,11 +80,9 @@
         android:id="@+id/loginBtn"
         android:layout_width="148dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/passwordTIL"
+        android:layout_below="@id/recoverPassTv"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="45dp"
-
-
+        android:layout_marginTop="5dp"
         android:background="@color/colorPrimary"
         android:layout_centerHorizontal="true"
         android:text="Login"
@@ -97,6 +93,7 @@
         android:id="@+id/googleLoginBtn"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
+        android:layout_below="@id/loginBtn"
         android:layout_centerHorizontal="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"

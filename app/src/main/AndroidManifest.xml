@@ -14,24 +14,25 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LetsCompete">
         <activity android:name=".activities.TimeChallengeActivity">
-
         </activity>
-        <activity android:name=".activities.CreatechallengeActivity" />
+        <activity android:name=".activities.CreateChallengeActivity" />
         <activity
             android:name=".activities.ChatActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".activities.LoginActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".activities.LoginActivity"
+            android:label="LogIn">
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".activities.DashBoardActivity" />
         <activity
             android:name=".activities.Setting_Activity"
             android:label="@string/title_activity_setting_" />
         <activity android:name=".activities.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
         </activity>
         <activity android:name=".activities.RegisterActivity" />

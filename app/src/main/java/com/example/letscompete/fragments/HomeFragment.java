@@ -6,7 +6,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -15,10 +14,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
-import com.example.letscompete.activities.DashBoardActivity;
-import com.example.letscompete.activities.CreatechallengeActivity;
+import com.example.letscompete.activities.CreateChallengeActivity;
 import com.example.letscompete.activities.MainActivity;
 import com.example.letscompete.R;
 import com.example.letscompete.activities.TimeChallengeActivity;
@@ -122,7 +119,7 @@ public class HomeFragment extends Fragment {
         builder.setTitle("Add new a challenge");
         builder.setItems(options, (dialog, which) -> {
             if(which == 0) {
-                startActivity(new Intent(getActivity(), CreatechallengeActivity.class));
+                startActivity(new Intent(getActivity(), CreateChallengeActivity.class));
                 getActivity().finish();
                 //create a new challenge clicked
                 //transfer to new challenge fragment_Harika

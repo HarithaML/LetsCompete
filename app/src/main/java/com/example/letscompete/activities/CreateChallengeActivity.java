@@ -23,6 +23,8 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.letscompete.models.ModelChallenge;
+import com.example.letscompete.models.ModelParticipant;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -39,7 +41,7 @@ import java.io.IOException;
 import java.util.Calendar;
 
 
-public class CreatechallengeActivity<storageReference> extends AppCompatActivity {
+public class CreateChallengeActivity<storageReference> extends AppCompatActivity {
     private static final String TAG = "Uploaded";
     EditText ChallengeTitle, ChallengeDuration, ChallengeDescription, StartDate,txtdata;
     String text;
@@ -48,6 +50,7 @@ public class CreatechallengeActivity<storageReference> extends AppCompatActivity
     DatePickerDialog datepicker;
     int Image_Request_Code = 7;
     Spinner ChallengeType;
+
     Button Create,btnbrowse,btnupload;
     DatabaseReference reference,databaseReference;
     FirebaseStorage storage;
@@ -67,14 +70,14 @@ public class CreatechallengeActivity<storageReference> extends AppCompatActivity
 
     View view;
 
-    Challenge challenge;
+    ModelChallenge modelChallenge;
     String role = "Moderator";
     String status = "Completed";
     String progress ="Started";
     String rank = "0";
 
 
-    Participants participants;
+    ModelParticipant participants;
     String imageurl1;
 
     @Override
@@ -95,7 +98,7 @@ public class CreatechallengeActivity<storageReference> extends AppCompatActivity
         btnupload = (Button) findViewById(R.id.btnUpload);
         txtdata = (EditText) findViewById(R.id.txtdata);
         imgview = (ImageView) findViewById(R.id.image_view);
-        progressDialog = new ProgressDialog(CreatechallengeActivity.this);// context name as per your project name
+        progressDialog = new ProgressDialog(CreateChallengeActivity.this);// context name as per your project name
 
 
         btnbrowse.setOnClickListener(new View.OnClickListener() {
@@ -129,8 +132,8 @@ public class CreatechallengeActivity<storageReference> extends AppCompatActivity
                 int year = cldr.get(Calendar.YEAR);
 
                 // date picker dialog
-                datepicker = new DatePickerDialog(CreatechallengeActivity.this,
-                        new DatePickerDialog.OnDateSetListener() {
+                datepicker = new DatePickerDialog(CreateChallengeActivity.this,
+                                                  new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                                 StartDate.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
@@ -161,7 +164,7 @@ public class CreatechallengeActivity<storageReference> extends AppCompatActivity
 
         Create = (Button) findViewById(R.id.create);
         ChallengeType = (Spinner) findViewById(R.id.challengetype);
-        challenge = new Challenge();
+        modelChallenge = new ModelChallenge();
         reference = FirebaseDatabase.getInstance().getReference().child("Challenge");
         Create.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -170,32 +173,32 @@ public class CreatechallengeActivity<storageReference> extends AppCompatActivity
                 String userid = currentFirebaseUser.getUid();
                 String username = currentFirebaseUser.getEmail();
                 Uri userimage = currentFirebaseUser.getPhotoUrl();
-                challenge.setChallengeTitle(ChallengeTitle.getText().toString().trim());
-                challenge.setChallengeDuration(ChallengeDuration.getText().toString().trim());
-                challenge.setChallengeDescription(ChallengeDescription.getText().toString().trim());
-                challenge.setStartdate(StartDate.getText().toString());
-                challenge.setChallengeType(text);
-                challenge.setImageName(txtdata.getText().toString().trim());
-                challenge.setImageURL(imageurl1);
+                modelChallenge.setChallengeTitle(ChallengeTitle.getText().toString().trim());
+                modelChallenge.setChallengeDuration(ChallengeDuration.getText().toString().trim());
+                modelChallenge.setChallengeDescription(ChallengeDescription.getText().toString().trim());
+                modelChallenge.setStartdate(StartDate.getText().toString());
+                modelChallenge.setChallengeType(text);
+                modelChallenge.setImageName(txtdata.getText().toString().trim());
+                modelChallenge.setImageURL(imageurl1);
                 //challenge.setRole("Moderator");
-                challenge.setUserID(userid);
-                reference.push().setValue(challenge);
+                modelChallenge.setUserID(userid);
+                reference.push().setValue(modelChallenge);
 
-                participants = new Participants();
+                participants = new ModelParticipant();
                 reference = FirebaseDatabase.getInstance().getReference().child("Participants");
-                participants.setUserUid(userid);
+                participants.setUserUID(userid);
                 participants.setProgress(progress);
                 participants.setRank(rank);
                 participants.setRole(role);
                 participants.setStatus(status);
                 participants.setUserName(username);
-                participants.setUserImage(userimage);
+                participants.setUserImage(userimage.toString());
                 //participants.setImageURL(imageurl1);
                 participants.setChallengeTitle(ChallengeTitle.getText().toString().trim());
                 reference.push().setValue(participants);
 
 
-                Toast.makeText(CreatechallengeActivity.this, "Challenge created successfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CreateChallengeActivity.this, "Challenge created successfully", Toast.LENGTH_SHORT).show();
                 ChallengeTitle.setText("");
                 ChallengeDuration.setText("");
                 ChallengeDescription.setText("");
@@ -253,16 +256,16 @@ public class CreatechallengeActivity<storageReference> extends AppCompatActivity
                             @SuppressWarnings("VisibleForTests")
 
                             //uploadinfo imageUploadInfo = new uploadinfo(TempImageName, taskSnapshot.getUploadSessionUri().toString());
-                                    Challenge challenge = new Challenge(TempImageName, taskSnapshot.getUploadSessionUri().toString());
+                                    ModelChallenge modelChallenge = new ModelChallenge(TempImageName, taskSnapshot.getUploadSessionUri().toString());
                             String ImageUploadId = databaseReference.push().getKey();
                             imageurl1 = taskSnapshot.getUploadSessionUri().toString();
-                            databaseReference.child(ImageUploadId).setValue(challenge);
+                            databaseReference.child(ImageUploadId).setValue(modelChallenge);
                         }
                     });
         }
         else {
 
-            Toast.makeText(CreatechallengeActivity.this, "Please Select Image or Add Image Name", Toast.LENGTH_LONG).show();
+            Toast.makeText(CreateChallengeActivity.this, "Please Select Image or Add Image Name", Toast.LENGTH_LONG).show();
             progressDialog.dismiss();
         }
 

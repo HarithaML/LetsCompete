@@ -239,7 +239,8 @@ public class ContactsFragment extends Fragment {
         FirebaseUser user = firebaseAuth.getCurrentUser();
         if(user!=null){
             // user is signed in stay here
-            //set email of logged in user
+            //set email of l
+            // ogged in user
 //            mProfileTv.setText(user.getEmail());
         }else{
             // user not signed in go to main activity

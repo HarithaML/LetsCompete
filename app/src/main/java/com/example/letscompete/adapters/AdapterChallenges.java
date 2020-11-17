@@ -1,32 +1,27 @@
 package com.example.letscompete.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.letscompete.activities.*;
-import com.example.letscompete.models.ModelChallenge;
-import com.example.letscompete.models.ModelUser;
 import com.example.letscompete.R;
-import com.squareup.picasso.Picasso;
+import com.example.letscompete.models.ModelChallenge;
 
 import java.util.List;
 
 public class AdapterChallenges extends RecyclerView.Adapter<AdapterChallenges.MyHolder> {
 
     Context context;
-    List<ModelChallenge> challengeList;
+    List<ModelChallenge> modelChallengeList;
 
-    public AdapterChallenges(Context context, List<ModelChallenge> challengeList) {
+    public AdapterChallenges(Context context, List<ModelChallenge> modelChallengeList) {
         this.context = context;
-        this.challengeList = challengeList;
+        this.modelChallengeList = modelChallengeList;
     }
 
 
@@ -41,10 +36,10 @@ public class AdapterChallenges extends RecyclerView.Adapter<AdapterChallenges.My
     @Override
     public void onBindViewHolder(@NonNull MyHolder holder, int position) {
         //get data
-        String challengeTitle = challengeList.get(position).getChallengeTitle();
-        String challengeDescription = challengeList.get(position).getChallengeDescription();
-        String challengeType = challengeList.get(position).getChallengeType();
-        String startdate = challengeList.get(position).getStartdate();
+        String challengeTitle = modelChallengeList.get(position).getChallengeTitle();
+        String challengeDescription = modelChallengeList.get(position).getChallengeDescription();
+        String challengeType = modelChallengeList.get(position).getChallengeType();
+        String startdate = modelChallengeList.get(position).getStartdate();
         //set data
 
 
