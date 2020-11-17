@@ -5,8 +5,12 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -18,7 +22,10 @@ import android.widget.Toast;
 
 import com.example.letscompete.activities.MainActivity;
 import com.example.letscompete.R;
+import com.example.letscompete.adapters.SectionPagerAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.tabs.TabItem;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -36,6 +43,7 @@ public class HomeFragment extends Fragment {
     FirebaseAuth firebaseAuth;
 
     //View for xml
+    TabLayout tabLayout;
     FloatingActionButton fab_add_challenge;
 
     // TODO: Rename and change types of parameters
@@ -79,16 +87,48 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+        //todo: get joined challenges
+        //todo: get completed challenges
+        //todo: get suggested challenges
+        tabLayout = view.findViewById(R.id.tablayout);
+        TabItem tabOngoing = view.findViewById(R.id.ongoing);
+        TabItem tabCompleted = view.findViewById(R.id.completed);
+        ViewPager viewPager;
+        //viewPager = (ViewPager) view.findViewById(R.id.viewPager);
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                System.out.println("tabbbbbbbbbbbbbbbbbbbbbbbbbbed"+tab.getPosition());
+                switch (tab.getPosition()){
+                    case R.id.ongoing:
+                        OngoingFragment fragment1 = new OngoingFragment();
+                        FragmentTransaction ft1 = getChildFragmentManager().beginTransaction();
+                        ft1.replace(R.id.viewPager, fragment1);
+                        ft1.commit();
+                    case R.id.completed:
+                        CompletedFragment fragment2 = new CompletedFragment();
+                        FragmentTransaction ft2 = getChildFragmentManager().beginTransaction();
+                        ft2.replace(R.id.viewPager, fragment2);
+                        ft2.commit();
+
+                }
+                //viewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
         //init
         firebaseAuth = FirebaseAuth.getInstance();
         //init views
         fab_add_challenge = view.findViewById(R.id.fab_add_challenge);
-
-        //todo: get joined challenges
-        //todo: get completed challenges
-        //todo: get suggested challenges
-
-
         //floating add challenge
         fab_add_challenge.setOnClickListener(new View.OnClickListener() {
 
@@ -130,7 +170,6 @@ public class HomeFragment extends Fragment {
         super.onCreateOptionsMenu(menu,inflater);
     }
     /* handle menu item clicks*/
-
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         //Toast
