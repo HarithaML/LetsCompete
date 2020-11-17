@@ -11,6 +11,6 @@
     <item android:id="@+id/action_search_challenge"
         android:icon="@drawable/ic_search_white"
         app:showAsAction="always"
-        android:title="Search challenge"
+        android:title="Search modelChallenge"
         app:actionViewClass="android.widget.SearchView" />
 </menu>

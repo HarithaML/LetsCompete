@@ -1,20 +1,20 @@
 package com.example.letscompete.models;
 
 public class ModelUser {
-    String name,email,search,phone,image,cover,uid,onlineStatus;
+    String name,email,phone,image,cover,uid,onlineStatus,typingTo;
 
     public ModelUser() {
     }
 
 
-    public ModelUser(String name, String email, String search, String phone, String image, String cover, String uid, String onlineStatus) {
+    public ModelUser(String name, String email, String phone, String image, String cover, String uid, String onlineStatus,String typingTo) {
         this.name = name;
         this.email = email;
-        this.search = search;
         this.phone = phone;
         this.image = image;
         this.cover = cover;
         this.onlineStatus = onlineStatus;
+        this.typingTo = typingTo;
         this.uid = uid;
     }
 
@@ -26,20 +26,20 @@ public class ModelUser {
         this.name = name;
     }
 
+    public String getTypingTo(String typingTo){
+        return  typingTo;
+    }
+
+    public void setTypingTo(String typingTo){
+        this.typingTo = typingTo;
+    }
+
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getSearch() {
-        return search;
-    }
-
-    public void setSearch(String search) {
-        this.search = search;
     }
 
     public String getPhone() {
