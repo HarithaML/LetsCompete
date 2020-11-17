@@ -78,7 +78,6 @@ public class LoginActivity extends AppCompatActivity {
         //init
         mEmailEt = findViewById(R.id.emailEt);
         mPasswordEt = findViewById(R.id.paswordEt);
-        notHaveAcccountTv = findViewById(R.id.notHave_accountTv);
         mLoginBtn = findViewById(R.id.loginBtn);
         mRecoverPassTv = findViewById(R.id.recoverPassTv);
         //login button click
@@ -99,7 +98,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
-        //not have account textview click
+        /*not have account textview click
         notHaveAcccountTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,6 +106,7 @@ public class LoginActivity extends AppCompatActivity {
                 finish();
             }
         });
+        */
 
         mRecoverPassTv.setOnClickListener(new View.OnClickListener() {
             @Override

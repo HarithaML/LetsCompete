@@ -20,13 +20,16 @@
             android:enabled="true"
             android:exported="true"></service>
 
-        <activity
-            android:name=".activities.Setting_Activity"
-            android:label="@string/title_activity_setting_" />
+        <activity android:name=".activities.CreatechallengeActivity"></activity>
         <activity
             android:name=".activities.ChatActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".activities.Setting_Activity"
+            android:label="@string/title_activity_setting_" />
         <activity android:name=".activities.LoginActivity" >
+            android:label="@string/title_activity_setting_"></activity>
+        <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -34,9 +37,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.DashBoardActivity" />
-        <activity android:name=".activities.MainActivity">
-
-        </activity>
         <activity android:name=".activities.RegisterActivity" />
 
         <service
