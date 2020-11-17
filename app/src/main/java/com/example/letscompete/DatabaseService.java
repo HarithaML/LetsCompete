@@ -2,6 +2,8 @@ package com.example.letscompete;
 
 import android.app.Service;
 import android.content.Intent;
+import android.content.ServiceConnection;
+import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
 
@@ -21,13 +23,22 @@ public class DatabaseService extends Service {
     AppDatabase localDatabase;
     List<ModelUser> userList;
 
+    public class DatabaseServiceBinder extends Binder {
+        public DatabaseService getService(){
+            return DatabaseService.this;
+        }
+    }
+
+    private final IBinder myBinder = new DatabaseServiceBinder();
+
     public DatabaseService() {
     }
 
     @Override
     public IBinder onBind(Intent intent) {
+        return myBinder;
         // TODO: Return the communication channel to the service.
-        throw new UnsupportedOperationException("Not yet implemented");
+        //throw new UnsupportedOperationException("Not yet implemented");
     }
 
     @Override
@@ -55,11 +66,11 @@ public class DatabaseService extends Service {
         super.onDestroy();
     }
 
-    private void getDatabaseData()
+    public void getDatabaseData()
     {
         Log.i(TAG, "Checking if this works");
         DatabaseReference a = database.getReference("Users");
-        a.addValueEventListener(new ValueEventListener() {
+        a.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again

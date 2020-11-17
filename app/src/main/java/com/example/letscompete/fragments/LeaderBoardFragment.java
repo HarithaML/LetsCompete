@@ -1,16 +1,21 @@
 package com.example.letscompete.fragments;
 
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.IBinder;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import com.example.letscompete.AppDatabase;
 import com.example.letscompete.DatabaseService;
@@ -34,7 +39,26 @@ public class LeaderBoardFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private AppDatabase database;
+    private DatabaseService service;
     private Intent sIntent;
+    private boolean mBound = false;
+
+    private ServiceConnection connection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName className,
+                                       IBinder ibinder) {
+            // We've bound to LocalService, cast the IBinder and get LocalService instance
+            DatabaseService.DatabaseServiceBinder binder = (DatabaseService.DatabaseServiceBinder) ibinder;
+            service = binder.getService();
+            mBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+            mBound = false;
+        }
+    };
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -83,10 +107,28 @@ public class LeaderBoardFragment extends Fragment {
         user.setRank(1);
         user.setStat("12");
         database.userDao().insertAll(user);
+        RelativeLayout relativeLayout = view.findViewById(R.id.recyleSetting);
+        //please change latter
+        relativeLayout.setClickable(true);
+        relativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i("touched", "yay");
+                touch();
+            }
+        });
         // Inflate the layout for this fragment
-        setLeaderboardStats(view);
-        getActivity().startService(sIntent);
+        //setLeaderboardStats(view);
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        sIntent = new Intent(getView().getContext(), DatabaseService.class);
+        getActivity().bindService(sIntent, connection, Context.BIND_AUTO_CREATE);
+        getActivity().startService(sIntent);
+        setLeaderboardStats(getView());
     }
 
     private void setLeaderboardStats(View view)
@@ -104,5 +146,17 @@ public class LeaderBoardFragment extends Fragment {
     public void onPause() {
         super.onPause();
         getActivity().stopService(sIntent);
+        getActivity().unbindService(connection);
+        database.clearAllTables();
     }
+
+    private void touch()
+    {
+        if(mBound)
+        {
+            service.getDatabaseData();
+            setLeaderboardStats(getView());
+        }
+    }
+
 }
