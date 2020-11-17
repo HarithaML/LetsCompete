@@ -30,6 +30,7 @@ import android.widget.Toast;
 
 import com.example.letscompete.activities.MainActivity;
 import com.example.letscompete.R;
+import com.example.letscompete.activities.Setting_Activity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -48,6 +49,7 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
+import java.util.Set;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -203,6 +205,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 showEditProfileDialog();
+                //goToSettingsActivity();
             }
         });
 
@@ -228,7 +231,11 @@ public class ProfileFragment extends Fragment {
     }
 
 
-
+    private void goToSettingsActivity()
+    {
+        Intent intent = new Intent(getActivity(), Setting_Activity.class);
+        startActivity(intent);
+    }
 
     private void showEditProfileDialog() {
         /*Show dialog containing options

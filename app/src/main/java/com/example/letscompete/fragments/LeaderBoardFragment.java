@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.example.letscompete.AppDatabase;
@@ -107,10 +108,9 @@ public class LeaderBoardFragment extends Fragment {
         user.setRank(1);
         user.setStat("12");
         database.userDao().insertAll(user);
-        RelativeLayout relativeLayout = view.findViewById(R.id.recyleSetting);
+        Button button = view.findViewById(R.id.button);
         //please change latter
-        relativeLayout.setClickable(true);
-        relativeLayout.setOnClickListener(new View.OnClickListener() {
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.i("touched", "yay");
