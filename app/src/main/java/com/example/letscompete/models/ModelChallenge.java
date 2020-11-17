@@ -1,12 +1,12 @@
 package com.example.letscompete.models;
 
 public class ModelChallenge {
-    String challengeDescription, challengeDuration, challengeTitle, challengeType, imageName, imageURL, startdate, search;
+    String challengeDescription, challengeDuration, challengeTitle, challengeType, imageName, imageURL, startdate;
 
     public ModelChallenge() {
     }
 
-    public ModelChallenge(String challengeDescription, String challengeDuration, String challengeTitle, String challengeType, String imageName, String imageURL, String startdate, String search){
+    public ModelChallenge(String challengeDescription, String challengeDuration, String challengeTitle, String challengeType, String imageName, String imageURL, String startdate){
         this.challengeDescription = challengeDescription;
         this.challengeDuration = challengeDuration;
         this.challengeTitle = challengeTitle;
@@ -14,7 +14,6 @@ public class ModelChallenge {
         this.imageName = imageName;
         this.imageURL = imageURL;
         this.startdate = startdate;
-        this.search = search;
     }
 
     public String getChallengeDescription() {
@@ -73,11 +72,4 @@ public class ModelChallenge {
         this.startdate = startdate;
     }
 
-    public String getSearch() {
-        return search;
-    }
-
-    public void setSearch(String search) {
-        this.search = search;
-    }
 }
