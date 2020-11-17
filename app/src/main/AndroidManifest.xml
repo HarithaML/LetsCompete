@@ -14,10 +14,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LetsCompete">
         <activity
+            android:name=".Activities.HomeActivity"
+            android:label="@string/title_activity_home"
+            android:theme="@style/Theme.LetsCompete.NoActionBar"></activity>
+        <activity
             android:name=".activities.Setting_Activity"
-            android:label="@string/title_activity_setting_"></activity>
-        <activity android:name=".activities.ChatActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+            android:label="@string/title_activity_setting_" />
+        <activity
+            android:name=".activities.ChatActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".activities.LoginActivity" />
         <activity android:name=".activities.DashBoardActivity" />
         <activity android:name=".activities.MainActivity">
@@ -29,4 +34,5 @@
         </activity>
         <activity android:name=".activities.RegisterActivity" />
     </application>
+
 </manifest>
