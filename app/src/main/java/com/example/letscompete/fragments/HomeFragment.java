@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.letscompete.activities.CreatechallengeActivity;
 import com.example.letscompete.activities.MainActivity;
 import com.example.letscompete.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -110,6 +111,8 @@ public class HomeFragment extends Fragment {
         builder.setTitle("Add new a challenge");
         builder.setItems(options, (dialog, which) -> {
             if(which == 0) {
+                startActivity(new Intent(getActivity(), CreatechallengeActivity.class));
+                getActivity().finish();
                 //create a new challenge clicked
                 //transfer to new challenge fragment_Harika
             } else if(which == 1) {

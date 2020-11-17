@@ -7,14 +7,18 @@
     tools:context=".activities.RegisterActivity">
 
     <!-- TextView: Label Register-->
+    <!--EditText: Input Email-->
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="@string/get_started_with_your_account"
         android:textAlignment="center"
-        android:text="@string/register"
-        android:textColor="@color/colorPrimary"
-        android:textSize="25sp"/>
-    <!--EditText: Input Email-->
+
+        android:layout_marginTop="100dp"
+        android:textColor="@color/black"
+        android:textSize="30sp" />
+
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -25,6 +29,8 @@
             android:id="@+id/emailEt"
             android:inputType="textEmailAddress"
             android:hint="@string/email"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"/>
     </com.google.android.material.textfield.TextInputLayout>
@@ -41,6 +47,8 @@
             android:id="@+id/paswordEt"
             android:inputType="textEmailAddress"
             android:hint="@string/password"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"/>
     </com.google.android.material.textfield.TextInputLayout>
@@ -50,11 +58,14 @@
 
     <Button
         android:id="@+id/registerBtn"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/passwordTIL"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="-1dp"
+        android:layout_below="@+id/passwordTIL"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="142dp"
+        android:layout_marginTop="90dp"
+        android:layout_marginEnd="138dp"
         android:background="@color/colorPrimary"
         android:text="@string/register"
         android:textColor="@color/colorSecondary"
@@ -69,5 +80,4 @@
         android:layout_below="@+id/registerBtn"
         android:layout_marginTop="30dp"
         android:textColor="@color/colorPrimary"/>
-
 </RelativeLayout>
