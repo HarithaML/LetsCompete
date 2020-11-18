@@ -23,12 +23,8 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-
-import com.example.letscompete.Challengesfordisplay;
-
 import com.example.letscompete.models.ModelChallenge;
 import com.example.letscompete.models.ModelParticipant;
-
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -67,10 +63,6 @@ public class CreateChallengeActivity<storageReference> extends AppCompatActivity
     private AlertDialog mAlertDialog;
     ProgressDialog progressDialog ;
 
-    String url;
-    Challengesfordisplay challengesfordisplay;
-
-
     private static final int CAMERA_REQUEST_CODE = 111;
     private static final
 
@@ -78,22 +70,14 @@ public class CreateChallengeActivity<storageReference> extends AppCompatActivity
 
     View view;
 
-
-    Challenge challenge;
-
     ModelChallenge modelChallenge;
-
     String role = "Moderator";
     String status = "Completed";
     String progress ="Started";
     String rank = "0";
 
 
-
-    Participants participants;
-
     ModelParticipant participants;
-
     String imageurl1;
 
     @Override
@@ -148,7 +132,8 @@ public class CreateChallengeActivity<storageReference> extends AppCompatActivity
                 int year = cldr.get(Calendar.YEAR);
 
                 // date picker dialog
-                datepicker = new DatePickerDialog(CreateChallengeActivity.this,new DatePickerDialog.OnDateSetListener() {
+                datepicker = new DatePickerDialog(CreateChallengeActivity.this,
+                                                  new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                                 StartDate.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
@@ -179,11 +164,7 @@ public class CreateChallengeActivity<storageReference> extends AppCompatActivity
 
         Create = (Button) findViewById(R.id.create);
         ChallengeType = (Spinner) findViewById(R.id.challengetype);
-
-        challenge = new Challenge();
-
         modelChallenge = new ModelChallenge();
-
         reference = FirebaseDatabase.getInstance().getReference().child("Challenge");
         Create.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -192,35 +173,13 @@ public class CreateChallengeActivity<storageReference> extends AppCompatActivity
                 String userid = currentFirebaseUser.getUid();
                 String username = currentFirebaseUser.getEmail();
                 Uri userimage = currentFirebaseUser.getPhotoUrl();
-
-                challenge.setChallengeTitle(ChallengeTitle.getText().toString().trim());
-                challenge.setChallengeDuration(ChallengeDuration.getText().toString().trim());
-                challenge.setChallengeDescription(ChallengeDescription.getText().toString().trim());
-                challenge.setStartdate(StartDate.getText().toString());
-                challenge.setChallengeType(text);
-                challenge.setImageName(txtdata.getText().toString().trim());
-                challenge.setImageURL(url);
-                //challenge.setRole("Moderator");
-                challenge.setUserID(userid);
-                reference.push().setValue(challenge);
-                reference = FirebaseDatabase.getInstance().getReference().child("Challengesfordsiplay");
-                challengesfordisplay = new Challengesfordisplay();
-                challengesfordisplay.settitle(ChallengeTitle.getText().toString().trim());
-                challengesfordisplay.setduration(ChallengeDuration.getText().toString().trim());
-                challengesfordisplay.setdescription(ChallengeDescription.getText().toString().trim());
-                challengesfordisplay.setimageurl(url);
-                reference.push().setValue(challengesfordisplay);
-                participants = new Participants();
-                reference = FirebaseDatabase.getInstance().getReference().child("Participants");
-                participants.setUserUid(userid);
-
                 modelChallenge.setChallengeTitle(ChallengeTitle.getText().toString().trim());
                 modelChallenge.setChallengeDuration(ChallengeDuration.getText().toString().trim());
                 modelChallenge.setChallengeDescription(ChallengeDescription.getText().toString().trim());
                 modelChallenge.setStartdate(StartDate.getText().toString());
                 modelChallenge.setChallengeType(text);
                 modelChallenge.setImageName(txtdata.getText().toString().trim());
-                modelChallenge.setImageURL(url);
+                modelChallenge.setImageURL(imageurl1);
                 //challenge.setRole("Moderator");
                 modelChallenge.setUserID(userid);
                 reference.push().setValue(modelChallenge);
@@ -228,19 +187,13 @@ public class CreateChallengeActivity<storageReference> extends AppCompatActivity
                 participants = new ModelParticipant();
                 reference = FirebaseDatabase.getInstance().getReference().child("Participants");
                 participants.setUserUID(userid);
-
                 participants.setProgress(progress);
                 participants.setRank(rank);
                 participants.setRole(role);
                 participants.setStatus(status);
                 participants.setUserName(username);
-
-               // participants.setUserImage(userimage);
-                //participants.setImageURL(url);
-
                 participants.setUserImage(userimage.toString());
                 //participants.setImageURL(imageurl1);
-
                 participants.setChallengeTitle(ChallengeTitle.getText().toString().trim());
                 reference.push().setValue(participants);
 
@@ -251,11 +204,6 @@ public class CreateChallengeActivity<storageReference> extends AppCompatActivity
                 ChallengeDescription.setText("");
                 StartDate.setText("");
                 txtdata.setText("");
-
-
-                Intent notificationIntent = new Intent(CreateChallengeActivity.this,DashBoardActivity.class);
-                startActivity(notificationIntent);
-
             }
 
         });
@@ -308,18 +256,10 @@ public class CreateChallengeActivity<storageReference> extends AppCompatActivity
                             @SuppressWarnings("VisibleForTests")
 
                             //uploadinfo imageUploadInfo = new uploadinfo(TempImageName, taskSnapshot.getUploadSessionUri().toString());
-
-                                    Challenge challenge = new Challenge(TempImageName, taskSnapshot.getUploadSessionUri().toString());
-
-
-                            storageReference2.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    url = uri.toString();
-
-                                    //Do what you need to do with url
-                                }
-                            });
+                                    ModelChallenge modelChallenge = new ModelChallenge(TempImageName, taskSnapshot.getUploadSessionUri().toString());
+                            String ImageUploadId = databaseReference.push().getKey();
+                            imageurl1 = taskSnapshot.getUploadSessionUri().toString();
+                            databaseReference.child(ImageUploadId).setValue(modelChallenge);
                         }
                     });
         }
@@ -329,16 +269,6 @@ public class CreateChallengeActivity<storageReference> extends AppCompatActivity
             progressDialog.dismiss();
         }
 
-    }
-
-    @Override
-    public void onBackPressed()
-    {
-        // code here to show dialog
-        super.onBackPressed();
-        Intent intent = new Intent(CreateChallengeActivity.this, DashBoardActivity.class);
-        startActivity(intent);
-        // optional depending on your needs
     }
 }
 
