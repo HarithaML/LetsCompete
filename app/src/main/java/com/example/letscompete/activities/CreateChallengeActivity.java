@@ -23,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.letscompete.Challengesfordisplay;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -39,7 +40,7 @@ import java.io.IOException;
 import java.util.Calendar;
 
 
-public class CreatechallengeActivity<storageReference> extends AppCompatActivity {
+public class CreateChallengeActivity<storageReference> extends AppCompatActivity {
     private static final String TAG = "Uploaded";
     EditText ChallengeTitle, ChallengeDuration, ChallengeDescription, StartDate,txtdata;
     String text;
@@ -59,6 +60,8 @@ public class CreatechallengeActivity<storageReference> extends AppCompatActivity
     private ProgressDialog mProgressDialog;
     private AlertDialog mAlertDialog;
     ProgressDialog progressDialog ;
+    String url;
+    Challengesfordisplay challengesfordisplay;
 
     private static final int CAMERA_REQUEST_CODE = 111;
     private static final
@@ -95,7 +98,7 @@ public class CreatechallengeActivity<storageReference> extends AppCompatActivity
         btnupload = (Button) findViewById(R.id.btnUpload);
         txtdata = (EditText) findViewById(R.id.txtdata);
         imgview = (ImageView) findViewById(R.id.image_view);
-        progressDialog = new ProgressDialog(CreatechallengeActivity.this);// context name as per your project name
+        progressDialog = new ProgressDialog(CreateChallengeActivity.this);// context name as per your project name
 
 
         btnbrowse.setOnClickListener(new View.OnClickListener() {
@@ -129,7 +132,7 @@ public class CreatechallengeActivity<storageReference> extends AppCompatActivity
                 int year = cldr.get(Calendar.YEAR);
 
                 // date picker dialog
-                datepicker = new DatePickerDialog(CreatechallengeActivity.this,
+                datepicker = new DatePickerDialog(CreateChallengeActivity.this,
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -176,11 +179,17 @@ public class CreatechallengeActivity<storageReference> extends AppCompatActivity
                 challenge.setStartdate(StartDate.getText().toString());
                 challenge.setChallengeType(text);
                 challenge.setImageName(txtdata.getText().toString().trim());
-                challenge.setImageURL(imageurl1);
+                challenge.setImageURL(url);
                 //challenge.setRole("Moderator");
                 challenge.setUserID(userid);
                 reference.push().setValue(challenge);
-
+                reference = FirebaseDatabase.getInstance().getReference().child("Challengesfordsiplay");
+                challengesfordisplay = new Challengesfordisplay();
+                challengesfordisplay.settitle(ChallengeTitle.getText().toString().trim());
+                challengesfordisplay.setduration(ChallengeDuration.getText().toString().trim());
+                challengesfordisplay.setdescription(ChallengeDescription.getText().toString().trim());
+                challengesfordisplay.setimageurl(url);
+                reference.push().setValue(challengesfordisplay);
                 participants = new Participants();
                 reference = FirebaseDatabase.getInstance().getReference().child("Participants");
                 participants.setUserUid(userid);
@@ -190,17 +199,20 @@ public class CreatechallengeActivity<storageReference> extends AppCompatActivity
                 participants.setStatus(status);
                 participants.setUserName(username);
                 participants.setUserImage(userimage);
-                //participants.setImageURL(imageurl1);
+                //participants.setImageURL(url);
                 participants.setChallengeTitle(ChallengeTitle.getText().toString().trim());
                 reference.push().setValue(participants);
 
 
-                Toast.makeText(CreatechallengeActivity.this, "Challenge created successfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CreateChallengeActivity.this, "Challenge created successfully", Toast.LENGTH_SHORT).show();
                 ChallengeTitle.setText("");
                 ChallengeDuration.setText("");
                 ChallengeDescription.setText("");
                 StartDate.setText("");
                 txtdata.setText("");
+
+                Intent notificationIntent = new Intent(CreateChallengeActivity.this,DashBoardActivity.class);
+                startActivity(notificationIntent);
             }
 
         });
@@ -254,18 +266,35 @@ public class CreatechallengeActivity<storageReference> extends AppCompatActivity
 
                             //uploadinfo imageUploadInfo = new uploadinfo(TempImageName, taskSnapshot.getUploadSessionUri().toString());
                                     Challenge challenge = new Challenge(TempImageName, taskSnapshot.getUploadSessionUri().toString());
-                            String ImageUploadId = databaseReference.push().getKey();
-                            imageurl1 = taskSnapshot.getUploadSessionUri().toString();
-                            databaseReference.child(ImageUploadId).setValue(challenge);
+
+
+                            storageReference2.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    url = uri.toString();
+
+                                    //Do what you need to do with url
+                                }
+                            });
+
                         }
                     });
         }
         else {
 
-            Toast.makeText(CreatechallengeActivity.this, "Please Select Image or Add Image Name", Toast.LENGTH_LONG).show();
+            Toast.makeText(CreateChallengeActivity.this, "Please Select Image or Add Image Name", Toast.LENGTH_LONG).show();
             progressDialog.dismiss();
         }
 
+    }
+    @Override
+    public void onBackPressed()
+    {
+        // code here to show dialog
+        super.onBackPressed();
+        Intent intent = new Intent(CreateChallengeActivity.this, DashBoardActivity.class);
+        startActivity(intent);
+        // optional depending on your needs
     }
 }
 
