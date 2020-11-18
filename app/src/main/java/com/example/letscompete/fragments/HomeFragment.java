@@ -7,6 +7,9 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import androidx.fragment.app.FragmentTransaction;
+
+
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -125,6 +128,10 @@ public class HomeFragment extends Fragment {
                 //transfer to new challenge fragment_Harika
             } else if(which == 1) {
                 //join a current challenge clicked
+                ChallengeslistFragment fragment1 = new ChallengeslistFragment();
+                FragmentTransaction ft1 = getFragmentManager().beginTransaction();
+                ft1.replace(R.id.content,fragment1,"");
+                ft1.addToBackStack(null).commit();
             }
         });
         //create and show dialog
