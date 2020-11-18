@@ -13,8 +13,10 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.letscompete.R;
+import com.example.letscompete.activities.Setting_Activity;
 
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder> {
+    private Context mContext;
     private String[] localDataSet;
     private String[] desc;
 
@@ -26,10 +28,15 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         public ViewHolder(View view) {
             super(view);
             // Define click listener for the ViewHolder's View
-
             main = (TextView) view.findViewById(R.id.Main);
             sub = (TextView) view.findViewById(R.id.Sub);
+        }
 
+        public ViewHolder(View view, Context context) {
+            super(view);
+            // Define click listener for the ViewHolder's View
+            main = (TextView) view.findViewById(R.id.Main);
+            sub = (TextView) view.findViewById(R.id.Sub);
         }
 
         public TextView getTextView() {
@@ -44,6 +51,12 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
     public CustomAdapter(String[] dataSet, String[] des) {
         localDataSet = dataSet;
         desc = des;
+        mContext = null;
+    }
+    public CustomAdapter(String[] dataSet, String[] des, Context context) {
+        localDataSet = dataSet;
+        desc = des;
+        mContext = context;
     }
 
     // Create new views (invoked by the layout manager)
@@ -75,15 +88,17 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
 
     private void decideOnClick(View view, final int position)
     {
+        if(mContext instanceof Setting_Activity)
         switch(position)
         {
+            case 0:
+                view.setOnClickListener(view1 ->((Setting_Activity) mContext).showImagePicDialog());
+                break;
+            case 1:
+                view.setOnClickListener(view1 ->((Setting_Activity) mContext).showNamePhoneUpdateDialog("name"));
+                break;
             case 3:
-                view.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        sometext(view);
-                    }
-                });
+                view.setOnClickListener(view1 -> sometext(view1));
                 break;
             default:
                 break;
