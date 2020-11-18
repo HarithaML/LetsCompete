@@ -78,13 +78,23 @@ public class HomeFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        OngoingFragment ongoingFragment = new OngoingFragment();
-        FragmentTransaction ft1 = getFragmentManager().beginTransaction();
-        ft1.replace(R.id.home_middle_content, ongoingFragment,"");
-        ft1.commit();
 
-        TabLayout tabLayout = getView().findViewById(R.id.home_up_tablayout);
-        final HomeUpAdapter adapter = new HomeUpAdapter(getContext(), getFragmentManager(), tabLayout.getTabCount());
+
+
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        viewPager = view.findViewById(R.id.home_middle_content);
+        OngoingFragment ongoingFragment = new OngoingFragment();
+        FragmentTransaction ft1 = getChildFragmentManager().beginTransaction();
+        ft1.add(R.id.home_middle_content, ongoingFragment,"");
+        ft1.commit();
+        TabLayout tabLayout = view.findViewById(R.id.home_up_tablayout);
+        final HomeUpAdapter adapter = new HomeUpAdapter(getActivity().getApplicationContext(), getChildFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -104,21 +114,6 @@ public class HomeFragment extends Fragment {
         });
 
 
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
-        TabLayout tabLayout = view.findViewById(R.id.home_up_tablayout);
-        tabLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), HomeUpActivity.class);
-                startActivity(intent);
-            }
-        });
         //init
         firebaseAuth = FirebaseAuth.getInstance();
         //init views
