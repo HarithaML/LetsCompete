@@ -12,9 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.letscompete.R;
-import com.example.letscompete.adapters.AdapterUsers;
 import com.example.letscompete.models.ModelChallenge;
-import com.example.letscompete.models.ModelUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -91,27 +89,26 @@ public class InfoFragment extends Fragment {
                 System.out.println("Database Reached");
                 for(DataSnapshot ds:  snapshot.getChildren()){
                     ModelChallenge modelChallenge = ds.getValue(ModelChallenge.class);
-                    if(modelChallenge == null){
+//                    if(modelChallenge.getChallengeTitle() != null){
                         System.out.println("yes");
-                    }
+                        if(modelChallenge.getChallengeTitle().equals("test")){
+                            System.out.println(modelChallenge.getChallengeTitle());
+                            mTitle.setText(modelChallenge.getChallengeTitle());
+                            mDescription.setText(modelChallenge.getChallengeDescription());
+                            mDuration.setText(modelChallenge.getChallengeDuration());
+                            mStartDate.setText(modelChallenge.getStartdate());
+                            mType.setText(modelChallenge.getChallengeType());
+                            try{
+                                Picasso.get().load(modelChallenge.getImageURL())
+                                        .placeholder(R.drawable.ic_default_img_black)
+                                        .into(mImage);
+                            }catch (Exception e){
+                                Picasso.get().load(R.drawable.ic_default_img_black)
+                                        .into(mImage);
+                            }
 
-                    if(modelChallenge.getChallengeTitle().equals("Test Challenge 1")){
-                        System.out.println(modelChallenge.getChallengeTitle());
-                        mTitle.setText(modelChallenge.getChallengeTitle());
-                        mDescription.setText(modelChallenge.getChallengeDescription());
-                        mDuration.setText(modelChallenge.getChallengeDuration());
-                        mStartDate.setText(modelChallenge.getStartdate());
-                        mType.setText(modelChallenge.getChallengeType());
-                        try{
-                            Picasso.get().load(modelChallenge.getImageURL())
-                                    .placeholder(R.drawable.ic_default_img_black)
-                                    .into(mImage);
-                        }catch (Exception e){
-                            Picasso.get().load(R.drawable.ic_default_img_black)
-                                    .into(mImage);
                         }
-
-                    }
+//                    }
 
                 }
             }

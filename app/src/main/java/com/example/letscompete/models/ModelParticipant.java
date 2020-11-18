@@ -5,7 +5,7 @@ public class ModelParticipant {
     *progress = ongoing/completed
     * rank = caluclate
     * */
-    String challengeTitle,userName,userImage,userUID,progress,role,rank,status;
+    public String challengeTitle,userName,userImage,userUID,progress,role,rank,status;
 
     public ModelParticipant() {
     }

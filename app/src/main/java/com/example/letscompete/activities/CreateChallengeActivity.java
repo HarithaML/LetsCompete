@@ -23,7 +23,12 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+
 import com.example.letscompete.Challengesfordisplay;
+
+import com.example.letscompete.models.ModelChallenge;
+import com.example.letscompete.models.ModelParticipant;
+
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -49,6 +54,7 @@ public class CreateChallengeActivity<storageReference> extends AppCompatActivity
     DatePickerDialog datepicker;
     int Image_Request_Code = 7;
     Spinner ChallengeType;
+
     Button Create,btnbrowse,btnupload;
     DatabaseReference reference,databaseReference;
     FirebaseStorage storage;
@@ -60,8 +66,10 @@ public class CreateChallengeActivity<storageReference> extends AppCompatActivity
     private ProgressDialog mProgressDialog;
     private AlertDialog mAlertDialog;
     ProgressDialog progressDialog ;
+
     String url;
     Challengesfordisplay challengesfordisplay;
+
 
     private static final int CAMERA_REQUEST_CODE = 111;
     private static final
@@ -70,14 +78,22 @@ public class CreateChallengeActivity<storageReference> extends AppCompatActivity
 
     View view;
 
+
     Challenge challenge;
+
+    ModelChallenge modelChallenge;
+
     String role = "Moderator";
     String status = "Completed";
     String progress ="Started";
     String rank = "0";
 
 
+
     Participants participants;
+
+    ModelParticipant participants;
+
     String imageurl1;
 
     @Override
@@ -132,8 +148,7 @@ public class CreateChallengeActivity<storageReference> extends AppCompatActivity
                 int year = cldr.get(Calendar.YEAR);
 
                 // date picker dialog
-                datepicker = new DatePickerDialog(CreateChallengeActivity.this,
-                        new DatePickerDialog.OnDateSetListener() {
+                datepicker = new DatePickerDialog(CreateChallengeActivity.this,new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                                 StartDate.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
@@ -164,7 +179,11 @@ public class CreateChallengeActivity<storageReference> extends AppCompatActivity
 
         Create = (Button) findViewById(R.id.create);
         ChallengeType = (Spinner) findViewById(R.id.challengetype);
+
         challenge = new Challenge();
+
+        modelChallenge = new ModelChallenge();
+
         reference = FirebaseDatabase.getInstance().getReference().child("Challenge");
         Create.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -173,6 +192,7 @@ public class CreateChallengeActivity<storageReference> extends AppCompatActivity
                 String userid = currentFirebaseUser.getUid();
                 String username = currentFirebaseUser.getEmail();
                 Uri userimage = currentFirebaseUser.getPhotoUrl();
+
                 challenge.setChallengeTitle(ChallengeTitle.getText().toString().trim());
                 challenge.setChallengeDuration(ChallengeDuration.getText().toString().trim());
                 challenge.setChallengeDescription(ChallengeDescription.getText().toString().trim());
@@ -193,13 +213,34 @@ public class CreateChallengeActivity<storageReference> extends AppCompatActivity
                 participants = new Participants();
                 reference = FirebaseDatabase.getInstance().getReference().child("Participants");
                 participants.setUserUid(userid);
+
+                modelChallenge.setChallengeTitle(ChallengeTitle.getText().toString().trim());
+                modelChallenge.setChallengeDuration(ChallengeDuration.getText().toString().trim());
+                modelChallenge.setChallengeDescription(ChallengeDescription.getText().toString().trim());
+                modelChallenge.setStartdate(StartDate.getText().toString());
+                modelChallenge.setChallengeType(text);
+                modelChallenge.setImageName(txtdata.getText().toString().trim());
+                modelChallenge.setImageURL(url);
+                //challenge.setRole("Moderator");
+                modelChallenge.setUserID(userid);
+                reference.push().setValue(modelChallenge);
+
+                participants = new ModelParticipant();
+                reference = FirebaseDatabase.getInstance().getReference().child("Participants");
+                participants.setUserUID(userid);
+
                 participants.setProgress(progress);
                 participants.setRank(rank);
                 participants.setRole(role);
                 participants.setStatus(status);
                 participants.setUserName(username);
-                participants.setUserImage(userimage);
+
+               // participants.setUserImage(userimage);
                 //participants.setImageURL(url);
+
+                participants.setUserImage(userimage.toString());
+                //participants.setImageURL(imageurl1);
+
                 participants.setChallengeTitle(ChallengeTitle.getText().toString().trim());
                 reference.push().setValue(participants);
 
@@ -211,8 +252,10 @@ public class CreateChallengeActivity<storageReference> extends AppCompatActivity
                 StartDate.setText("");
                 txtdata.setText("");
 
+
                 Intent notificationIntent = new Intent(CreateChallengeActivity.this,DashBoardActivity.class);
                 startActivity(notificationIntent);
+
             }
 
         });
@@ -265,6 +308,7 @@ public class CreateChallengeActivity<storageReference> extends AppCompatActivity
                             @SuppressWarnings("VisibleForTests")
 
                             //uploadinfo imageUploadInfo = new uploadinfo(TempImageName, taskSnapshot.getUploadSessionUri().toString());
+
                                     Challenge challenge = new Challenge(TempImageName, taskSnapshot.getUploadSessionUri().toString());
 
 
@@ -276,7 +320,6 @@ public class CreateChallengeActivity<storageReference> extends AppCompatActivity
                                     //Do what you need to do with url
                                 }
                             });
-
                         }
                     });
         }
@@ -287,6 +330,7 @@ public class CreateChallengeActivity<storageReference> extends AppCompatActivity
         }
 
     }
+
     @Override
     public void onBackPressed()
     {

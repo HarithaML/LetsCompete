@@ -43,7 +43,7 @@
               android:textColor="@color/colorPrimary"
               android:layout_below="@id/challenge_title"
               android:layout_centerHorizontal="true"
-              android:text="This challenge is crazy!!" />
+              android:text="This modelChallenge is crazy!!" />
           <TextView
               android:id="@+id/challenge_type"
               android:layout_width="wrap_content"
