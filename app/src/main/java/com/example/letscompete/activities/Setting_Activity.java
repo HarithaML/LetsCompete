@@ -221,7 +221,6 @@ public class Setting_Activity extends AppCompatActivity {
     //now uploading
     private void uploadProfileCoverPhoto(Uri uri) {
         //path and name of image to be stored in firebase storage
-        Log.i("upload", "uploading");
         String filePathAndName = storagePath+""+profileOrCoverPhoto+"_"+user.getUid();
         StorageReference storageReference2nd = storageReference.child(filePathAndName);
         storageReference2nd.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -241,7 +240,7 @@ public class Setting_Activity extends AppCompatActivity {
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
-                                    Toast.makeText(getApplicationContext(),"added to databse successfully",Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(),"added to databse successfully",Toast.LENGTH_SHORT);
                                 }
                             });
 
@@ -352,5 +351,9 @@ public class Setting_Activity extends AppCompatActivity {
             startActivity(new Intent(this, MainActivity.class));
             finish();
         }
+    }
+
+    public void setProfileOrCoverPhoto(String profileOrCoverPhoto) {
+        this.profileOrCoverPhoto = profileOrCoverPhoto;
     }
 }

@@ -92,7 +92,10 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         switch(position)
         {
             case 0:
-                view.setOnClickListener(view1 ->((Setting_Activity) mContext).showImagePicDialog());
+                view.setOnClickListener(view1 ->{
+                    ((Setting_Activity) mContext).setProfileOrCoverPhoto("image");
+                    ((Setting_Activity) mContext).showImagePicDialog();
+                });
                 break;
             case 1:
                 view.setOnClickListener(view1 ->((Setting_Activity) mContext).showNamePhoneUpdateDialog("name"));
