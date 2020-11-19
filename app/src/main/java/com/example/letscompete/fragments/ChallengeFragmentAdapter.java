@@ -22,6 +22,7 @@ public class ChallengeFragmentAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
+                System.out.println("you are info");
                 InfoFragment infoFragment = new InfoFragment();
                 return infoFragment;
             case 1:

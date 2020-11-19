@@ -13,7 +13,7 @@
         android:background="#FFFFFF">
 
         <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tablayout"
+            android:id="@+id/home_up_tablayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:tabTextColor="@color/black"
@@ -35,6 +35,13 @@
 
 
     </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/home_middle_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp" />
+
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_below="@id/app_bar"
