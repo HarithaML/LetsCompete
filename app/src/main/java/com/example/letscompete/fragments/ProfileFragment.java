@@ -87,8 +87,8 @@ public class ProfileFragment extends Fragment {
 
 
     //arrays of permissions to be requested
-    String cameraPermissions[];
-    String storagePermissions[];
+    String []cameraPermissions;
+    String []storagePermissions;
 
 
     //views from xml
@@ -204,8 +204,8 @@ public class ProfileFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showEditProfileDialog();
-                //goToSettingsActivity();
+                //showEditProfileDialog();
+                goToSettingsActivity();
             }
         });
 
@@ -213,8 +213,7 @@ public class ProfileFragment extends Fragment {
         return view;
     }
     private boolean checkStoragePermission(){
-        boolean result = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)==(PackageManager.PERMISSION_GRANTED);
-        return result;
+        return ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)==(PackageManager.PERMISSION_GRANTED);
     }
     private void requestStoragePermission(){
         //request runtime Storage Permission
@@ -474,7 +473,7 @@ public class ProfileFragment extends Fragment {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getActivity(),"Error Occurred",Toast.LENGTH_SHORT);
+                Toast.makeText(getActivity(),"Error Occurred",Toast.LENGTH_SHORT).show();
             }
         });
 

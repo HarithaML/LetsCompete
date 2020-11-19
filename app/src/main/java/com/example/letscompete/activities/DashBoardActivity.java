@@ -8,8 +8,10 @@ import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.letscompete.fragments.ChallengeSelectionFragment;
 import com.example.letscompete.fragments.ChatListFragment;
 import com.example.letscompete.fragments.ContactsFragment;
 import com.example.letscompete.fragments.HomeFragment;
@@ -24,14 +26,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
 
-public class DashBoardActivity extends AppCompatActivity {
+public class DashBoardActivity extends AppCompatActivity
+    implements ChallengeSelectionFragment.OnChallengeSelectionListener {
     // firebase auth
     FirebaseAuth firebaseAuth;
     ActionBar actionBar;
     String mUID;
-
-
-
 
 
     @Override
@@ -106,6 +106,9 @@ public class DashBoardActivity extends AppCompatActivity {
                         case R.id.nav_leaderBoard:
                             actionBar.setTitle("LeaderBoard");
                             LeaderBoardFragment fragment5 = new LeaderBoardFragment();
+                            Bundle args = new Bundle();
+                            args.putString("Challenge", "Other");
+                            fragment5.setArguments(args);
                             FragmentTransaction ft5 = getSupportFragmentManager().beginTransaction();
                             ft5.replace(R.id.content,fragment5,"");
                             ft5.commit();
@@ -149,5 +152,17 @@ public class DashBoardActivity extends AppCompatActivity {
     }
     /*inflate options menu*/
 
+    @Override
+    public void onAttachFragment(Fragment fragment) {
+        if (fragment instanceof ChallengeSelectionFragment) {
+            ChallengeSelectionFragment headlinesFragment = (ChallengeSelectionFragment) fragment;
+            headlinesFragment.setOnChallengeSelectionListener(this);
+        }
+    }
 
+
+    public void onChallengeSelected(String name)
+    {
+
+    }
 }

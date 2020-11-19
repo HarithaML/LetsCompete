@@ -104,6 +104,7 @@ public class LeaderBoardFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_leader_board, container, false);
         sIntent = new Intent(view.getContext(), DatabaseService.class);
         UserLeaderBoardStats user = new UserLeaderBoardStats();
+        Log.i("Help", getArguments().getString("Challenge"));
         user.setUsername("ok");
         user.setRank(1);
         user.setStat("12");
