@@ -14,11 +14,16 @@ import android.view.ViewGroup;
 import com.example.letscompete.R;
 import com.example.letscompete.adapters.AdapterChallengesCard;
 import com.example.letscompete.models.ModelChallenge;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.database.Query;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +42,13 @@ public class OngoingFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
+    //firebase
+    FirebaseAuth  firebaseAuth;
+    FirebaseUser user;
+    FirebaseDatabase firebaseDatabase;
+    DatabaseReference databaseReference;
+    //storage
+    StorageReference storageReference;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -78,6 +89,13 @@ public class OngoingFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_ongoing, container, false);
+        //init firebase
+        firebaseAuth = FirebaseAuth.getInstance();
+        user = firebaseAuth.getCurrentUser();
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference("Users");
+        storageReference = FirebaseStorage.getInstance().getReference();
+        // init views
         recyclerView = view.findViewById(R.id.onging_recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -87,6 +105,8 @@ public class OngoingFragment extends Fragment {
     }
 
     private void getAllOngoing(){
+        //retrieve challenge under current user
+        //Query query = databaseReference.orderByChild("id").equalTo(user.getUid());
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Challenge");
         ref.addValueEventListener(new ValueEventListener() {
             @Override
@@ -94,10 +114,10 @@ public class OngoingFragment extends Fragment {
                 challengeList.clear();
                 for(DataSnapshot ds : snapshot.getChildren()){
                     ModelChallenge modelChallenge = ds.getValue(ModelChallenge.class);
-                    if(!modelChallenge.getChallengeTitle().equals("")){
+                    //pass userid
+                    if(modelChallenge.getUserID().equals(user.getUid())){
                         challengeList.add(modelChallenge);
                     }
-                    System.out.println(challengeList);
                     adapterChallengesCard = new AdapterChallengesCard(getActivity(), challengeList);
                     recyclerView.setAdapter(adapterChallengesCard);
                 }
