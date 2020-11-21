@@ -7,10 +7,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.example.letscompete.fragments.CompletedFragement;
-import com.example.letscompete.fragments.InfoFragment;
+import com.example.letscompete.fragments.CompletedFragment;
 import com.example.letscompete.fragments.OngoingFragment;
-import com.example.letscompete.fragments.ParticipantsFragment;
 
 public class HomeUpAdapter extends FragmentPagerAdapter {
     private Context myContext;
@@ -33,8 +31,8 @@ public class HomeUpAdapter extends FragmentPagerAdapter {
                 return ongoingFragment;
             case 1:
                 System.out.println("loading completed challenges");
-                CompletedFragement completedFragement = new CompletedFragement();
-                return completedFragement;
+                CompletedFragment completedFragment = new CompletedFragment();
+                return completedFragment;
             default:
                 return null;
         }
