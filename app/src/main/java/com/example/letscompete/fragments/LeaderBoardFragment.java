@@ -108,7 +108,7 @@ public class LeaderBoardFragment extends Fragment {
         user.setUsername("ok");
         user.setRank(1);
         user.setStat("12");
-        database.userDao().insertAll(user);
+        //database.userDao().insertAll(user);
         Button button = view.findViewById(R.id.button);
         //please change latter
         button.setOnClickListener(new View.OnClickListener() {

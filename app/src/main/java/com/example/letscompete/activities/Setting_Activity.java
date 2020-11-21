@@ -23,6 +23,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -116,7 +117,12 @@ public class Setting_Activity extends AppCompatActivity {
         */
         CustomAdapter ad = new CustomAdapter(main,sub, this);
         content.setAdapter(ad);
-        LinearLayoutManager a = new LinearLayoutManager(this);
+        LinearLayoutManager a = new LinearLayoutManager(this) {
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        };
         a.setStackFromEnd(true);
         content.setLayoutManager(a);
 
@@ -339,6 +345,31 @@ public class Setting_Activity extends AppCompatActivity {
         builder.create().show();
     }
 
+    public void promptLogout()
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Are you sure?");
+        //set layout of dialog
+        LinearLayout linearLayout = new LinearLayout(this);
+        linearLayout.setOrientation(LinearLayout.VERTICAL);
+        //linearLayout.setPadding(10,10,10,10);
+        builder.setView(linearLayout);
+        builder.setPositiveButton("yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                firebaseAuth.signOut();
+                checkUserStatus();
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                checkUserStatus();
+            }
+        });
+        builder.create().show();
+    }
+
     private void checkUserStatus() {
         //get current user
         FirebaseUser user = firebaseAuth.getCurrentUser();
@@ -348,7 +379,8 @@ public class Setting_Activity extends AppCompatActivity {
 //            mProfileTv.setText(user.getEmail());
         } else {
             // user not signed in go to main activity
-            startActivity(new Intent(this, MainActivity.class));
+            //FragmentManager manange = getSupportFragmentManager();
+            //startActivity(new Intent(this, MainActivity.class));
             finish();
         }
     }
