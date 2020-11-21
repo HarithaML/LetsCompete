@@ -3,8 +3,10 @@ package com.example.letscompete.adapters;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -77,6 +79,10 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         // contents of the view with that element
         viewHolder.getTextView().setText(localDataSet[position]);
         viewHolder.getSub().setText(desc[position]);
+        if(position == 4)
+        {
+            viewHolder.getTextView().setTextColor(Color.parseColor("#b23b3b"));
+        }
         decideOnClick(viewHolder.itemView, position);
     }
 
@@ -88,23 +94,44 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
 
     private void decideOnClick(View view, final int position)
     {
-        if(mContext instanceof Setting_Activity)
-        switch(position)
-        {
-            case 0:
-                view.setOnClickListener(view1 ->{
-                    ((Setting_Activity) mContext).setProfileOrCoverPhoto("image");
-                    ((Setting_Activity) mContext).showImagePicDialog();
-                });
-                break;
-            case 1:
-                view.setOnClickListener(view1 ->((Setting_Activity) mContext).showNamePhoneUpdateDialog("name"));
-                break;
-            case 3:
-                view.setOnClickListener(view1 -> sometext(view1));
-                break;
-            default:
-                break;
+        if(mContext instanceof Setting_Activity) {
+            switch (position) {
+                case 0:
+                    view.setOnClickListener(view1 -> {
+                        ((Setting_Activity) mContext).setProfileOrCoverPhoto("image");
+                        ((Setting_Activity) mContext).showImagePicDialog();
+                    });
+                    break;
+                case 1:
+                    view.setOnClickListener(view1 -> ((Setting_Activity) mContext).showNamePhoneUpdateDialog("name"));
+                    break;
+                case 2:
+                    //change later
+                    view.setOnClickListener(view1 -> ((Setting_Activity) mContext).showNamePhoneUpdateDialog("name"));
+                    break;
+                case 3:
+                    view.setOnClickListener(view1 -> sometext(view1));
+                    break;
+                case 4:
+                    view.setOnClickListener(view1 -> ((Setting_Activity) mContext).promptLogout());
+                    break;
+                default:
+                    break;
+            }
+            view.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+                    if(motionEvent.getAction() == MotionEvent.ACTION_DOWN)
+                    {
+                        view.setBackgroundColor(mContext.getColor(R.color.colorPrimaryVariant));
+                    }
+                    else
+                    {
+                        view.setBackgroundColor(mContext.getColor(R.color.colorSecondary));
+                    }
+                    return false;
+                }
+            });
         }
     }
     private void sometext(View view)
