@@ -127,11 +127,6 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        //todo: get joined challenges
-        //todo: get completed challenges
-        //todo: get suggested challenges
-
-
         //floating add challenge
         fab_add_challenge.setOnClickListener(new View.OnClickListener() {
 

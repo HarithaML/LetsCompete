@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.letscompete.R;
-import com.example.letscompete.adapters.AdapterChallengesCard;
+import com.example.letscompete.adapters.AdapterChallenge;
 import com.example.letscompete.models.ModelChallenge;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -23,7 +23,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.database.Query;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +34,7 @@ import java.util.List;
  */
 public class OngoingFragment extends Fragment {
     RecyclerView recyclerView;
-    AdapterChallengesCard adapterChallengesCard;
+    AdapterChallenge adapterChallenge;
     List<ModelChallenge> challengeList;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -120,8 +119,8 @@ public class OngoingFragment extends Fragment {
                     if(modelChallenge.getUserID().equals(user.getUid())){
                         challengeList.add(modelChallenge);
                     }
-                    adapterChallengesCard = new AdapterChallengesCard(getActivity(), challengeList);
-                    recyclerView.setAdapter(adapterChallengesCard);
+                    adapterChallenge = new AdapterChallenge(getActivity(), challengeList);
+                    recyclerView.setAdapter(adapterChallenge);
                 }
             }
 

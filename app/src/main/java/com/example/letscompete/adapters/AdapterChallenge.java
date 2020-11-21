@@ -1,27 +1,23 @@
 package com.example.letscompete.adapters;
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.letscompete.R;
 import com.example.letscompete.models.ModelChallenge;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class AdapterChallengesCard extends RecyclerView.Adapter<AdapterChallengesCard.MyHolder> {
+public class AdapterChallenge extends RecyclerView.Adapter<AdapterChallenge.MyHolder> {
     Context context;
     List<ModelChallenge> challengeList;
 
-    public AdapterChallengesCard(Context context, List<ModelChallenge> challengeList){
+    public AdapterChallenge(Context context, List<ModelChallenge> challengeList){
         this.context = context;
         this.challengeList = challengeList;
     }
@@ -29,13 +25,13 @@ public class AdapterChallengesCard extends RecyclerView.Adapter<AdapterChallenge
 
     @NonNull
     @Override
-    public AdapterChallengesCard.MyHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public AdapterChallenge.MyHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.row_challenges,parent,false);
-        return new AdapterChallengesCard.MyHolder(view);
+        return new AdapterChallenge.MyHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AdapterChallengesCard.MyHolder holder, int position) {
+    public void onBindViewHolder(@NonNull AdapterChallenge.MyHolder holder, int position) {
         //get data
         String userID = challengeList.get(position).getUserID();
         String challengeTitle = challengeList.get(position).getChallengeTitle();

@@ -7,15 +7,13 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.letscompete.R;
-import com.example.letscompete.adapters.AdapterChallengesCard;
+import com.example.letscompete.adapters.AdapterChallenge;
 import com.example.letscompete.models.ModelChallenge;
-import com.example.letscompete.models.ModelParticipant;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -36,7 +34,7 @@ import java.util.List;
  */
 public class CompletedFragment extends Fragment {
     RecyclerView recyclerView;
-    AdapterChallengesCard adapterChallengesCard;
+    AdapterChallenge adapterChallenge;
     List<ModelChallenge> challengeList;
 
     // TODO: Rename parameter arguments, choose names that match
