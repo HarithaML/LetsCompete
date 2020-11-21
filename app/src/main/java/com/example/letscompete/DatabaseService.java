@@ -7,11 +7,13 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
 
+import com.example.letscompete.models.ModelParticipant;
 import com.example.letscompete.models.ModelUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -21,7 +23,7 @@ public class DatabaseService extends Service {
     private final static String TAG = "MyService";
     FirebaseDatabase database;
     AppDatabase localDatabase;
-    List<ModelUser> userList;
+    List<ModelParticipant> userList;
 
     public class DatabaseServiceBinder extends Binder {
         public DatabaseService getService(){
@@ -69,30 +71,40 @@ public class DatabaseService extends Service {
     public void getDatabaseData()
     {
         Log.i(TAG, "Checking if this works");
-        DatabaseReference a = database.getReference("Users");
-        a.addListenerForSingleValueEvent(new ValueEventListener() {
+        DatabaseReference a = database.getReference("Participants");
+        Query query = a.orderByChild("challengeTitle").equalTo("");
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 userList.clear();
                 for(DataSnapshot ds:  dataSnapshot.getChildren()) {
-                    ModelUser modelUser = ds.getValue(ModelUser.class);
+                    ModelParticipant modelUser = ds.getValue(ModelParticipant.class);
                     userList.add(modelUser);
                 }
-                Log.i(TAG, "Value is: " + userList);
-                for(ModelUser a: userList)
+                Log.i(TAG, "Value is: " + userList + "\n" + userList.size());
+                for(ModelParticipant a: userList)
                 {
+                    String rank = a.getRank();
                     UserLeaderBoardStats user = new UserLeaderBoardStats();
-                    if(a.getName() != null){
-                        user.setUsername(a.getName());
+                    if(a.getUserName() != null){
+                        user.setUsername(a.getUserName());
                     }
                     else
                     {
                         user.setUsername("none");
                     }
-                    user.setStat("1");
+                    if(rank!= null && !rank.isEmpty())
+                    {
+                        user.setStat(a.getRank());
+                    }
+                    else
+                    {
+                        user.setStat("0");
+                    }
                     localDatabase.userDao().insertAll(user);
+                    //Log.i(TAG, "Value is: " + a);
                 }
                 stopSelf();
             }

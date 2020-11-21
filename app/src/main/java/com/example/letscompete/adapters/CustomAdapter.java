@@ -88,23 +88,26 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
 
     private void decideOnClick(View view, final int position)
     {
-        if(mContext instanceof Setting_Activity)
-        switch(position)
-        {
-            case 0:
-                view.setOnClickListener(view1 ->{
-                    ((Setting_Activity) mContext).setProfileOrCoverPhoto("image");
-                    ((Setting_Activity) mContext).showImagePicDialog();
-                });
-                break;
-            case 1:
-                view.setOnClickListener(view1 ->((Setting_Activity) mContext).showNamePhoneUpdateDialog("name"));
-                break;
-            case 3:
-                view.setOnClickListener(view1 -> sometext(view1));
-                break;
-            default:
-                break;
+        if(mContext instanceof Setting_Activity) {
+            switch (position) {
+                case 0:
+                    view.setOnClickListener(view1 -> {
+                        ((Setting_Activity) mContext).setProfileOrCoverPhoto("image");
+                        ((Setting_Activity) mContext).showImagePicDialog();
+                    });
+                    break;
+                case 1:
+                    view.setOnClickListener(view1 -> ((Setting_Activity) mContext).showNamePhoneUpdateDialog("name"));
+                    break;
+                case 3:
+                    view.setOnClickListener(view1 -> sometext(view1));
+                    break;
+                case 4:
+                    view.setOnClickListener(view1 -> ((Setting_Activity) mContext).promptLogout());
+                    break;
+                default:
+                    break;
+            }
         }
     }
     private void sometext(View view)
