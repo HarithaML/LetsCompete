@@ -117,7 +117,12 @@ public class Setting_Activity extends AppCompatActivity {
         */
         CustomAdapter ad = new CustomAdapter(main,sub, this);
         content.setAdapter(ad);
-        LinearLayoutManager a = new LinearLayoutManager(this);
+        LinearLayoutManager a = new LinearLayoutManager(this) {
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        };
         a.setStackFromEnd(true);
         content.setLayoutManager(a);
 
