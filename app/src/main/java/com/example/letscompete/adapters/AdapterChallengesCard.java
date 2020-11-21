@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.letscompete.R;
 import com.example.letscompete.models.ModelChallenge;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -35,29 +36,44 @@ public class AdapterChallengesCard extends RecyclerView.Adapter<AdapterChallenge
 
     @Override
     public void onBindViewHolder(@NonNull AdapterChallengesCard.MyHolder holder, int position) {
+        //get data
+        String userID = challengeList.get(position).getUserID();
+        String challengeTitle = challengeList.get(position).getChallengeTitle();
+        String challengeDescription = challengeList.get(position).getChallengeDescription();
+        String challengeType = challengeList.get(position).getChallengeType();
+        String challengeDuration = challengeList.get(position).getChallengeDuration();
+        String startdate = challengeList.get(position).getStartdate();
+        String imageName = challengeList.get(position).getImageName();
+        String imageURL = challengeList.get(position).imageURL;
+
+        //set data
+        holder.challengeTitle.setText(challengeTitle);
+        holder.challengeDescription.setText(challengeDescription);
+
+
+        //click challenge item on Home fragment
+        //todo: transfer to challenge details fragment
+        holder.itemView.setOnClickListener(v -> {});
+
 
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return challengeList.size();
     }
 
     class MyHolder extends RecyclerView.ViewHolder{
-        ImageView participantImage;
-        TextView userName, progress,role,rank,status;
+        TextView challengeTitle, challengeDescription, challengeDuration, challengeImage, challengeType, challengeStartdate;
 
-        public MyHolder(@NonNull View itemView) {
+        public MyHolder(View itemView){
             super(itemView);
-//            System.out.println(itemView.findViewById(R.id.avatar_tv));
-            //init Views
-            participantImage = itemView.findViewById(R.id.participant_image);
-            userName = itemView.findViewById(R.id.participant_name);
-            progress = itemView.findViewById(R.id.progress);
-            role = itemView.findViewById(R.id.role);
-            rank = itemView.findViewById(R.id.rank);
-            status = itemView.findViewById(R.id.status);
-
+            challengeTitle = itemView.findViewById(R.id.card_challenge_title);
+            challengeDescription = itemView.findViewById(R.id.card_challenge_description);
+            challengeDuration = itemView.findViewById(R.id.challenge_duration);
+            challengeType = itemView.findViewById(R.id.challenge_type);
+            challengeStartdate = itemView.findViewById(R.id.challenge_startDate);
+            challengeImage = itemView.findViewById(R.id.challenge_image);
 
         }
     }
