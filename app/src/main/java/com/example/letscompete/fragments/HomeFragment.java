@@ -18,7 +18,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.letscompete.activities.CreateChallengeActivity;
-import com.example.letscompete.activities.HomeUpActivity;
 import com.example.letscompete.activities.MainActivity;
 import com.example.letscompete.R;
 import com.example.letscompete.activities.TimeChallengeActivity;
@@ -100,6 +99,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
+                System.out.println("You tabed tool bar in home page" + tab.getText());
             }
 
             @Override

@@ -192,7 +192,8 @@ public class CreateChallengeActivity<storageReference> extends AppCompatActivity
                 participants.setRole(role);
                 participants.setStatus(status);
                 participants.setUserName(username);
-                participants.setUserImage(userimage.toString());
+                //Qiming commented this following setter s
+                //participants.setUserImage(userimage.toString());
                 //participants.setImageURL(imageurl1);
                 participants.setChallengeTitle(ChallengeTitle.getText().toString().trim());
                 reference.push().setValue(participants);

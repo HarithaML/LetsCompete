@@ -29,6 +29,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.letscompete.adapters.CustomAdapter;
 import com.example.letscompete.R;
+import com.example.letscompete.fragments.ProfileFragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -318,6 +319,7 @@ public class Setting_Activity extends AppCompatActivity {
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
+                                    finish();
                                     Toast.makeText(getApplicationContext(),"Updated "+key,Toast.LENGTH_SHORT).show();
 
                                 }
