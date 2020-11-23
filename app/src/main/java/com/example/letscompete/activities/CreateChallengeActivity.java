@@ -72,7 +72,7 @@ public class CreateChallengeActivity<storageReference> extends AppCompatActivity
 
     ModelChallenge modelChallenge;
     String role = "Moderator";
-    String status = "Completed";
+    String status = "Ongoing";
     String progress ="Started";
     String rank = "0";
 

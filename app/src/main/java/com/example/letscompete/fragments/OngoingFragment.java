@@ -101,15 +101,13 @@ public class OngoingFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         challengeList = new ArrayList<>();
         getAllOngoing();
-        //click card and lead to in TimeChallengeActivity
-
         return view;
     }
 
     private void getAllOngoing(){
         //retrieve challenge under current user
         //Query query = databaseReference.orderByChild("id").equalTo(user.getUid());
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Challenge");
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Participants");
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -117,15 +115,14 @@ public class OngoingFragment extends Fragment {
                 for(DataSnapshot ds : snapshot.getChildren()){
                     ModelParticipant modelParticipant = ds.getValue(ModelParticipant.class);
                     ModelChallenge modelChallenge = ds.getValue(ModelChallenge.class);
-                    //pass userid
                     if (modelParticipant.getUserUID() != null) {
-                        if (modelChallenge.getUserID().equals(user.getUid()) && modelParticipant.getStatus().equals("Ongoing")) {
+                        if (modelParticipant.getUserUID().equals(user.getUid()) && modelParticipant.getStatus().equals("Ongoing")) {
                             challengeList.add(modelChallenge);
                         }
                     }
-                    adapterChallenge = new AdapterChallenge(getActivity(), challengeList);
-                    recyclerView.setAdapter(adapterChallenge);
                 }
+                adapterChallenge = new AdapterChallenge(getActivity(), challengeList);
+                recyclerView.setAdapter(adapterChallenge);
             }
 
             @Override
