@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import com.example.letscompete.R;
 import com.example.letscompete.adapters.AdapterChallenge;
 import com.example.letscompete.models.ModelChallenge;
+import com.example.letscompete.models.ModelParticipant;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -111,13 +112,15 @@ public class CompletedFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 challengeList.clear();
                 for(DataSnapshot ds : snapshot.getChildren()){
-//                    ModelParticipant modelParticipant = ds.getValue(ModelParticipant.class);
-//                    ModelChallenge modelChallenge = ds.getValue(ModelChallenge.class);
-//                    //pass userid
-//                    if(modelParticipant.getUserUID().equals(user.getUid()) && modelParticipant.getStatus().equals("Completed")){
-//                    }
-//                    adapterChallengesCard = new AdapterChallengesCard(getActivity(), challengeList);
-//                    recyclerView.setAdapter(adapterChallengesCard);
+                    ModelParticipant modelParticipant = ds.getValue(ModelParticipant.class);
+                    ModelChallenge modelChallenge = ds.getValue(ModelChallenge.class);
+                    if (modelParticipant.getUserUID() != null){
+                        if(modelParticipant.getUserUID().equals(user.getUid()) && modelParticipant.getStatus().equals("Completed")){
+                            challengeList.add(modelChallenge);
+                        }
+                    }
+                    adapterChallenge = new AdapterChallenge(getActivity(), challengeList);
+                    recyclerView.setAdapter(adapterChallenge);
                 }
             }
 
