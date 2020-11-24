@@ -4,12 +4,22 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.letscompete.R;
+import com.example.letscompete.adapters.AdapterChallengesLeaderboard;
+import com.example.letscompete.adapters.LeaderBoardAdapter;
+import com.example.letscompete.models.ModelChallenge;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -78,5 +88,18 @@ public class ChallengeSelectionFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_challenge_selection, container, false);
     }
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        View v = getView();
+        RecyclerView content = v.findViewById(R.id.leaderboard_list2);
+        List<ModelChallenge> ok = new ArrayList<>();
+        ok.add(new ModelChallenge("yay", "yay", "a", "k", "stay", "play", "", "" ));
+        ok.add(new ModelChallenge("y1y", "yay", "a", "k", "stay", "play", "", "" ));
+        ok.add(new ModelChallenge("y2y", "yay", "a", "k", "stay", "play", "", "" ));
+        Log.i("help", ok.size() + "");
+        AdapterChallengesLeaderboard ad = new AdapterChallengesLeaderboard(ok);
+        content.setLayoutManager(new GridLayoutManager(v.getContext(), 3));
+        content.setAdapter(ad);
+    }
 }

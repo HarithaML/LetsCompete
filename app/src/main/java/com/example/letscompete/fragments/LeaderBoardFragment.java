@@ -16,13 +16,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.RelativeLayout;
 
 import com.example.letscompete.AppDatabase;
-import com.example.letscompete.DatabaseService;
+import com.example.letscompete.LeaderBoardDatabaseService;
 import com.example.letscompete.R;
 import com.example.letscompete.UserLeaderBoardStats;
-import com.example.letscompete.adapters.CustomAdapter;
 import com.example.letscompete.adapters.LeaderBoardAdapter;
 
 import java.util.ArrayList;
@@ -40,7 +38,7 @@ public class LeaderBoardFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private AppDatabase database;
-    private DatabaseService service;
+    private LeaderBoardDatabaseService service;
     private Intent sIntent;
     private boolean mBound = false;
 
@@ -50,7 +48,7 @@ public class LeaderBoardFragment extends Fragment {
         public void onServiceConnected(ComponentName className,
                                        IBinder ibinder) {
             // We've bound to LocalService, cast the IBinder and get LocalService instance
-            DatabaseService.DatabaseServiceBinder binder = (DatabaseService.DatabaseServiceBinder) ibinder;
+            LeaderBoardDatabaseService.DatabaseServiceBinder binder = (LeaderBoardDatabaseService.DatabaseServiceBinder) ibinder;
             service = binder.getService();
             mBound = true;
         }
@@ -102,7 +100,7 @@ public class LeaderBoardFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_leader_board, container, false);
-        sIntent = new Intent(view.getContext(), DatabaseService.class);
+        sIntent = new Intent(view.getContext(), LeaderBoardDatabaseService.class);
         UserLeaderBoardStats user = new UserLeaderBoardStats();
         Log.i("Help", getArguments().getString("Challenge"));
         user.setUsername("ok");
@@ -126,7 +124,7 @@ public class LeaderBoardFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        sIntent = new Intent(getView().getContext(), DatabaseService.class);
+        sIntent = new Intent(getView().getContext(), LeaderBoardDatabaseService.class);
         getActivity().bindService(sIntent, connection, Context.BIND_AUTO_CREATE);
         getActivity().startService(sIntent);
         setLeaderboardStats(getView());
