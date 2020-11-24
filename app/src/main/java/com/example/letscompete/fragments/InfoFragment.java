@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.letscompete.R;
+import com.example.letscompete.activities.TimeChallengeActivity;
 import com.example.letscompete.models.ModelChallenge;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -39,6 +40,7 @@ public class InfoFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    String challengeTitle;
 
     public InfoFragment() {
         // Required empty public constructor
@@ -65,15 +67,19 @@ public class InfoFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
+        if (getArguments() != null && getArguments().containsKey("challengeTitle")) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+            challengeTitle = getArguments().getString("challengeTitle");
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        //get challengeTitle from TimeChallengeActivity.java
+        TimeChallengeActivity timeChallengeActivity = (TimeChallengeActivity)getActivity();
+        String challengeTitle = timeChallengeActivity.getChallengeTitle();
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_info, container, false);
         mImage = view.findViewById(R.id.challenge_image);
@@ -86,13 +92,12 @@ public class InfoFragment extends Fragment {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                System.out.println("Database Reached");
+                //System.out.println("Database Reached");
                 for(DataSnapshot ds:  snapshot.getChildren()){
                     ModelChallenge modelChallenge = ds.getValue(ModelChallenge.class);
 //                    if(modelChallenge.getChallengeTitle() != null){
-                        System.out.println("yes");
-                        if(modelChallenge.getChallengeTitle().equals("test")){
-                            System.out.println(modelChallenge.getChallengeTitle());
+                        //System.out.println("yes");
+                        if(modelChallenge.getChallengeTitle().equals(challengeTitle)){
                             mTitle.setText(modelChallenge.getChallengeTitle());
                             mDescription.setText(modelChallenge.getChallengeDescription());
                             mDuration.setText(modelChallenge.getChallengeDuration());

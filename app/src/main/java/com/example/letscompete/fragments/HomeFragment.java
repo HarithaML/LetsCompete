@@ -99,7 +99,6 @@ public class HomeFragment extends Fragment {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
-                System.out.println("You tabed tool bar in home page" + tab.getText());
             }
 
             @Override

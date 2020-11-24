@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.letscompete.R;
+import com.example.letscompete.activities.TimeChallengeActivity;
 import com.example.letscompete.adapters.AdapterParticipant;
 import com.example.letscompete.adapters.AdapterUsers;
 import com.example.letscompete.models.ModelParticipant;
@@ -96,6 +97,9 @@ public class ParticipantsFragment extends Fragment {
     }
 
     private void getAllParticipants() {
+        //get challengeTitle from TimeChallengeActivity.java
+        TimeChallengeActivity timeChallengeActivity = (TimeChallengeActivity)getActivity();
+        String challengeTitle = timeChallengeActivity.getChallengeTitle();
         //get path of database named "Participants" containing users info
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Participants");
         //get all data from path
@@ -105,11 +109,9 @@ public class ParticipantsFragment extends Fragment {
                 participantList.clear();
                 for(DataSnapshot ds:  snapshot.getChildren()){
                     ModelParticipant modelParticipant = ds.getValue(ModelParticipant.class);
-
-                    //get all searched users except currently signed in user
-                    if(!modelParticipant.getChallengeTitle().equals("")){
+                    //get participants with same challengeTitle
+                    if(modelParticipant.getChallengeTitle().equals(challengeTitle)){
                         participantList.add(modelParticipant);
-
                     }
                     System.out.println(participantList);
                     //adapter

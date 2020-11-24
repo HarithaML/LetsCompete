@@ -1,6 +1,7 @@
 package com.example.letscompete.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.letscompete.R;
+import com.example.letscompete.activities.TimeChallengeActivity;
 import com.example.letscompete.models.ModelChallenge;
 
 import java.util.List;
@@ -48,8 +50,11 @@ public class AdapterChallenge extends RecyclerView.Adapter<AdapterChallenge.MyHo
 
 
         //click challenge item on Home fragment
-        //todo: transfer to challenge details fragment
-        holder.itemView.setOnClickListener(v -> {});
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, TimeChallengeActivity.class);
+            intent.putExtra("challengeTitle", challengeTitle);
+            context.startActivity(intent);
+        });
 
 
     }

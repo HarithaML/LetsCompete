@@ -23,8 +23,10 @@ import com.example.letscompete.fragments.ChallengeFragmentAdapter;
 import com.example.letscompete.fragments.HomeFragment;
 import com.example.letscompete.fragments.InfoFragment;
 import com.example.letscompete.fragments.ParticipantsFragment;
+import com.example.letscompete.models.ModelChallenge;
 import com.example.letscompete.models.ModelParticipant;
 import com.example.letscompete.models.ModelUser;
+import com.example.letscompete.notifications.APIService;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
@@ -41,25 +43,39 @@ import java.util.List;
 public class TimeChallengeActivity extends AppCompatActivity {
     ViewPager viewPager;
 
+    FirebaseAuth firebaseAuth;
+    APIService apiService;
 
+    FirebaseDatabase firebaseDatabase;
+    DatabaseReference databaseReference;
+
+    String challengeTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_time_challenge);
-         viewPager = findViewById(R.id.challenge_content);
-
+        //init views
+        viewPager = findViewById(R.id.challenge_content);
+        Intent intent = getIntent();
+        challengeTitle = intent.getStringExtra("challengeTitle");
+        System.out.println("you passed the challengeTitle to info/participants herrrrrrrrrrrrr     "+challengeTitle);
+        //init firebase
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference("Challenge");
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("Challenge Name");
+        actionBar.setTitle(challengeTitle);
         actionBar.setDisplayHomeAsUpEnabled(true);
         //info  fragment transaction
+        Bundle args = new Bundle();
+        args.putString("challengeTitle", challengeTitle);
         InfoFragment fragment1 = new InfoFragment();
+        fragment1.setArguments(args);
         FragmentTransaction ft1 = getSupportFragmentManager().beginTransaction();
         ft1.replace(R.id.challenge_content,fragment1,"");
         ft1.commit();
-
-
 
         TabLayout tabLayout = findViewById(R.id.challenge_tablayout);
         final ChallengeFragmentAdapter adapter = new ChallengeFragmentAdapter(this, getSupportFragmentManager(), tabLayout.getTabCount());
@@ -84,6 +100,10 @@ public class TimeChallengeActivity extends AppCompatActivity {
 
 
 
+    }
+
+    public String getChallengeTitle(){
+        return challengeTitle;
     }
 
 
