@@ -1,5 +1,6 @@
 package com.example.letscompete.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.letscompete.R;
+import com.example.letscompete.activities.DashBoardActivity;
+import com.example.letscompete.activities.MainActivity;
 import com.example.letscompete.activities.TimeChallengeActivity;
 import com.example.letscompete.models.ModelChallenge;
 import com.example.letscompete.models.ModelParticipant;
@@ -22,6 +25,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
@@ -94,7 +98,8 @@ public class InfoFragment extends Fragment {
         TimeChallengeActivity timeChallengeActivity = (TimeChallengeActivity)getActivity();
         challengeTitle = timeChallengeActivity.getChallengeTitle();
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_info, container, false);
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_info, null);
+        //View view = inflater.inflate(R.layout.fragment_info, container, false);
         mImage = view.findViewById(R.id.challenge_image);
         mTitle = view.findViewById(R.id.challenge_title);
         mDescription = view.findViewById(R.id.challenge_description);
@@ -137,17 +142,53 @@ public class InfoFragment extends Fragment {
             }
         });
 
+
+        //Button set
         //completed challenge button
         Button buttonComplete = view.findViewById(R.id.complete_challenge);
-        buttonComplete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                updateComplete();
-            }
-        });
+        buttonComplete.setOnClickListener(new ButtonListener());
+
+        //delete challenge button
+        Button buttonDelete = (Button) view.findViewById(R.id.delete_btn);
+        buttonDelete.setOnClickListener(new ButtonListener());
+//        buttonDelete.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                System.out.println("you clicked         ");
+//                //updateDelete();
+//            }
+//        });
+
+        //leave challenge button
+        Button buttonLeave = view.findViewById(R.id.leave_btn);
+        buttonLeave.setOnClickListener(new ButtonListener());
+//        buttonDelete.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //updateLeave();
+//            }
+//        });
 
 
         return view;
+    }
+
+    private class ButtonListener implements View.OnClickListener{
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()){
+                case R.id.complete_challenge:
+                    updateComplete();
+                    break;
+                    case R.id.delete_btn:
+                        updateDelete();
+                        break;
+                case R.id.leave_btn:
+                    updateLeave();
+                    break;
+            }
+
+        }
     }
 
     private void updateComplete() {
@@ -161,6 +202,53 @@ public class InfoFragment extends Fragment {
                         String key = ds.getKey();
                         String newStatus = "Completed";
                         ref.child(key).child("status").setValue(newStatus);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    //remove row from participants table
+    // only Monitor can proceed this button
+    private void updateDelete() {
+        DatabaseReference refP = FirebaseDatabase.getInstance().getReference("Participants");
+        Query queryP = refP.orderByChild("userUID").equalTo(user.getUid());
+        queryP.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot ds : snapshot.getChildren()){
+                    ModelParticipant modelParticipant = ds.getValue(ModelParticipant.class);
+                    if(modelParticipant.getChallengeTitle().equals(challengeTitle) && modelParticipant.getRole().equals("Moderator")) {
+                        ds.getRef().removeValue();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    //remove row from participants table
+    // only Participants can proceed this button
+    private void updateLeave() {
+        DatabaseReference refP = FirebaseDatabase.getInstance().getReference("Participants");
+        Query queryP = refP.orderByChild("userUID").equalTo(user.getUid());
+        queryP.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot ds : snapshot.getChildren()){
+                    ModelParticipant modelParticipant = ds.getValue(ModelParticipant.class);
+                    if(modelParticipant.getChallengeTitle().equals(challengeTitle) && modelParticipant.getRole().equals("Participant")) {
+                        System.out.println("you clicked         "+modelParticipant.challengeTitle);
+                        ds.getRef().removeValue();
                     }
                 }
             }
