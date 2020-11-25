@@ -30,10 +30,7 @@ import android.widget.VideoView;
 
 import com.example.letscompete.R;
 import com.example.letscompete.adapters.AdapterParticipant;
-import com.example.letscompete.adapters.AdapterVideo;
 import com.example.letscompete.models.ModelParticipant;
-import com.example.letscompete.models.ModelUser;
-import com.example.letscompete.models.ModelVideo;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -98,11 +95,7 @@ public class CompleteChallengeActivity extends AppCompatActivity {
             //set email of logged in user
 //            mProfileTv.setText(user.getEmail());
             userUID = user.getUid();
-
             //save uid of currently signed in user in shared preferences
-
-        }else{
-            System.out.println("User null");
         }
 
         //init views
@@ -112,6 +105,7 @@ public class CompleteChallengeActivity extends AppCompatActivity {
         pickVideoFab = findViewById(R.id.pickVideoFab);
         messageWindow = findViewById(R.id.messageWidow);
         challengeComplete = findViewById(R.id.confirmCompletion);
+        changeButtonVisibility();
 
         //init action bar
         actionBar = getSupportActionBar();
@@ -171,7 +165,28 @@ public class CompleteChallengeActivity extends AppCompatActivity {
 
     }
 
+    private void changeButtonVisibility() {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("/Participants");
+        Query complete = ref.orderByChild("userUID").equalTo(userUID);
+        complete.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot ds:  snapshot.getChildren()) {
+                    ModelParticipant modelParticipant = ds.getValue(ModelParticipant.class);
+                    if(modelParticipant.getStatus().equals("Completed") && modelParticipant.getChallengeTitle().equals(challengeTitle)){
+                        challengeComplete.setVisibility(View.GONE);
+                    }else{
+                        challengeComplete.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
 
     private void uploadVideoFirebase() {
         ///timestamp
@@ -344,5 +359,4 @@ public class CompleteChallengeActivity extends AppCompatActivity {
         onBackPressed();
         return super.onSupportNavigateUp();
     }
-
 }

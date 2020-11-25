@@ -6,10 +6,9 @@
     android:layout_height="match_parent"
     android:background="#F1EDED"
     tools:context=".fragments.ProfileFragment">
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+
         <RelativeLayout
+            android:id="@+id/profile_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <!--CoverPhoto-->
@@ -70,20 +69,36 @@
 
                 </LinearLayout>
             </LinearLayout>
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_below="@+id/profile_info"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/videosRv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="0dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/row_video"/>
+
+            <!--Floating ActionButton-->
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:src="@drawable/ic_edit_black"
+                app:backgroundTint="@color/colorPrimary" />
+
         </RelativeLayout>
 
-    </ScrollView>
-    <!--Floating ActionButton-->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        android:src="@drawable/ic_edit_black"
-        app:backgroundTint="@color/colorPrimary" />
+
+
 </RelativeLayout>

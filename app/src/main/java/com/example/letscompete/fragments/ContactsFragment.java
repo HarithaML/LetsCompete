@@ -127,7 +127,6 @@ public class ContactsFragment extends Fragment {
                     if(!modelUser.getUid().equals(fuser.getUid())){
                         userList.add(modelUser);
                     }
-                    System.out.println(userList);
                     //adapter
                     adapterUsers = new AdapterUsers(getActivity(),userList);
                     //set adapter to recycler view
@@ -163,7 +162,6 @@ public class ContactsFragment extends Fragment {
                         }
 
                     }
-                    System.out.println(userList);
                     //adapter
                     adapterUsers = new AdapterUsers(getActivity(),userList);
                     adapterUsers.notifyDataSetChanged();
