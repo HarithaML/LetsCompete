@@ -17,18 +17,21 @@
             app:tabTextColor="@color/black"
             app:tabIndicatorColor="@color/colorPrimary"
             app:tabSelectedTextColor="@color/colorPrimary">
-
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/infoTab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Info" />
-
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/participantsTab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Participants" />
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/videosTab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Videos" />
 
         </com.google.android.material.tabs.TabLayout>
     </com.google.android.material.appbar.AppBarLayout>

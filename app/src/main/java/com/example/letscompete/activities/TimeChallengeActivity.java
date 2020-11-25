@@ -1,47 +1,27 @@
 package com.example.letscompete.activities;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.Toolbar;
 
 import com.example.letscompete.R;
-import com.example.letscompete.adapters.AdapterParticipant;
-import com.example.letscompete.adapters.AdapterUsers;
-import com.example.letscompete.fragments.ChallengeFragmentAdapter;
-import com.example.letscompete.fragments.HomeFragment;
+import com.example.letscompete.adapters.ChallengeFragmentAdapter;
 import com.example.letscompete.fragments.InfoFragment;
-import com.example.letscompete.fragments.ParticipantsFragment;
-import com.example.letscompete.models.ModelChallenge;
-import com.example.letscompete.models.ModelParticipant;
-import com.example.letscompete.models.ModelUser;
 import com.example.letscompete.notifications.APIService;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class TimeChallengeActivity extends AppCompatActivity {
     ViewPager viewPager;
+    String challengeTitle;
 
     FirebaseAuth firebaseAuth;
     APIService apiService;
@@ -49,21 +29,17 @@ public class TimeChallengeActivity extends AppCompatActivity {
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
 
-    String challengeTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_time_challenge);
-        //init views
-        viewPager = findViewById(R.id.challenge_content);
+         viewPager = findViewById(R.id.challenge_content);
+        //challengeTitle
         Intent intent = getIntent();
+
         challengeTitle = intent.getStringExtra("challengeTitle");
-        System.out.println("you passed the challengeTitle to info/participants herrrrrrrrrrrrr     "+challengeTitle);
-        //init firebase
-        firebaseAuth = FirebaseAuth.getInstance();
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference("Challenge");
+
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(challengeTitle);
@@ -72,13 +48,20 @@ public class TimeChallengeActivity extends AppCompatActivity {
         Bundle args = new Bundle();
         args.putString("challengeTitle", challengeTitle);
         InfoFragment fragment1 = new InfoFragment();
-        fragment1.setArguments(args);
+        Bundle arguments = new Bundle();
+        arguments.putString("challengeTitle",challengeTitle);
+        fragment1.setArguments(arguments);
         FragmentTransaction ft1 = getSupportFragmentManager().beginTransaction();
         ft1.replace(R.id.challenge_content,fragment1,"");
         ft1.commit();
 
+
+
+
+
         TabLayout tabLayout = findViewById(R.id.challenge_tablayout);
-        final ChallengeFragmentAdapter adapter = new ChallengeFragmentAdapter(this, getSupportFragmentManager(), tabLayout.getTabCount());
+        final ChallengeFragmentAdapter adapter = new ChallengeFragmentAdapter(this, getSupportFragmentManager(), tabLayout.getTabCount(),challengeTitle);
+
         viewPager.setAdapter(adapter);
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {

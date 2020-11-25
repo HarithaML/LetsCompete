@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.CompleteChallengeActivity">
+
+    <!--Video Title-->
+    <EditText
+        android:id="@+id/titleEt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorSecondary"
+        android:padding="10dp"
+        android:layout_margin="10dp"
+        android:hint="Enter Description"
+        android:inputType="textPersonName|textCapSentences"
+        android:textColor="@color/black"/>
+    <!--Video-->
+    <VideoView
+        android:id="@+id/videoView"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_below="@id/titleEt"
+        android:layout_margin="10dp"/>
+    <!--Button: pick video-->
+    <Button
+        android:id="@+id/uploadVideoButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/videoView"
+        android:layout_marginTop="5dp"
+        android:background="@color/colorPrimary"
+        android:layout_margin="10dp"
+        android:text = "Upload Video"
+        android:textColor="@color/white"/>
+    <TextView
+        android:id="@+id/messageWidow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/uploadVideoButton"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:text = ""/>
+    <TextView
+        android:id="@+id/challengeDuration"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/messageWidow"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:text = ""/>
+    <Button
+        android:id="@+id/confirmCompletion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/challengeDuration"
+        android:layout_marginTop="50dp"
+        android:background="@color/colorPrimary"
+        android:layout_margin="10dp"
+        android:text = "Confirm Challenge Completion"
+        android:textColor="@color/white"/>
+    <!--Pick Video-->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/pickVideoFab"
+        android:layout_margin="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_add_white"
+        android:layout_alignParentBottom="true"
+        android:backgroundTint="@color/colorPrimary"
+        android:layout_alignParentEnd="true"/>
+
+
+</RelativeLayout>

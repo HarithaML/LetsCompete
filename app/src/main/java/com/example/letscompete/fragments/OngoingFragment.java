@@ -1,5 +1,6 @@
 package com.example.letscompete.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,8 +11,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.letscompete.R;
+import com.example.letscompete.activities.TimeChallengeActivity;
 import com.example.letscompete.adapters.AdapterChallengesCard;
 import com.example.letscompete.models.ModelChallenge;
 import com.example.letscompete.models.ModelParticipant;
@@ -38,6 +43,7 @@ public class OngoingFragment extends Fragment {
     AdapterChallengesCard adapterChallengesCard;
     String titleKey;
     List<ModelChallenge> challengeList;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -101,7 +107,11 @@ public class OngoingFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         challengeList = new ArrayList<>();
+
+
         getAllOngoing();
+
+
         return view;
     }
 
