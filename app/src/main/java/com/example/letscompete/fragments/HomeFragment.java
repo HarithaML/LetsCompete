@@ -18,7 +18,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.letscompete.activities.CreateChallengeActivity;
-import com.example.letscompete.activities.HomeUpActivity;
 import com.example.letscompete.activities.MainActivity;
 import com.example.letscompete.R;
 import com.example.letscompete.activities.TimeChallengeActivity;
@@ -118,11 +117,6 @@ public class HomeFragment extends Fragment {
         firebaseAuth = FirebaseAuth.getInstance();
         //init views
         fab_add_challenge = view.findViewById(R.id.fab_add_challenge);
-
-        //todo: get joined challenges
-        //todo: get completed challenges
-        //todo: get suggested challenges
-
 
         //floating add challenge
         fab_add_challenge.setOnClickListener(new View.OnClickListener() {

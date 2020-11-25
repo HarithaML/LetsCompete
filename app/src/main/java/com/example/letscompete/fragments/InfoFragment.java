@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.letscompete.activities.CompleteChallengeActivity;
 import com.example.letscompete.R;
+import com.example.letscompete.activities.TimeChallengeActivity;
 import com.example.letscompete.activities.DashBoardActivity;
 import com.example.letscompete.models.ModelChallenge;
 import com.example.letscompete.models.ModelParticipant;
@@ -83,6 +84,9 @@ public class InfoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        //get challengeTitle from TimeChallengeActivity.java
+        TimeChallengeActivity timeChallengeActivity = (TimeChallengeActivity)getActivity();
+        String challengeTitle = timeChallengeActivity.getChallengeTitle();
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_info, container, false);
@@ -112,7 +116,7 @@ public class InfoFragment extends Fragment {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                System.out.println("Database Reached");
+                //System.out.println("Database Reached");
                 for(DataSnapshot ds:  snapshot.getChildren()){
                     ModelChallenge modelChallenge = ds.getValue(ModelChallenge.class);
 //                    if(modelChallenge.getChallengeTitle() != null){

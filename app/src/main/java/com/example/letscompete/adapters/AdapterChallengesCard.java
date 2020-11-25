@@ -1,6 +1,5 @@
 package com.example.letscompete.adapters;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -15,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.letscompete.R;
 import com.example.letscompete.activities.TimeChallengeActivity;
 import com.example.letscompete.models.ModelChallenge;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -42,20 +40,27 @@ public class AdapterChallengesCard extends RecyclerView.Adapter<AdapterChallenge
         String userID = challengeList.get(position).getUserID();
         String challengeTitle = challengeList.get(position).getChallengeTitle();
         String challengeDescription = challengeList.get(position).getChallengeDescription();
-        String challengeType = challengeList.get(position).getChallengeType();
-        String challengeDuration = challengeList.get(position).getChallengeDuration();
-        String startdate = challengeList.get(position).getStartdate();
-        String imageName = challengeList.get(position).getImageName();
-        String imageURL = challengeList.get(position).imageURL;
+//        String challengeType = challengeList.get(position).getChallengeType();
+//        String challengeDuration = challengeList.get(position).getChallengeDuration();
+//        String startdate = challengeList.get(position).getStartdate();
+//        String imageName = challengeList.get(position).getImageName();
+//        String imageURL = challengeList.get(position).imageURL;
 
         //set data
         holder.challengeTitle.setText(challengeTitle);
         holder.challengeDescription.setText(challengeDescription);
+//        holder.challengeType.setText(challengeType);
+//        holder.challengeDuration.setText(challengeDuration);
+//        holder.challengeStartdate.setText(startdate);
+//        holder.challengeImage.setText(imageName);
 
 
         //click challenge item on Home fragment
-        //todo: transfer to challenge details fragment
-        holder.itemView.setOnClickListener(v -> {});
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, TimeChallengeActivity.class);
+            intent.putExtra("challengeTitle", challengeTitle);
+            context.startActivity(intent);
+        });
 
 
     }
