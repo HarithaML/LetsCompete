@@ -11,7 +11,6 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 import com.example.letscompete.R;
 import com.example.letscompete.adapters.HomeUpAdapter;
-import com.example.letscompete.fragments.ChallengeFragmentAdapter;
 import com.example.letscompete.fragments.OngoingFragment;
 import com.google.android.material.tabs.TabLayout;
 

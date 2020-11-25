@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.provider.MediaStore;
 import android.text.TextUtils;
@@ -31,6 +32,8 @@ import android.widget.Toast;
 import com.example.letscompete.activities.MainActivity;
 import com.example.letscompete.R;
 import com.example.letscompete.activities.Setting_Activity;
+import com.example.letscompete.adapters.AdapterVideo;
+import com.example.letscompete.models.ModelVideo;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -48,6 +51,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -95,6 +99,11 @@ public class ProfileFragment extends Fragment {
     ImageView avatarTv,coverTv;
     TextView name_tv, email_tv, phone_tv;
     FloatingActionButton fab;
+
+    //Videos
+    private ArrayList<ModelVideo> videoArrayList;
+    private AdapterVideo adapterVideo;
+    private RecyclerView videosRv;
 
 
 
@@ -209,9 +218,48 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+
+        //videos
+        videosRv = view.findViewById(R.id.videosRv);
+        loadVideosFromFireBase();
+
         // Inflate the layout for this fragment
         return view;
     }
+
+    private void loadVideosFromFireBase() {
+        videoArrayList = new ArrayList<>();
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("ChallengeVideos");
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot ds: snapshot.getChildren()){
+                    ModelVideo modelVideo = ds.getValue(ModelVideo.class);
+                    if(modelVideo.getUuid().equals(user.getUid())){
+                        videoArrayList.add(modelVideo);
+                        adapterVideo = new AdapterVideo(getActivity(),videoArrayList);
+                        videosRv.setAdapter(adapterVideo);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+//        ModelVideo modelVideo = new ModelVideo();
+//        modelVideo.setChallengeTitle("Test1");
+//        modelVideo.setVideoUrl("https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4");
+//        videoArrayList.add(modelVideo);
+//        ModelVideo modelVideo1 = new ModelVideo();
+//        modelVideo1.setChallengeTitle("Test2");
+//        modelVideo1.setVideoUrl("https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4");
+//        videoArrayList.add(modelVideo1);
+//        adapterVideo = new AdapterVideo(getActivity(),videoArrayList);
+//        videosRv.setAdapter(adapterVideo);
+    }
+
     private boolean checkStoragePermission(){
         return ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)==(PackageManager.PERMISSION_GRANTED);
     }
