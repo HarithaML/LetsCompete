@@ -2,13 +2,13 @@ package com.example.letscompete;
 
 import android.app.Service;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
 
 import com.example.letscompete.models.ModelParticipant;
-import com.example.letscompete.models.ModelUser;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -19,21 +19,22 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DatabaseService extends Service {
-    private final static String TAG = "MyService";
+public class UserLeaderBoardDatabaseService extends Service {
+    private final static String TAG = "UserLeaderBoardDatabaseService";
     FirebaseDatabase database;
+    FirebaseUser user;
     AppDatabase localDatabase;
     List<ModelParticipant> userList;
 
     public class DatabaseServiceBinder extends Binder {
-        public DatabaseService getService(){
-            return DatabaseService.this;
+        public UserLeaderBoardDatabaseService getService(){
+            return UserLeaderBoardDatabaseService.this;
         }
     }
 
     private final IBinder myBinder = new DatabaseServiceBinder();
 
-    public DatabaseService() {
+    public UserLeaderBoardDatabaseService() {
     }
 
     @Override
@@ -72,8 +73,9 @@ public class DatabaseService extends Service {
     {
         Log.i(TAG, "Checking if this works");
         DatabaseReference a = database.getReference("Participants");
-        Query query = a.orderByChild("challengeTitle").equalTo("");
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        Query query = a.orderByChild("userUID").equalTo(user.getUid());
+        query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
@@ -86,27 +88,15 @@ public class DatabaseService extends Service {
                 Log.i(TAG, "Value is: " + userList + "\n" + userList.size());
                 for(ModelParticipant a: userList)
                 {
-                    String rank = a.getRank();
-                    UserLeaderBoardStats user = new UserLeaderBoardStats();
-                    if(a.getUserName() != null){
-                        user.setUsername(a.getUserName());
+                    String challengeTitle = a.getChallengeTitle();
+                    UserLeaderBoardChallenges user = new UserLeaderBoardChallenges();
+                    if(challengeTitle != null){
+                        user.setChallengename(challengeTitle);
+                        Log.i(TAG, "Got data " + challengeTitle);
                     }
-                    else
-                    {
-                        user.setUsername("none");
-                    }
-                    if(rank!= null && !rank.isEmpty())
-                    {
-                        user.setStat(a.getRank());
-                    }
-                    else
-                    {
-                        user.setStat("0");
-                    }
-                    localDatabase.userDao().insertAll(user);
+                    localDatabase.leaderDao().insertAll(user);
                     //Log.i(TAG, "Value is: " + a);
                 }
-                stopSelf();
             }
 
             @Override

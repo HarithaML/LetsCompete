@@ -1,8 +1,12 @@
 package com.example.letscompete.activities;
 
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -11,6 +15,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.letscompete.LeaderBoardDatabaseService;
+import com.example.letscompete.UserLeaderBoardDatabaseService;
 import com.example.letscompete.fragments.ChallengeSelectionFragment;
 import com.example.letscompete.fragments.ChatListFragment;
 import com.example.letscompete.fragments.ContactsFragment;
@@ -29,10 +35,29 @@ import com.google.firebase.iid.FirebaseInstanceId;
 public class DashBoardActivity extends AppCompatActivity
     implements ChallengeSelectionFragment.OnChallengeSelectionListener {
     // firebase auth
+    private UserLeaderBoardDatabaseService service;
+    private Intent sIntent;
     FirebaseAuth firebaseAuth;
     ActionBar actionBar;
     String mUID;
+    private boolean mBound;
 
+    private ServiceConnection connection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName className,
+                                       IBinder ibinder) {
+            // We've bound to LocalService, cast the IBinder and get LocalService instance
+            UserLeaderBoardDatabaseService.DatabaseServiceBinder binder = (UserLeaderBoardDatabaseService.DatabaseServiceBinder) ibinder;
+            service = binder.getService();
+            mBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+            mBound = false;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +92,16 @@ public class DashBoardActivity extends AppCompatActivity
     protected void onResume() {
         checkUserStatus();
         super.onResume();
+        sIntent = new Intent(this, UserLeaderBoardDatabaseService.class);
+        bindService(sIntent, connection, Context.BIND_AUTO_CREATE);
+        startService(sIntent);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        stopService(sIntent);
+        unbindService(connection);
     }
 
     public void updateToken(String token){
@@ -105,7 +140,8 @@ public class DashBoardActivity extends AppCompatActivity
                             return true;
                         case R.id.nav_leaderBoard:
                             actionBar.setTitle("LeaderBoard");
-                            LeaderBoardFragment fragment5 = new LeaderBoardFragment();
+                            //LeaderBoardFragment fragment5 = new LeaderBoardFragment();
+                            ChallengeSelectionFragment fragment5 = new ChallengeSelectionFragment();
                             Bundle args = new Bundle();
                             args.putString("Challenge", "Other");
                             fragment5.setArguments(args);
@@ -163,6 +199,14 @@ public class DashBoardActivity extends AppCompatActivity
 
     public void onChallengeSelected(String name)
     {
-
+        actionBar.setTitle("LeaderBoard");
+        LeaderBoardFragment fragment5 = new LeaderBoardFragment();
+        //ChallengeSelectionFragment fragment5 = new ChallengeSelectionFragment();
+        Bundle args = new Bundle();
+        args.putString("Challenge", name);
+        fragment5.setArguments(args);
+        FragmentTransaction ft5 = getSupportFragmentManager().beginTransaction();
+        ft5.replace(R.id.content,fragment5,"");
+        ft5.commit();
     }
 }

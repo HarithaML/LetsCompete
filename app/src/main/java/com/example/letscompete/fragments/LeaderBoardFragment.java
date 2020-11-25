@@ -7,6 +7,8 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,13 +18,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.RelativeLayout;
 
 import com.example.letscompete.AppDatabase;
-import com.example.letscompete.DatabaseService;
+import com.example.letscompete.LeaderBoardDatabaseService;
 import com.example.letscompete.R;
 import com.example.letscompete.UserLeaderBoardStats;
-import com.example.letscompete.adapters.CustomAdapter;
 import com.example.letscompete.adapters.LeaderBoardAdapter;
 
 import java.util.ArrayList;
@@ -40,7 +40,7 @@ public class LeaderBoardFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private AppDatabase database;
-    private DatabaseService service;
+    private LeaderBoardDatabaseService service;
     private Intent sIntent;
     private boolean mBound = false;
 
@@ -50,7 +50,7 @@ public class LeaderBoardFragment extends Fragment {
         public void onServiceConnected(ComponentName className,
                                        IBinder ibinder) {
             // We've bound to LocalService, cast the IBinder and get LocalService instance
-            DatabaseService.DatabaseServiceBinder binder = (DatabaseService.DatabaseServiceBinder) ibinder;
+            LeaderBoardDatabaseService.DatabaseServiceBinder binder = (LeaderBoardDatabaseService.DatabaseServiceBinder) ibinder;
             service = binder.getService();
             mBound = true;
         }
@@ -102,7 +102,8 @@ public class LeaderBoardFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_leader_board, container, false);
-        sIntent = new Intent(view.getContext(), DatabaseService.class);
+        sIntent = new Intent(view.getContext(), LeaderBoardDatabaseService.class);
+        sIntent.putExtra("Challenge", getArguments().getString("Challenge"));
         UserLeaderBoardStats user = new UserLeaderBoardStats();
         Log.i("Help", getArguments().getString("Challenge"));
         user.setUsername("ok");
@@ -110,6 +111,7 @@ public class LeaderBoardFragment extends Fragment {
         user.setStat("12");
         //database.userDao().insertAll(user);
         Button button = view.findViewById(R.id.button);
+        Button button2 = view.findViewById(R.id.change_challenge_btn);
         //please change latter
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,6 +121,13 @@ public class LeaderBoardFragment extends Fragment {
             }
         });
         // Inflate the layout for this fragment
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i("touched", "yay");
+                changeFrags();
+            }
+        });
         //setLeaderboardStats(view);
         return view;
     }
@@ -126,7 +135,7 @@ public class LeaderBoardFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        sIntent = new Intent(getView().getContext(), DatabaseService.class);
+        sIntent = new Intent(getView().getContext(), LeaderBoardDatabaseService.class);
         getActivity().bindService(sIntent, connection, Context.BIND_AUTO_CREATE);
         getActivity().startService(sIntent);
         setLeaderboardStats(getView());
@@ -146,18 +155,28 @@ public class LeaderBoardFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
+        //database.userDao().deleteAll();
         getActivity().stopService(sIntent);
         getActivity().unbindService(connection);
-        database.clearAllTables();
+        //database.clearAllTables();
     }
 
     private void touch()
     {
         if(mBound)
         {
-            service.getDatabaseData();
+            service.getDatabaseData(getArguments().getString("Challenge"));
             setLeaderboardStats(getView());
         }
+    }
+
+    private void changeFrags()
+    {
+        FragmentTransaction fm = getFragmentManager().beginTransaction();
+        ChallengeSelectionFragment fragment5 = new ChallengeSelectionFragment();
+        fm.replace(R.id.content,fragment5,"");
+        fm.commit();
+
     }
 
 }
