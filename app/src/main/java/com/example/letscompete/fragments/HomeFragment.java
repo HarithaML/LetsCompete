@@ -118,14 +118,6 @@ public class HomeFragment extends Fragment {
         firebaseAuth = FirebaseAuth.getInstance();
         //init views
         fab_add_challenge = view.findViewById(R.id.fab_add_challenge);
-        Button button = (Button) view.findViewById(R.id.test_btn);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), TimeChallengeActivity.class);
-                startActivity(intent);
-            }
-        });
 
         //todo: get joined challenges
         //todo: get completed challenges

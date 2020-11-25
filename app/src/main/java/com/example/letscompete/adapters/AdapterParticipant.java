@@ -54,6 +54,7 @@ public class AdapterParticipant extends RecyclerView.Adapter<AdapterParticipant.
         holder.progress.setText(progress);
         holder.role.setText(role);
         holder.rank.setText(rank);
+        holder.status.setText(status);
         try{
             Picasso.get().load(userImage)
                     .placeholder(R.drawable.ic_default_img_black)

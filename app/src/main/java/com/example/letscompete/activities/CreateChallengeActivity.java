@@ -1,5 +1,6 @@
 package com.example.letscompete.activities;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
@@ -9,6 +10,8 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -84,6 +87,9 @@ public class CreateChallengeActivity<storageReference> extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_createchallenge);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("Create Challenge");
+        actionBar.setDisplayHomeAsUpEnabled(true);
         mStorage = FirebaseStorage.getInstance().getReference();
         ChallengeTitle = (EditText) findViewById(R.id.challengetitle);
         ChallengeDuration = (EditText) findViewById(R.id.challengeduration);
@@ -270,5 +276,20 @@ public class CreateChallengeActivity<storageReference> extends AppCompatActivity
         }
 
     }
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                startActivity(new Intent(CreateChallengeActivity.this, DashBoardActivity.class));
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return true;
+    }
+
+
 }
 
