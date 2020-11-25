@@ -52,7 +52,9 @@ public class LeaderBoardDatabaseService extends Service {
             @Override
             public void run() {
                 Log.i(TAG, "Inside run()");
-                getDatabaseData();
+                if(intent!= null) {
+                    getDatabaseData(intent.getStringExtra("Challenge"));
+                }
             }
         };
         Thread t = new Thread(a);
@@ -66,11 +68,11 @@ public class LeaderBoardDatabaseService extends Service {
         super.onDestroy();
     }
 
-    public void getDatabaseData()
+    public void getDatabaseData(String name)
     {
         Log.i(TAG, "Checking if this works");
         DatabaseReference a = database.getReference("Participants");
-        Query query = a.orderByChild("challengeTitle").equalTo("");
+        Query query = a.orderByChild("challengeTitle").equalTo(name);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

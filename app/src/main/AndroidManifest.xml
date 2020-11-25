@@ -23,7 +23,11 @@
         <service
             android:name=".LeaderBoardDatabaseService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true"/>
+        <service
+            android:name=".UserLeaderBoardDatabaseService"
+            android:enabled="true"
+            android:exported="true"/>
         <activity
             android:name=".activities.Setting_Activity"
             android:label="@string/title_activity_setting_" />

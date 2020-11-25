@@ -92,6 +92,7 @@ public class UserLeaderBoardDatabaseService extends Service {
                     UserLeaderBoardChallenges user = new UserLeaderBoardChallenges();
                     if(challengeTitle != null){
                         user.setChallengename(challengeTitle);
+                        Log.i(TAG, "Got data " + challengeTitle);
                     }
                     localDatabase.leaderDao().insertAll(user);
                     //Log.i(TAG, "Value is: " + a);

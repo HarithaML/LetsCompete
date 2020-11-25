@@ -13,7 +13,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.letscompete.AppDatabase;
 import com.example.letscompete.R;
+import com.example.letscompete.UserLeaderBoardChallenges;
+import com.example.letscompete.UserLeaderBoardStats;
 import com.example.letscompete.adapters.AdapterChallengesLeaderboard;
 import com.example.letscompete.adapters.LeaderBoardAdapter;
 import com.example.letscompete.models.ModelChallenge;
@@ -32,6 +35,7 @@ public class ChallengeSelectionFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private AppDatabase database;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -91,15 +95,23 @@ public class ChallengeSelectionFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        database = AppDatabase.getInstance(getActivity());
         View v = getView();
         RecyclerView content = v.findViewById(R.id.leaderboard_list2);
-        List<ModelChallenge> ok = new ArrayList<>();
-        ok.add(new ModelChallenge("yay", "yay", "a", "k", "stay", "play", "", "" ));
-        ok.add(new ModelChallenge("y1y", "yay", "a", "k", "stay", "play", "", "" ));
-        ok.add(new ModelChallenge("y2y", "yay", "a", "k", "stay", "play", "", "" ));
+        List<UserLeaderBoardChallenges> ok = new ArrayList<>();
+        UserLeaderBoardChallenges u = new UserLeaderBoardChallenges();
+        u.setChallengename("");
+        ok.add(u);
+        ok.addAll(database.leaderDao().getAll());
         Log.i("help", ok.size() + "");
-        AdapterChallengesLeaderboard ad = new AdapterChallengesLeaderboard(ok);
+        AdapterChallengesLeaderboard ad = new AdapterChallengesLeaderboard(ok, getActivity());
         content.setLayoutManager(new GridLayoutManager(v.getContext(), 3));
         content.setAdapter(ad);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        database.close();
     }
 }
