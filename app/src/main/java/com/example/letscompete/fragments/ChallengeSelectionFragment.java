@@ -100,7 +100,7 @@ public class ChallengeSelectionFragment extends Fragment {
         RecyclerView content = v.findViewById(R.id.leaderboard_list2);
         List<UserLeaderBoardChallenges> ok = new ArrayList<>();
         UserLeaderBoardChallenges u = new UserLeaderBoardChallenges();
-        u.setChallengename("");
+        u.setChallengename("Cooking Challenge");
         ok.add(u);
         ok.addAll(database.leaderDao().getAll());
         Log.i("help", ok.size() + "");
