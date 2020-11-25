@@ -42,8 +42,7 @@ public class ParticipantsFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private String challengeTitle;
 
     public ParticipantsFragment() {
         // Required empty public constructor
@@ -53,16 +52,14 @@ public class ParticipantsFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
+     * @param challengeTitle Parameter 1.
      * @return A new instance of fragment ParticipantsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ParticipantsFragment newInstance(String param1, String param2) {
+    public static ParticipantsFragment newInstance(String challengeTitle) {
         ParticipantsFragment fragment = new ParticipantsFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString("challengeTitle", challengeTitle);
         fragment.setArguments(args);
         return fragment;
     }
@@ -71,8 +68,7 @@ public class ParticipantsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            challengeTitle = getArguments().getString("challengeTitle");
         }
     }
 
@@ -105,13 +101,11 @@ public class ParticipantsFragment extends Fragment {
                 participantList.clear();
                 for(DataSnapshot ds:  snapshot.getChildren()){
                     ModelParticipant modelParticipant = ds.getValue(ModelParticipant.class);
-
                     //get all searched users except currently signed in user
-                    if(!modelParticipant.getChallengeTitle().equals("")){
+                    if(modelParticipant.getChallengeTitle().equals(challengeTitle)){
                         participantList.add(modelParticipant);
 
                     }
-                    System.out.println(participantList);
                     //adapter
                     adapterParticipant = new AdapterParticipant(getActivity(), participantList);
                     adapterParticipant.notifyDataSetChanged();
