@@ -75,7 +75,7 @@ public class CreateChallengeActivity<storageReference> extends AppCompatActivity
 
     ModelChallenge modelChallenge;
     String role = "Moderator";
-    String status = "Completed";
+    String status = "Ongoing";
     String progress ="Started";
     String rank = "0";
 
@@ -172,6 +172,7 @@ public class CreateChallengeActivity<storageReference> extends AppCompatActivity
         ChallengeType = (Spinner) findViewById(R.id.challengetype);
         modelChallenge = new ModelChallenge();
         reference = FirebaseDatabase.getInstance().getReference().child("Challenge");
+        //create challenge button
         Create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -198,12 +199,13 @@ public class CreateChallengeActivity<storageReference> extends AppCompatActivity
                 participants.setRole(role);
                 participants.setStatus(status);
                 participants.setUserName(username);
-                participants.setUserImage(userimage.toString());
+                //Qiming commented this following setter s
+                //participants.setUserImage(userimage.toString());
                 //participants.setImageURL(imageurl1);
                 participants.setChallengeTitle(ChallengeTitle.getText().toString().trim());
                 reference.push().setValue(participants);
-
-
+                startActivity(new Intent(CreateChallengeActivity.this, DashBoardActivity.class));
+                finish();
                 Toast.makeText(CreateChallengeActivity.this, "Challenge created successfully", Toast.LENGTH_SHORT).show();
                 ChallengeTitle.setText("");
                 ChallengeDuration.setText("");

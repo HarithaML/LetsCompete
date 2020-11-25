@@ -13,12 +13,21 @@ import android.view.MenuItem;
 import com.example.letscompete.R;
 import com.example.letscompete.adapters.ChallengeFragmentAdapter;
 import com.example.letscompete.fragments.InfoFragment;
+import com.example.letscompete.notifications.APIService;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class TimeChallengeActivity extends AppCompatActivity {
     ViewPager viewPager;
     String challengeTitle;
 
+    FirebaseAuth firebaseAuth;
+    APIService apiService;
+
+    FirebaseDatabase firebaseDatabase;
+    DatabaseReference databaseReference;
 
 
     @Override
@@ -36,6 +45,8 @@ public class TimeChallengeActivity extends AppCompatActivity {
         actionBar.setTitle(challengeTitle);
         actionBar.setDisplayHomeAsUpEnabled(true);
         //info  fragment transaction
+        Bundle args = new Bundle();
+        args.putString("challengeTitle", challengeTitle);
         InfoFragment fragment1 = new InfoFragment();
         Bundle arguments = new Bundle();
         arguments.putString("challengeTitle",challengeTitle);
@@ -72,6 +83,10 @@ public class TimeChallengeActivity extends AppCompatActivity {
 
 
 
+    }
+
+    public String getChallengeTitle(){
+        return challengeTitle;
     }
 
 

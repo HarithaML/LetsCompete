@@ -1,6 +1,5 @@
 package com.example.letscompete.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,12 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.example.letscompete.R;
-import com.example.letscompete.activities.TimeChallengeActivity;
 import com.example.letscompete.adapters.AdapterChallengesCard;
 import com.example.letscompete.models.ModelChallenge;
 import com.example.letscompete.models.ModelParticipant;
@@ -35,22 +30,21 @@ import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link OngoingFragment#newInstance} factory method to
+ * Use the {@link CompletedFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class OngoingFragment extends Fragment {
+public class CompletedFragment extends Fragment {
     RecyclerView recyclerView;
     AdapterChallengesCard adapterChallengesCard;
     String titleKey;
     List<ModelChallenge> challengeList;
-
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     //firebase
-    FirebaseAuth  firebaseAuth;
+    FirebaseAuth firebaseAuth;
     FirebaseUser user;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
@@ -60,7 +54,7 @@ public class OngoingFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public OngoingFragment() {
+    public CompletedFragment() {
         // Required empty public constructor
     }
 
@@ -70,11 +64,11 @@ public class OngoingFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment OngoingFragment.
+     * @return A new instance of fragment CompletedFragement.
      */
     // TODO: Rename and change types and number of parameters
-    public static OngoingFragment newInstance(String param1, String param2) {
-        OngoingFragment fragment = new OngoingFragment();
+    public static CompletedFragment newInstance(String param1, String param2) {
+        CompletedFragment fragment = new CompletedFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -95,27 +89,22 @@ public class OngoingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_ongoing, container, false);
+        View view = inflater.inflate(R.layout.fragment_completed, container, false);
         //init firebase
         firebaseAuth = FirebaseAuth.getInstance();
         user = firebaseAuth.getCurrentUser();
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("Users");
         storageReference = FirebaseStorage.getInstance().getReference();
-        // init views
-        recyclerView = view.findViewById(R.id.onging_recyclerView);
-        recyclerView.setHasFixedSize(true);
+        //init views
+        recyclerView = view.findViewById(R.id.completed_recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         challengeList = new ArrayList<>();
-
-
-        getAllOngoing();
-
-
+        getAllCompleted();
         return view;
     }
 
-    private void getAllOngoing(){
+    private void getAllCompleted() {
         //retrieve challenge under current user
         //Query query = databaseReference.orderByChild("id").equalTo(user.getUid());
         DatabaseReference participantsRef = FirebaseDatabase.getInstance().getReference().child("Participants");
@@ -126,7 +115,7 @@ public class OngoingFragment extends Fragment {
                 for(DataSnapshot ds : snapshot.getChildren()){
                     ModelParticipant modelParticipant = ds.getValue(ModelParticipant.class);
                     if (modelParticipant.getUserUID() != null) {
-                        if (modelParticipant.getUserUID().equals(user.getUid()) && modelParticipant.getStatus().equals("Ongoing")) {
+                        if (modelParticipant.getUserUID().equals(user.getUid()) && modelParticipant.getStatus().equals("Completed")) {
                             titleKey = modelParticipant.getChallengeTitle();
                             //get Chanllenge table
                             DatabaseReference chaRef = FirebaseDatabase.getInstance().getReference().child("Challenge");
@@ -160,6 +149,5 @@ public class OngoingFragment extends Fragment {
 
             }
         });
-
     }
 }
