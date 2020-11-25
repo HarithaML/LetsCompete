@@ -12,10 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.letscompete.R;
-import com.example.letscompete.adapters.AdapterChallenge;
+import com.example.letscompete.adapters.AdapterChallengesCard;
 import com.example.letscompete.models.ModelChallenge;
 import com.example.letscompete.models.ModelParticipant;
-import com.example.letscompete.notifications.Data;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -27,9 +26,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -38,7 +35,7 @@ import java.util.Map;
  */
 public class OngoingFragment extends Fragment {
     RecyclerView recyclerView;
-    AdapterChallenge adapterChallenge;
+    AdapterChallengesCard adapterChallengesCard;
     String titleKey;
     List<ModelChallenge> challengeList;
 
@@ -134,8 +131,8 @@ public class OngoingFragment extends Fragment {
                                             }
                                         }
                                     }
-                                    adapterChallenge = new AdapterChallenge(getActivity(), challengeList);
-                                    recyclerView.setAdapter(adapterChallenge);
+                                    adapterChallengesCard = new AdapterChallengesCard(getActivity(), challengeList);
+                                    recyclerView.setAdapter(adapterChallengesCard);
                                 }
 
                                 @Override

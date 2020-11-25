@@ -15,11 +15,11 @@ import com.example.letscompete.models.ModelChallenge;
 
 import java.util.List;
 
-public class AdapterChallenge extends RecyclerView.Adapter<AdapterChallenge.MyHolder> {
+public class AdapterChallengesCard extends RecyclerView.Adapter<AdapterChallengesCard.MyHolder> {
     Context context;
     List<ModelChallenge> challengeList;
 
-    public AdapterChallenge(Context context, List<ModelChallenge> challengeList){
+    public AdapterChallengesCard(Context context, List<ModelChallenge> challengeList){
         this.context = context;
         this.challengeList = challengeList;
     }
@@ -27,13 +27,13 @@ public class AdapterChallenge extends RecyclerView.Adapter<AdapterChallenge.MyHo
 
     @NonNull
     @Override
-    public AdapterChallenge.MyHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public AdapterChallengesCard.MyHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.row_challenges,parent,false);
-        return new AdapterChallenge.MyHolder(view);
+        return new AdapterChallengesCard.MyHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AdapterChallenge.MyHolder holder, int position) {
+    public void onBindViewHolder(@NonNull AdapterChallengesCard.MyHolder holder, int position) {
         //get data
         String userID = challengeList.get(position).getUserID();
         String challengeTitle = challengeList.get(position).getChallengeTitle();
