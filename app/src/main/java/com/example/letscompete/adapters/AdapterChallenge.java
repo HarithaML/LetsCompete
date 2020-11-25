@@ -38,15 +38,19 @@ public class AdapterChallenge extends RecyclerView.Adapter<AdapterChallenge.MyHo
         String userID = challengeList.get(position).getUserID();
         String challengeTitle = challengeList.get(position).getChallengeTitle();
         String challengeDescription = challengeList.get(position).getChallengeDescription();
-        String challengeType = challengeList.get(position).getChallengeType();
-        String challengeDuration = challengeList.get(position).getChallengeDuration();
-        String startdate = challengeList.get(position).getStartdate();
-        String imageName = challengeList.get(position).getImageName();
-        String imageURL = challengeList.get(position).imageURL;
+//        String challengeType = challengeList.get(position).getChallengeType();
+//        String challengeDuration = challengeList.get(position).getChallengeDuration();
+//        String startdate = challengeList.get(position).getStartdate();
+//        String imageName = challengeList.get(position).getImageName();
+//        String imageURL = challengeList.get(position).imageURL;
 
         //set data
         holder.challengeTitle.setText(challengeTitle);
         holder.challengeDescription.setText(challengeDescription);
+//        holder.challengeType.setText(challengeType);
+//        holder.challengeDuration.setText(challengeDuration);
+//        holder.challengeStartdate.setText(startdate);
+//        holder.challengeImage.setText(imageName);
 
 
         //click challenge item on Home fragment
@@ -71,10 +75,10 @@ public class AdapterChallenge extends RecyclerView.Adapter<AdapterChallenge.MyHo
             super(itemView);
             challengeTitle = itemView.findViewById(R.id.card_challenge_title);
             challengeDescription = itemView.findViewById(R.id.card_challenge_description);
-            challengeDuration = itemView.findViewById(R.id.challenge_duration);
-            challengeType = itemView.findViewById(R.id.challenge_type);
-            challengeStartdate = itemView.findViewById(R.id.challenge_startDate);
-            challengeImage = itemView.findViewById(R.id.challenge_image);
+            //challengeDuration = itemView.findViewById(R.id.challenge_duration);
+            //challengeType = itemView.findViewById(R.id.challenge_type);
+            //challengeStartdate = itemView.findViewById(R.id.challenge_startDate);
+            //challengeImage = itemView.findViewById(R.id.challenge_image);
 
         }
     }

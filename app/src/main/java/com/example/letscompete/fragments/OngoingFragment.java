@@ -15,6 +15,7 @@ import com.example.letscompete.R;
 import com.example.letscompete.adapters.AdapterChallenge;
 import com.example.letscompete.models.ModelChallenge;
 import com.example.letscompete.models.ModelParticipant;
+import com.example.letscompete.notifications.Data;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -26,7 +27,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,6 +39,7 @@ import java.util.List;
 public class OngoingFragment extends Fragment {
     RecyclerView recyclerView;
     AdapterChallenge adapterChallenge;
+    String titleKey;
     List<ModelChallenge> challengeList;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -107,22 +111,41 @@ public class OngoingFragment extends Fragment {
     private void getAllOngoing(){
         //retrieve challenge under current user
         //Query query = databaseReference.orderByChild("id").equalTo(user.getUid());
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Participants");
-        ref.addValueEventListener(new ValueEventListener() {
+        DatabaseReference participantsRef = FirebaseDatabase.getInstance().getReference().child("Participants");
+        participantsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 challengeList.clear();
                 for(DataSnapshot ds : snapshot.getChildren()){
                     ModelParticipant modelParticipant = ds.getValue(ModelParticipant.class);
-                    ModelChallenge modelChallenge = ds.getValue(ModelChallenge.class);
                     if (modelParticipant.getUserUID() != null) {
                         if (modelParticipant.getUserUID().equals(user.getUid()) && modelParticipant.getStatus().equals("Ongoing")) {
-                            challengeList.add(modelChallenge);
+                            titleKey = modelParticipant.getChallengeTitle();
+                            //get Chanllenge table
+                            DatabaseReference chaRef = FirebaseDatabase.getInstance().getReference().child("Challenge");
+                            chaRef.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                                        ModelChallenge modelChallenge = dataSnapshot.getValue(ModelChallenge.class);
+                                        if(modelChallenge.getChallengeTitle()!=null){
+                                            if(modelChallenge.getChallengeTitle().equals(modelParticipant.getChallengeTitle())){
+                                                challengeList.add(modelChallenge);
+                                            }
+                                        }
+                                    }
+                                    adapterChallenge = new AdapterChallenge(getActivity(), challengeList);
+                                    recyclerView.setAdapter(adapterChallenge);
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
                         }
                     }
                 }
-                adapterChallenge = new AdapterChallenge(getActivity(), challengeList);
-                recyclerView.setAdapter(adapterChallenge);
             }
 
             @Override

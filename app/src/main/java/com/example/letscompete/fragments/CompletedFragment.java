@@ -36,6 +36,7 @@ import java.util.List;
 public class CompletedFragment extends Fragment {
     RecyclerView recyclerView;
     AdapterChallenge adapterChallenge;
+    String titleKey;
     List<ModelChallenge> challengeList;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -106,21 +107,40 @@ public class CompletedFragment extends Fragment {
     private void getAllCompleted() {
         //retrieve challenge under current user
         //Query query = databaseReference.orderByChild("id").equalTo(user.getUid());
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Participants");
-        ref.addValueEventListener(new ValueEventListener() {
+        DatabaseReference participantsRef = FirebaseDatabase.getInstance().getReference().child("Participants");
+        participantsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 challengeList.clear();
                 for(DataSnapshot ds : snapshot.getChildren()){
                     ModelParticipant modelParticipant = ds.getValue(ModelParticipant.class);
-                    ModelChallenge modelChallenge = ds.getValue(ModelChallenge.class);
-                    if (modelParticipant.getUserUID() != null){
-                        if(modelParticipant.getUserUID().equals(user.getUid()) && modelParticipant.getStatus().equals("Completed")){
-                            challengeList.add(modelChallenge);
+                    if (modelParticipant.getUserUID() != null) {
+                        if (modelParticipant.getUserUID().equals(user.getUid()) && modelParticipant.getStatus().equals("Completed")) {
+                            titleKey = modelParticipant.getChallengeTitle();
+                            //get Chanllenge table
+                            DatabaseReference chaRef = FirebaseDatabase.getInstance().getReference().child("Challenge");
+                            chaRef.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                                        ModelChallenge modelChallenge = dataSnapshot.getValue(ModelChallenge.class);
+                                        if(modelChallenge.getChallengeTitle()!=null){
+                                            if(modelChallenge.getChallengeTitle().equals(modelParticipant.getChallengeTitle())){
+                                                challengeList.add(modelChallenge);
+                                            }
+                                        }
+                                    }
+                                    adapterChallenge = new AdapterChallenge(getActivity(), challengeList);
+                                    recyclerView.setAdapter(adapterChallenge);
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
                         }
                     }
-                    adapterChallenge = new AdapterChallenge(getActivity(), challengeList);
-                    recyclerView.setAdapter(adapterChallenge);
                 }
             }
 
