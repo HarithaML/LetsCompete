@@ -112,6 +112,5 @@ public class ChallengeSelectionFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        database.close();
     }
 }

@@ -155,9 +155,10 @@ public class LeaderBoardFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
+        database.userDao().deleteAll();
         getActivity().stopService(sIntent);
         getActivity().unbindService(connection);
-        database.clearAllTables();
+        //database.clearAllTables();
     }
 
     private void touch()

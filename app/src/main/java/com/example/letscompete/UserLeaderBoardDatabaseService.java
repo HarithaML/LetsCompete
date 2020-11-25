@@ -74,7 +74,7 @@ public class UserLeaderBoardDatabaseService extends Service {
         Log.i(TAG, "Checking if this works");
         DatabaseReference a = database.getReference("Participants");
         user = FirebaseAuth.getInstance().getCurrentUser();
-        Query query = a.orderByChild("userUid").equalTo(user.getUid());
+        Query query = a.orderByChild("userUID").equalTo(user.getUid());
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

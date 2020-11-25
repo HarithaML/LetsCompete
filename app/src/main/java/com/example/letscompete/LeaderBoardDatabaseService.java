@@ -79,6 +79,7 @@ public class LeaderBoardDatabaseService extends Service {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 userList.clear();
+                localDatabase.userDao().deleteAll();
                 for(DataSnapshot ds:  dataSnapshot.getChildren()) {
                     ModelParticipant modelUser = ds.getValue(ModelParticipant.class);
                     userList.add(modelUser);
