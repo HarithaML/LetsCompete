@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.LetsCompete">
-        <activity android:name=".activities.scoreBasedChallenge.ScoreBasedChallengeActivity"></activity>
+        <activity android:name=".activities.customBasedChallenge.CustomBasedChallengeActivity"></activity>
+        <activity android:name=".activities.scoreBasedChallenge.ScoreBasedChallengeActivity" />
         <activity android:name=".activities.timeBasedChallenge.TimeBasedChallengeActivity" />
         <activity android:name=".activities.activityBasedChallenge.CompleteChallengeActivity" />
         <activity android:name=".activities.activityBasedChallenge.ActivityBasedChallengeActivity" />
