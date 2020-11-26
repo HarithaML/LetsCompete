@@ -12,6 +12,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.letscompete.R;
 import com.example.letscompete.activities.activityBasedChallenge.ActivityBasedChallengeActivity;
+import com.example.letscompete.activities.customBasedChallenge.CustomBasedChallengeActivity;
+import com.example.letscompete.activities.scoreBasedChallenge.ScoreBasedChallengeActivity;
+import com.example.letscompete.activities.timeBasedChallenge.TimeBasedChallengeActivity;
 import com.example.letscompete.models.ModelChallenge;
 
 import java.util.List;
@@ -91,6 +94,21 @@ public class AdapterChallengesCard extends RecyclerView.Adapter<AdapterChallenge
                 public void onClick(View v) {
                     if(challengeType.toString()=="Activity based") {
                         Intent intent = new Intent(context, ActivityBasedChallengeActivity.class);
+                        intent.putExtra("challengeTitle",challengeTitle.getText());
+                        intent.putExtra("username",username);
+                        context.startActivity(intent);
+                    }else if(challengeType.toString()=="Score based"){
+                        Intent intent = new Intent(context, ScoreBasedChallengeActivity.class);
+                        intent.putExtra("challengeTitle",challengeTitle.getText());
+                        intent.putExtra("username",username);
+                        context.startActivity(intent);
+                    }else if(challengeType.toString()=="Time based"){
+                        Intent intent = new Intent(context, TimeBasedChallengeActivity.class);
+                        intent.putExtra("challengeTitle",challengeTitle.getText());
+                        intent.putExtra("username",username);
+                        context.startActivity(intent);
+                    }else{
+                        Intent intent = new Intent(context, CustomBasedChallengeActivity.class);
                         intent.putExtra("challengeTitle",challengeTitle.getText());
                         intent.putExtra("username",username);
                         context.startActivity(intent);
