@@ -54,20 +54,22 @@ public class AdapterChallengesCard extends RecyclerView.Adapter<AdapterChallenge
         //set data
         holder.challengeTitle.setText(challengeTitle);
         holder.challengeDescription.setText(challengeDescription);
+        holder.challengeType.setText(challengeType);
 //        holder.challengeType.setText(challengeType);
 //        holder.challengeDuration.setText(challengeDuration);
 //        holder.challengeStartdate.setText(startdate);
 //        holder.challengeImage.setText(imageName);
 
-
-        //click challenge item on Home fragment
-        holder.itemView.setOnClickListener(v -> {
-            if(holder.challengeType.toString()=="Activity based") {
-                Intent intent = new Intent(context, ActivityBasedChallengeActivity.class);
-                intent.putExtra("challengeTitle", challengeTitle);
-                context.startActivity(intent);
-            }
-        });
+//
+//        //click challenge item on Home fragment
+//        holder.itemView.setOnClickListener(v -> {
+//            if(holder.challengeType.toString()=="Activity based") {
+//                System.out.println("I came to activity");
+//                Intent intent = new Intent(context, ActivityBasedChallengeActivity.class);
+//                intent.putExtra("challengeTitle", challengeTitle);
+//                context.startActivity(intent);
+//            }
+//        });
 
 
     }
@@ -86,23 +88,23 @@ public class AdapterChallengesCard extends RecyclerView.Adapter<AdapterChallenge
             challengeTitle = itemView.findViewById(R.id.card_challenge_title);
             challengeDescription = itemView.findViewById(R.id.card_challenge_description);
             challengeDuration = itemView.findViewById(R.id.challenge_duration);
-            challengeType = itemView.findViewById(R.id.challenge_type);
+            challengeType = itemView.findViewById(R.id.card_challenge_type);
             challengeStartdate = itemView.findViewById(R.id.challenge_startDate);
             challengeImage = itemView.findViewById(R.id.challenge_image);
             challenge.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(challengeType.getText().toString()=="Activity based") {
+                    if(challengeType.getText().equals("Activity based")) {
                         Intent intent = new Intent(context, ActivityBasedChallengeActivity.class);
                         intent.putExtra("challengeTitle",challengeTitle.getText());
                         intent.putExtra("username",username);
                         context.startActivity(intent);
-                    }else if(challengeType.getText().toString()=="Score based"){
+                    }else if(challengeType.getText().equals("Score based")){
                         Intent intent = new Intent(context, ScoreBasedChallengeActivity.class);
                         intent.putExtra("challengeTitle",challengeTitle.getText());
                         intent.putExtra("username",username);
                         context.startActivity(intent);
-                    }else if(challengeType.getText().toString()=="Time based"){
+                    }else if(challengeType.getText().equals("Time based")){
                         Intent intent = new Intent(context, TimeBasedChallengeActivity.class);
                         intent.putExtra("challengeTitle",challengeTitle.getText());
                         intent.putExtra("username",username);

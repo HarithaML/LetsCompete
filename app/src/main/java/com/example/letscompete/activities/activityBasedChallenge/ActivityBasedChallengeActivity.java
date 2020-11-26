@@ -35,7 +35,7 @@ public class ActivityBasedChallengeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_time_challenge);
+        setContentView(R.layout.activity_activity_based_challenge);
          viewPager = findViewById(R.id.challenge_content);
         //challengeTitle
         Intent intent = getIntent();
