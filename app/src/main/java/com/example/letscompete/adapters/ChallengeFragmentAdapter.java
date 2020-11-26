@@ -16,12 +16,14 @@ public class ChallengeFragmentAdapter extends FragmentPagerAdapter {
     private Context myContext;
     int totalTabs;
     String challenegTitle;
+    String username;
 
-    public ChallengeFragmentAdapter(Context context, FragmentManager fm, int totalTabs,String challenegTitle) {
+    public ChallengeFragmentAdapter(Context context, FragmentManager fm, int totalTabs,String challenegTitle,String username) {
         super(fm);
         myContext = context;
         this.totalTabs = totalTabs;
         this.challenegTitle = challenegTitle;
+        this.username = username;
     }
 
     // this is for fragment tabs
@@ -29,7 +31,7 @@ public class ChallengeFragmentAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return InfoFragment.newInstance(challenegTitle);
+                return InfoFragment.newInstance(challenegTitle,username);
             case 1:
                 return ParticipantsFragment.newInstance(challenegTitle);
             case 2:

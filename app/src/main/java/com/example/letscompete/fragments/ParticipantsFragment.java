@@ -12,12 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.letscompete.R;
-import com.example.letscompete.activities.TimeChallengeActivity;
+import com.example.letscompete.activities.activityBasedChallenge.ActivityBasedChallengeActivity;
 import com.example.letscompete.adapters.AdapterParticipant;
-import com.example.letscompete.adapters.AdapterUsers;
 import com.example.letscompete.models.ModelParticipant;
-import com.example.letscompete.models.ModelUser;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -94,8 +91,8 @@ public class ParticipantsFragment extends Fragment {
 
     private void getAllParticipants() {
         //get challengeTitle from TimeChallengeActivity.java
-        TimeChallengeActivity timeChallengeActivity = (TimeChallengeActivity)getActivity();
-        String challengeTitle = timeChallengeActivity.getChallengeTitle();
+        ActivityBasedChallengeActivity activityBasedChallengeActivity = (ActivityBasedChallengeActivity)getActivity();
+        String challengeTitle = activityBasedChallengeActivity.getChallengeTitle();
         //get path of database named "Participants" containing users info
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Participants");
         //get all data from path
