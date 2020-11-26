@@ -5,14 +5,13 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.letscompete.R;
-import com.example.letscompete.activities.TimeChallengeActivity;
+import com.example.letscompete.activities.activityBasedChallenge.ActivityBasedChallengeActivity;
 import com.example.letscompete.models.ModelChallenge;
 
 import java.util.List;
@@ -20,10 +19,12 @@ import java.util.List;
 public class AdapterChallengesCard extends RecyclerView.Adapter<AdapterChallengesCard.MyHolder> {
     Context context;
     List<ModelChallenge> challengeList;
+    String username;
 
-    public AdapterChallengesCard(Context context, List<ModelChallenge> challengeList){
+    public AdapterChallengesCard(Context context, List<ModelChallenge> challengeList,String username){
         this.context = context;
         this.challengeList = challengeList;
+        this.username = username;
     }
 
 
@@ -40,6 +41,7 @@ public class AdapterChallengesCard extends RecyclerView.Adapter<AdapterChallenge
         String userID = challengeList.get(position).getUserID();
         String challengeTitle = challengeList.get(position).getChallengeTitle();
         String challengeDescription = challengeList.get(position).getChallengeDescription();
+        String challengeType = challengeList.get(position).getChallengeType();
 //        String challengeType = challengeList.get(position).getChallengeType();
 //        String challengeDuration = challengeList.get(position).getChallengeDuration();
 //        String startdate = challengeList.get(position).getStartdate();
@@ -57,9 +59,11 @@ public class AdapterChallengesCard extends RecyclerView.Adapter<AdapterChallenge
 
         //click challenge item on Home fragment
         holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(context, TimeChallengeActivity.class);
-            intent.putExtra("challengeTitle", challengeTitle);
-            context.startActivity(intent);
+            if(holder.challengeType.toString()=="Activity based") {
+                Intent intent = new Intent(context, ActivityBasedChallengeActivity.class);
+                intent.putExtra("challengeTitle", challengeTitle);
+                context.startActivity(intent);
+            }
         });
 
 
@@ -85,9 +89,13 @@ public class AdapterChallengesCard extends RecyclerView.Adapter<AdapterChallenge
             challenge.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(context, TimeChallengeActivity.class);
-                    intent.putExtra("challengeTitle",challengeTitle.getText());
-                    context.startActivity(intent);
+                    if(challengeType.toString()=="Activity based") {
+                        Intent intent = new Intent(context, ActivityBasedChallengeActivity.class);
+                        intent.putExtra("challengeTitle",challengeTitle.getText());
+                        intent.putExtra("username",username);
+                        context.startActivity(intent);
+                    }
+
                 }
             });
 

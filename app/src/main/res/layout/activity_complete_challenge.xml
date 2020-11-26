@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.CompleteChallengeActivity">
+    tools:context=".activities.activityBasedChallenge.CompleteChallengeActivity">
 
-    <!--Video Title-->
+    <!--Image Title-->
     <EditText
         android:id="@+id/titleEt"
         android:layout_width="match_parent"
@@ -17,60 +17,86 @@
         android:hint="Enter Description"
         android:inputType="textPersonName|textCapSentences"
         android:textColor="@color/black"/>
-    <!--Video-->
-    <VideoView
-        android:id="@+id/videoView"
+    <!--Image-->
+    <ImageView
+        android:id="@+id/imageView"
+        android:background="@color/colorSecondaryVariant"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:layout_below="@id/titleEt"
         android:layout_margin="10dp"/>
-    <!--Button: pick video-->
+    <!--Button: pick Image-->
     <Button
-        android:id="@+id/uploadVideoButton"
+        android:id="@+id/pickImageButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/videoView"
-        android:layout_marginTop="5dp"
+        android:layout_below="@id/imageView"
+        android:layout_marginTop="2dp"
         android:background="@color/colorPrimary"
-        android:layout_margin="10dp"
-        android:text = "Upload Video"
+        android:layout_margin="5dp"
+        android:text = "Pick Image"
+        android:textColor="@color/white"/>
+    <ProgressBar
+        android:id="@+id/progressBar2"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_marginTop="2dp"
+        android:layout_width="match_parent"
+        android:layout_below="@id/pickImageButton"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/uploadImageButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/progressBar2"
+        android:layout_marginTop="2dp"
+        android:background="@color/colorPrimary"
+        android:layout_margin="5dp"
+        android:text = "Upload Image"
         android:textColor="@color/white"/>
     <TextView
         android:id="@+id/messageWidow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/uploadVideoButton"
+        android:layout_below="@id/uploadImageButton"
         android:layout_centerHorizontal="true"
         android:textAlignment="center"
         android:text = ""/>
     <TextView
-        android:id="@+id/challengeDuration"
-        android:layout_width="match_parent"
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/messageWidow"
         android:layout_centerHorizontal="true"
-        android:textAlignment="center"
-        android:text = ""/>
+        android:layout_below="@id/messageWidow"
+        android:text="No Alarm set"
+        android:textSize="30sp" />
+    <Button
+        android:id="@+id/button_timepicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textView"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="open time picker" />
+    <Button
+        android:id="@+id/button_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/button_timepicker"
+        android:layout_centerHorizontal="true"
+        android:text="cancel alarm" />
+
     <Button
         android:id="@+id/confirmCompletion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/challengeDuration"
+        android:layout_below="@id/button_cancel"
         android:layout_marginTop="50dp"
         android:background="@color/colorPrimary"
         android:layout_margin="10dp"
         android:text = "Confirm Challenge Completion"
         android:textColor="@color/white"/>
-    <!--Pick Video-->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/pickVideoFab"
-        android:layout_margin="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_add_white"
-        android:layout_alignParentBottom="true"
-        android:backgroundTint="@color/colorPrimary"
-        android:layout_alignParentEnd="true"/>
+
+
 
 
 </RelativeLayout>

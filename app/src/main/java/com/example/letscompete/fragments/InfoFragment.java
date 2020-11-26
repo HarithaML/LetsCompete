@@ -15,9 +15,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.letscompete.activities.CompleteChallengeActivity;
+import com.example.letscompete.activities.activityBasedChallenge.CompleteChallengeActivity;
 import com.example.letscompete.R;
-import com.example.letscompete.activities.TimeChallengeActivity;
+import com.example.letscompete.activities.activityBasedChallenge.ActivityBasedChallengeActivity;
 import com.example.letscompete.activities.DashBoardActivity;
 import com.example.letscompete.models.ModelChallenge;
 import com.example.letscompete.models.ModelParticipant;
@@ -51,7 +51,7 @@ public class InfoFragment extends Fragment {
 
     // TODO: Rename and change types of parameters
     private String challengeTitle;
-
+    private String username;
 
     public InfoFragment() {
         // Required empty public constructor
@@ -62,13 +62,15 @@ public class InfoFragment extends Fragment {
      * this fragment using the provided parameters.
      *
      * @param challengeTitle Parameter 1.
+     * @param username Parameter 2.
      * @return A new instance of fragment InfoFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static InfoFragment newInstance(String challengeTitle) {
+    public static InfoFragment newInstance(String challengeTitle,String username) {
         InfoFragment fragment = new InfoFragment();
         Bundle args = new Bundle();
         args.putString("challengeTitle", challengeTitle);
+        args.putString("username", username);
         fragment.setArguments(args);
         return fragment;
     }
@@ -78,6 +80,7 @@ public class InfoFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             challengeTitle = getArguments().getString("challengeTitle");
+            username = getArguments().getString("username");
         }
     }
 
@@ -85,8 +88,8 @@ public class InfoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         //get challengeTitle from TimeChallengeActivity.java
-        TimeChallengeActivity timeChallengeActivity = (TimeChallengeActivity)getActivity();
-        String challengeTitle = timeChallengeActivity.getChallengeTitle();
+        ActivityBasedChallengeActivity activityBasedChallengeActivity = (ActivityBasedChallengeActivity)getActivity();
+        String challengeTitle = activityBasedChallengeActivity.getChallengeTitle();
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_info, container, false);
@@ -108,6 +111,7 @@ public class InfoFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), CompleteChallengeActivity.class);
                 intent.putExtra("challengeTitle",mTitle.getText());
+                intent.putExtra("username",username);
                 startActivity(intent);
 
             }
