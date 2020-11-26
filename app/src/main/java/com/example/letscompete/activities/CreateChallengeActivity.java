@@ -47,7 +47,8 @@ import java.util.Calendar;
 public class CreateChallengeActivity<storageReference> extends AppCompatActivity {
     private static final String TAG = "Uploaded";
     EditText ChallengeTitle, ChallengeDuration, ChallengeDescription, StartDate,txtdata;
-    String text;
+
+    String text,url;
     private  Uri FilePathUri;
     ImageView imageView,imgview;
     DatePickerDialog datepicker;
@@ -186,7 +187,7 @@ public class CreateChallengeActivity<storageReference> extends AppCompatActivity
                 modelChallenge.setStartdate(StartDate.getText().toString());
                 modelChallenge.setChallengeType(text);
                 modelChallenge.setImageName(txtdata.getText().toString().trim());
-                modelChallenge.setImageURL(imageurl1);
+                modelChallenge.setImageURL(url);
                 //challenge.setRole("Moderator");
                 modelChallenge.setUserID(userid);
                 reference.push().setValue(modelChallenge);
@@ -261,13 +262,17 @@ public class CreateChallengeActivity<storageReference> extends AppCompatActivity
                             String TempImageName = txtdata.getText().toString().trim();
                             progressDialog.dismiss();
                             Toast.makeText(getApplicationContext(), "Image Uploaded Successfully ", Toast.LENGTH_LONG).show();
-                            @SuppressWarnings("VisibleForTests")
 
-                            //uploadinfo imageUploadInfo = new uploadinfo(TempImageName, taskSnapshot.getUploadSessionUri().toString());
-                                    ModelChallenge modelChallenge = new ModelChallenge(TempImageName, taskSnapshot.getUploadSessionUri().toString());
-                            String ImageUploadId = databaseReference.push().getKey();
-                            imageurl1 = taskSnapshot.getUploadSessionUri().toString();
-                            databaseReference.child(ImageUploadId).setValue(modelChallenge);
+
+                            storageReference2.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    url = uri.toString();
+
+                                    //Do what you need to do with url
+                                }
+                            });
+
                         }
                     });
         }
@@ -292,6 +297,15 @@ public class CreateChallengeActivity<storageReference> extends AppCompatActivity
         return true;
     }
 
-
+    @Override
+    public void onBackPressed()
+    {
+        // code here to show dialog
+        super.onBackPressed();
+        Intent intent = new Intent(CreateChallengeActivity.this, DashBoardActivity.class);
+        startActivity(intent);
+        // optional depending on your needs
+    }
 }
+
 
