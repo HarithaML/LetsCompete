@@ -24,6 +24,9 @@ public interface UserLeaderBoardStatsDao {
 
     @Query("Delete from userleaderboardstats")
     void deleteAll();
+
+    @Query("Select * from userleaderboardstats where username = :user")
+    List<UserLeaderBoardStats> getUser(String user);
 }
 
 

@@ -51,7 +51,7 @@
         app:layout_constraintGuide_end="20dp" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/lChallenge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-medium"
@@ -62,34 +62,34 @@
         app:layout_constraintTop_toTopOf="@+id/guideline8" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/lchallengePic"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginTop="5dp"
         android:src="@drawable/ic_profile_black"
         app:layout_constraintStart_toStartOf="@+id/guideline9"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/lChallenge" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/ctype"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
         android:fontFamily="sans-serif"
         android:text="Type"
         android:textColor="@color/colorPrimary"
-        app:layout_constraintStart_toEndOf="@+id/imageView2"
-        app:layout_constraintTop_toTopOf="@+id/imageView2" />
+        app:layout_constraintStart_toEndOf="@+id/lchallengePic"
+        app:layout_constraintTop_toTopOf="@+id/lchallengePic" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/cduration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif"
         android:text="Duration"
         android:textColor="@color/colorPrimary"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView2"
-        app:layout_constraintStart_toStartOf="@+id/textView2" />
+        app:layout_constraintBottom_toBottomOf="@+id/lchallengePic"
+        app:layout_constraintStart_toStartOf="@+id/ctype" />
 
     <TextView
         android:id="@+id/textView4"
@@ -111,7 +111,7 @@
         android:background="#EE5F02"
 
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+        app:layout_constraintTop_toBottomOf="@+id/lchallengePic"
         tools:layout_editor_absoluteX="0dp" />
 
     <View
@@ -131,7 +131,7 @@
         android:background="#EE5F02"
 
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintTop_toBottomOf="@+id/lchallengePic" />
 
     <include
         android:id="@+id/include"

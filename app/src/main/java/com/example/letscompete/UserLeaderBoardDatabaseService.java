@@ -117,9 +117,19 @@ public class UserLeaderBoardDatabaseService extends Service {
                             UserLeaderBoardChallenges user = new UserLeaderBoardChallenges();
                             String challengeTitle = c.getChallengeTitle();
                             String challengeImage = c.getImageURL();
+                            String challengeType = c.getChallengeType();
+                            String challengeDuration = c.getChallengeDuration();
                             if(challengeImage != null){
                                 user.setPicture(challengeImage);
                                 Log.i(TAG, "Got data " + challengeImage);
+                            }
+                            if(challengeType != null){
+                                user.setType(challengeType);
+                                Log.i(TAG, "Got data " + challengeType);
+                            }
+                            if(challengeDuration != null){
+                                user.setDuration(challengeDuration);
+                                Log.i(TAG, "Got data " + challengeDuration);
                             }
                             if(challengeTitle != null){
                                 user.setChallengename(challengeTitle);

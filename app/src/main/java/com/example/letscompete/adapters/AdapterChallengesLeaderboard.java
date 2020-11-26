@@ -67,7 +67,11 @@ public class AdapterChallengesLeaderboard extends RecyclerView.Adapter<AdapterCh
             @Override
             public void onClick(View view) {
                 if(mContext instanceof DashBoardActivity) {
-                    ((DashBoardActivity) mContext).onChallengeSelected(modelChallengeList.get(position).getChallengename());
+                    String name = modelChallengeList.get(position).getChallengename();
+                    String type = modelChallengeList.get(position).getType();
+                    String duration = modelChallengeList.get(position).getDuration();
+                    String picture = modelChallengeList.get(position).getPicture();
+                    ((DashBoardActivity) mContext).onChallengeSelected(name, type, duration, picture);
                 }
             }
         });

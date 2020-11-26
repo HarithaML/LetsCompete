@@ -196,14 +196,21 @@ public class DashBoardActivity extends AppCompatActivity
         }
     }
 
-
     public void onChallengeSelected(String name)
+    {
+        onChallengeSelected(name, "none", "none", null);
+    }
+
+    public void onChallengeSelected(String name, String type, String duration, String picture)
     {
         actionBar.setTitle("LeaderBoard");
         LeaderBoardFragment fragment5 = new LeaderBoardFragment();
         //ChallengeSelectionFragment fragment5 = new ChallengeSelectionFragment();
         Bundle args = new Bundle();
         args.putString("Challenge", name);
+        args.putString("Type", type);
+        args.putString("Duration", duration);
+        args.putString("Picture", picture);
         fragment5.setArguments(args);
         FragmentTransaction ft5 = getSupportFragmentManager().beginTransaction();
         ft5.replace(R.id.content,fragment5,"");

@@ -18,12 +18,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.letscompete.AppDatabase;
 import com.example.letscompete.LeaderBoardDatabaseService;
 import com.example.letscompete.R;
 import com.example.letscompete.UserLeaderBoardStats;
 import com.example.letscompete.adapters.LeaderBoardAdapter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +44,12 @@ public class LeaderBoardFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final String TAG = "LeaderBoardFragment";
+    private TextView rank, username, number, challengeName, challengeType, challengeDuration;
+    private ImageView challengePicture;
     private AppDatabase database;
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser user;
     private LeaderBoardDatabaseService service;
     private Intent sIntent;
     private boolean mBound = false;
@@ -95,6 +105,8 @@ public class LeaderBoardFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         database = AppDatabase.getInstance(getActivity());
+        firebaseAuth = FirebaseAuth.getInstance();
+        user = firebaseAuth.getCurrentUser();
 
     }
 
@@ -104,11 +116,34 @@ public class LeaderBoardFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_leader_board, container, false);
         sIntent = new Intent(view.getContext(), LeaderBoardDatabaseService.class);
         sIntent.putExtra("Challenge", getArguments().getString("Challenge"));
-        UserLeaderBoardStats user = new UserLeaderBoardStats();
+        challengeName = view.findViewById(R.id.lChallenge);
+        challengeType = view.findViewById(R.id.ctype);
+        challengeDuration = view.findViewById(R.id.cduration);
+        challengePicture= view.findViewById(R.id.lchallengePic);
+        try {
+            challengeName.setText(getArguments().getString("Challenge"));
+            challengeType.setText("Type: " + getArguments().getString("Type"));
+            challengeDuration.setText("Duration: " + getArguments().getString("Duration"));
+        }
+        catch(Exception e)
+        {
+            challengeName.setText("");
+        }
+        try {
+            Picasso.get().load(getArguments().getString("Picture")).into(challengePicture);
+        }
+        catch(Exception e)
+        {
+            Picasso.get().load(R.drawable.ic_default_img_black).into(challengePicture);
+        }
+        rank = view.findViewById(R.id.RankLeader);
+        username = view.findViewById(R.id.UserLeader);
+        number = view.findViewById(R.id.numberLeader);
+        UserLeaderBoardStats usern = new UserLeaderBoardStats();
         Log.i("Help", getArguments().getString("Challenge"));
-        user.setUsername("ok");
-        user.setRank(1);
-        user.setStat("12");
+        usern.setUsername("ok");
+        usern.setRank(1);
+        usern.setStat("12");
         //database.userDao().insertAll(user);
         Button button = view.findViewById(R.id.button);
         Button button2 = view.findViewById(R.id.change_challenge_btn);
@@ -143,6 +178,20 @@ public class LeaderBoardFragment extends Fragment {
 
     private void setLeaderboardStats(View view)
     {
+        Log.i(TAG, user.getEmail());
+        List<UserLeaderBoardStats> ownStats = database.userDao().getUser(user.getEmail());
+        if(ownStats.size() == 1)
+        {
+            username.setText(ownStats.get(0).getUsername());
+            rank.setText("Your Rank: " + ownStats.get(0).getRank() + "");
+            number.setText(ownStats.get(0).getStat() + "");
+        }
+        else
+        {
+            username.setText(user.getEmail());
+            rank.setText("Your Rank: No data");
+            number.setText("N/A");
+        }
         RecyclerView content = view.findViewById(R.id.leaderboard_list);
         List<UserLeaderBoardStats> ok = new ArrayList<>();
         ok.addAll(database.userDao().getAll());
