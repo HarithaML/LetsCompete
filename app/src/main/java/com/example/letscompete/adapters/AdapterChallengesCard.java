@@ -92,17 +92,17 @@ public class AdapterChallengesCard extends RecyclerView.Adapter<AdapterChallenge
             challenge.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(challengeType.toString()=="Activity based") {
+                    if(challengeType.getText().toString()=="Activity based") {
                         Intent intent = new Intent(context, ActivityBasedChallengeActivity.class);
                         intent.putExtra("challengeTitle",challengeTitle.getText());
                         intent.putExtra("username",username);
                         context.startActivity(intent);
-                    }else if(challengeType.toString()=="Score based"){
+                    }else if(challengeType.getText().toString()=="Score based"){
                         Intent intent = new Intent(context, ScoreBasedChallengeActivity.class);
                         intent.putExtra("challengeTitle",challengeTitle.getText());
                         intent.putExtra("username",username);
                         context.startActivity(intent);
-                    }else if(challengeType.toString()=="Time based"){
+                    }else if(challengeType.getText().toString()=="Time based"){
                         Intent intent = new Intent(context, TimeBasedChallengeActivity.class);
                         intent.putExtra("challengeTitle",challengeTitle.getText());
                         intent.putExtra("username",username);
