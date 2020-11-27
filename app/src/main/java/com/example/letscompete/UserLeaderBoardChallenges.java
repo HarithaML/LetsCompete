@@ -20,7 +20,6 @@ public class UserLeaderBoardChallenges {
     @ColumnInfo(name = "duration")
     public String duration;
 
-    @Ignore
     @ColumnInfo(name = "picture")
     String picture;
 
