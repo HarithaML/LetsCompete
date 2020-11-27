@@ -5,6 +5,7 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import java.util.List;
 
@@ -24,6 +25,12 @@ public interface UserLeaderBoardStatsDao {
 
     @Query("Delete from userleaderboardstats")
     void deleteAll();
+
+    @Query("Select * from userleaderboardstats where username = :user")
+    List<UserLeaderBoardStats> getUser(String user);
+
+    @Query("Update userleaderboardstats Set picture = :pic where username = :user")
+    void updatePicture(String pic, String user);
 }
 
 

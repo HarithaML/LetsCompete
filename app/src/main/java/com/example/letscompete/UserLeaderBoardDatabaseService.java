@@ -6,6 +6,9 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
+import com.example.letscompete.models.ModelChallenge;
 import com.example.letscompete.models.ModelParticipant;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -25,6 +28,7 @@ public class UserLeaderBoardDatabaseService extends Service {
     FirebaseUser user;
     AppDatabase localDatabase;
     List<ModelParticipant> userList;
+    Query query;
 
     public class DatabaseServiceBinder extends Binder {
         public UserLeaderBoardDatabaseService getService(){
@@ -72,9 +76,10 @@ public class UserLeaderBoardDatabaseService extends Service {
     public void getDatabaseData()
     {
         Log.i(TAG, "Checking if this works");
+        localDatabase.leaderDao().deleteAll();
         DatabaseReference a = database.getReference("Participants");
         user = FirebaseAuth.getInstance().getCurrentUser();
-        Query query = a.orderByChild("userUID").equalTo(user.getUid());
+        query = a.orderByChild("userUID").equalTo(user.getUid());
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -86,15 +91,67 @@ public class UserLeaderBoardDatabaseService extends Service {
                     userList.add(modelUser);
                 }
                 Log.i(TAG, "Value is: " + userList + "\n" + userList.size());
-                for(ModelParticipant a: userList)
+                for(ModelParticipant b: userList)
                 {
-                    String challengeTitle = a.getChallengeTitle();
+                    Log.i(TAG, b.toString());
+                    DatabaseReference a = database.getReference("Challenge");
+                    String challengeTitle = b.getChallengeTitle();
+                    Query q = a.orderByChild("challengeTitle").equalTo(challengeTitle);
+                    q.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            List<ModelChallenge> modelchallenges = new ArrayList<>();
+                            for(DataSnapshot ds:  snapshot.getChildren()) {
+                                ModelChallenge modelchallenge = ds.getValue(ModelChallenge.class);
+                                modelchallenges.add(modelchallenge);
+                            }
+                            if(modelchallenges.size() ==0)
+                            {
+                                return;
+                            }
+                            ModelChallenge c = modelchallenges.get(0);
+                            Log.i(TAG, "Got data " + c);
+                            if(c ==null) {
+                                return;
+                            }
+                            UserLeaderBoardChallenges user = new UserLeaderBoardChallenges();
+                            String challengeTitle = c.getChallengeTitle();
+                            String challengeImage = c.getImageURL();
+                            Log.i(TAG,c.getImageURL());
+                            String challengeType = c.getChallengeType();
+                            String challengeDuration = c.getChallengeDuration();
+                            if(challengeImage != null){
+                                user.setPicture(challengeImage);
+                                Log.i(TAG, "Got data " + challengeImage);
+                            }
+                            if(challengeType != null){
+                                user.setType(challengeType);
+                                Log.i(TAG, "Got data " + challengeType);
+                            }
+                            if(challengeDuration != null){
+                                user.setDuration(challengeDuration);
+                                Log.i(TAG, "Got data " + challengeDuration);
+                            }
+                            if(challengeTitle != null){
+                                user.setChallengename(challengeTitle);
+                                Log.i(TAG, "Got data " + challengeTitle);
+                                localDatabase.leaderDao().insertAll(user);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                    /*
                     UserLeaderBoardChallenges user = new UserLeaderBoardChallenges();
                     if(challengeTitle != null){
                         user.setChallengename(challengeTitle);
                         Log.i(TAG, "Got data " + challengeTitle);
                     }
                     localDatabase.leaderDao().insertAll(user);
+                     */
                     //Log.i(TAG, "Value is: " + a);
                 }
             }

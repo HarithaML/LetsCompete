@@ -1,14 +1,17 @@
 package com.example.letscompete.fragments;
 
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,12 +21,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.letscompete.AppDatabase;
 import com.example.letscompete.LeaderBoardDatabaseService;
 import com.example.letscompete.R;
 import com.example.letscompete.UserLeaderBoardStats;
 import com.example.letscompete.adapters.LeaderBoardAdapter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,10 +47,28 @@ public class LeaderBoardFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final String TAG = "LeaderBoardFragment";
+    public static final String UPDATE_DATA = "asdnjoasndosan";
+    private TextView rank, username, number, challengeName, challengeType, challengeDuration;
+    private ImageView challengePicture, profilePic;
     private AppDatabase database;
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser user;
     private LeaderBoardDatabaseService service;
     private Intent sIntent;
     private boolean mBound = false;
+    private RecieverData r;
+
+    private class RecieverData extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+                if(intent.getAction().equals(UPDATE_DATA))
+                {
+                    setLeaderboardStats(getView());
+                }
+        }
+    }
 
     private ServiceConnection connection = new ServiceConnection() {
 
@@ -95,6 +121,9 @@ public class LeaderBoardFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         database = AppDatabase.getInstance(getActivity());
+        firebaseAuth = FirebaseAuth.getInstance();
+        user = firebaseAuth.getCurrentUser();
+        r = new RecieverData();
 
     }
 
@@ -104,11 +133,36 @@ public class LeaderBoardFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_leader_board, container, false);
         sIntent = new Intent(view.getContext(), LeaderBoardDatabaseService.class);
         sIntent.putExtra("Challenge", getArguments().getString("Challenge"));
-        UserLeaderBoardStats user = new UserLeaderBoardStats();
+        challengeName = view.findViewById(R.id.lChallenge);
+        challengeType = view.findViewById(R.id.ctype);
+        challengeDuration = view.findViewById(R.id.cduration);
+        challengePicture= view.findViewById(R.id.lchallengePic);
+        profilePic= view.findViewById(R.id.profile);
+        try {
+            challengeName.setText(getArguments().getString("Challenge"));
+            challengeType.setText("Type: " + getArguments().getString("Type"));
+            challengeDuration.setText("Duration: " + getArguments().getString("Duration"));
+        }
+        catch(Exception e)
+        {
+            challengeName.setText("");
+        }
+        try {
+            String pic = getArguments().getString("Picture");
+            Log.i(TAG, pic);
+            if(pic != null && pic != null)
+            {
+                Picasso.get().load(pic).into(challengePicture);
+            }
+        }
+        catch(Exception e)
+        {
+            //Picasso.get().load(R.drawable.ic_default_img_black).into(challengePicture);
+        }
+        rank = view.findViewById(R.id.RankLeader);
+        username = view.findViewById(R.id.UserLeader);
+        number = view.findViewById(R.id.numberLeader);
         Log.i("Help", getArguments().getString("Challenge"));
-        user.setUsername("ok");
-        user.setRank(1);
-        user.setStat("12");
         //database.userDao().insertAll(user);
         Button button = view.findViewById(R.id.button);
         Button button2 = view.findViewById(R.id.change_challenge_btn);
@@ -136,13 +190,42 @@ public class LeaderBoardFragment extends Fragment {
     public void onResume() {
         super.onResume();
         sIntent = new Intent(getView().getContext(), LeaderBoardDatabaseService.class);
+        try {
+            sIntent.putExtra("Challenge", getArguments().getString("Challenge"));
+        }
+        catch (Exception e)
+        {
+
+        }
         getActivity().bindService(sIntent, connection, Context.BIND_AUTO_CREATE);
         getActivity().startService(sIntent);
-        setLeaderboardStats(getView());
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(r,
+                new IntentFilter(UPDATE_DATA));
     }
 
     private void setLeaderboardStats(View view)
     {
+        Log.i(TAG, user.getEmail());
+        //remember this check
+        List<UserLeaderBoardStats> ownStats = database.userDao().getUser(user.getEmail());
+        if(ownStats.size() == 1)
+        {
+            username.setText(ownStats.get(0).getUsername());
+            rank.setText("Your Rank: " + ownStats.get(0).getRank() + "");
+            number.setText(ownStats.get(0).getStat() + "");
+            try{
+                Picasso.get().load(ownStats.get(0).getPicture()).into(profilePic);
+            }
+            catch (Exception e)
+            {
+            }
+        }
+        else
+        {
+            username.setText(user.getEmail());
+            rank.setText("Your Rank: No data");
+            number.setText("N/A");
+        }
         RecyclerView content = view.findViewById(R.id.leaderboard_list);
         List<UserLeaderBoardStats> ok = new ArrayList<>();
         ok.addAll(database.userDao().getAll());
@@ -158,6 +241,7 @@ public class LeaderBoardFragment extends Fragment {
         //database.userDao().deleteAll();
         getActivity().stopService(sIntent);
         getActivity().unbindService(connection);
+        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(r);
         //database.clearAllTables();
     }
 
@@ -165,14 +249,15 @@ public class LeaderBoardFragment extends Fragment {
     {
         if(mBound)
         {
-            service.getDatabaseData(getArguments().getString("Challenge"));
+            service.getDatabaseData(getArguments().getString("Challenge"),true);
             setLeaderboardStats(getView());
         }
     }
 
     private void changeFrags()
     {
-        FragmentTransaction fm = getFragmentManager().beginTransaction();
+        FragmentTransaction fm = getFragmentManager().beginTransaction().setCustomAnimations
+                (R.anim.slide_in_right,R.anim.fade_out, R.anim.fade_in, R.anim.slide_out_right);
         ChallengeSelectionFragment fragment5 = new ChallengeSelectionFragment();
         fm.replace(R.id.content,fragment5,"");
         fm.commit();

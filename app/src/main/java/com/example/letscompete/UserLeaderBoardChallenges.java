@@ -15,17 +15,37 @@ public class UserLeaderBoardChallenges {
     @ColumnInfo(name = "challengename")
     public String challengename;
 
-    @Ignore
+    @ColumnInfo(name = "type")
+    public String type;
+    @ColumnInfo(name = "duration")
+    public String duration;
+
     @ColumnInfo(name = "picture")
-    Bitmap picture;
+    String picture;
 
 
-    public Bitmap getPicture() {
+    public String getPicture() {
         return picture;
     }
 
-    public void setPicture(Bitmap picture) {
+    public void setPicture(String picture) {
         this.picture = picture;
+    }
+
+    public String getDuration() {
+        return duration;
+    }
+
+    public void setDuration(String duration) {
+        this.duration = duration;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     @NonNull
@@ -36,4 +56,5 @@ public class UserLeaderBoardChallenges {
     public void setChallengename(@NonNull String challengename) {
         this.challengename = challengename;
     }
+
 }

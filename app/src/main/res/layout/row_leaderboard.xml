@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/recyleSetting"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -11,20 +11,23 @@
         android:id="@+id/profile"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="20dp"
         android:layout_alignParentTop="true"
-        android:src="@drawable/ic_profile_black" />
+        android:layout_marginStart="16dp"
+        android:src="@drawable/ic_profile_black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/RankLeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
         android:layout_toEndOf="@id/profile"
         android:fontFamily="sans-serif"
-        android:text="Hello" />
+        android:text="Hello"
+        app:layout_constraintStart_toEndOf="@+id/profile"
+        app:layout_constraintTop_toTopOf="@+id/profile" />
 
     <TextView
         android:id="@+id/UserLeader"
@@ -32,11 +35,13 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/RankLeader"
         android:layout_alignStart="@+id/RankLeader"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
         android:fontFamily="sans-serif-light"
         android:text="Rank"
-        android:textColor="#EE5F02" />
+        android:textColor="#EE5F02"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/RankLeader"
+        app:layout_constraintTop_toBottomOf="@+id/RankLeader"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/numberLeader"
@@ -45,11 +50,14 @@
         android:layout_below="@+id/statLeader"
         android:layout_alignStart="@+id/statLeader"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
         android:fontFamily="sans-serif-light"
         android:text="TextView"
-        android:textColor="#EE5F02" />
+        android:textColor="#EE5F02"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/statLeader"
+        app:layout_constraintStart_toStartOf="@+id/statLeader"
+        app:layout_constraintTop_toBottomOf="@+id/statLeader"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/statLeader"
@@ -58,23 +66,32 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="20dp"
         android:fontFamily="sans-serif"
-        android:text="TextView" />
+        android:text="Stat"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/view"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <View
         android:id="@+id/view"
         android:layout_width="2dp"
         android:layout_height="@dimen/leader_frame_size"
-        android:layout_marginEnd="20dp"
-        android:layout_toStartOf="@+id/numberLeader"
-        android:background="#EE5F02" />
+        android:layout_alignParentEnd="true"
+        android:background="#EE5F02"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.74"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <View
         android:id="@+id/view2"
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:layout_marginTop="16dp"
+        android:layout_alignParentBottom="true"
         android:background="#EE5F02"
-        android:layout_alignParentBottom="true"/>
-</RelativeLayout>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
