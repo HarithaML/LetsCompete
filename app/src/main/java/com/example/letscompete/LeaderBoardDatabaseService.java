@@ -7,7 +7,9 @@ import android.os.IBinder;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.example.letscompete.fragments.LeaderBoardFragment;
 import com.example.letscompete.models.ModelChallenge;
 import com.example.letscompete.models.ModelParticipant;
 import com.example.letscompete.models.ModelUser;
@@ -26,6 +28,8 @@ public class LeaderBoardDatabaseService extends Service {
     FirebaseDatabase database;
     AppDatabase localDatabase;
     List<ModelParticipant> userList;
+    private int count;
+    private boolean isReady;
 
     public class DatabaseServiceBinder extends Binder {
         public LeaderBoardDatabaseService getService(){
@@ -47,6 +51,7 @@ public class LeaderBoardDatabaseService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        isReady = false;
         database = FirebaseDatabase.getInstance();
         localDatabase = AppDatabase.getInstance(this);
         userList = new ArrayList<>();
@@ -78,6 +83,7 @@ public class LeaderBoardDatabaseService extends Service {
 
     public void getDatabaseData(String name, boolean isSame)
     {
+        isReady = false;
         Log.i(TAG, "Checking if this works");
         DatabaseReference a = database.getReference("Participants");
         Query query = a.orderByChild("challengeTitle").equalTo(name);
@@ -134,7 +140,8 @@ public class LeaderBoardDatabaseService extends Service {
         });
         //stopSelf();
     }
-    public void getUserProfilePic(List<UserLeaderBoardStats> users) {
+    private void getUserProfilePic(List<UserLeaderBoardStats> users) {
+        count = 0;
         for (UserLeaderBoardStats user : users) {
             String name = user.getUsername();
             DatabaseReference b = database.getReference("Users");
@@ -142,12 +149,17 @@ public class LeaderBoardDatabaseService extends Service {
             query2.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    ++count;
                     List<ModelUser> modelusers = new ArrayList<>();
                     for (DataSnapshot ds : snapshot.getChildren()) {
                         ModelUser modeluser = ds.getValue(ModelUser.class);
                         modelusers.add(modeluser);
                     }
                     if (modelusers.size() == 0) {
+                        if(count >= userList.size())
+                        {
+                            sendMessage();
+                        }
                         return;
                     }
                     ModelUser c = modelusers.get(0);
@@ -156,15 +168,44 @@ public class LeaderBoardDatabaseService extends Service {
                         return;
                     }
                     localDatabase.userDao().updatePicture(c.getImage(), c.getEmail());
+                    if(count >= userList.size())
+                    {
+                        sendMessage();
+                    }
                 }
 
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
-
+                    ++count;
                 }
 
             });
         }
+        /*
+        while(count < users.size())
+        {
+            Log.i(TAG, count + "");
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+         */
+        isReady = true;
+    }
+
+    private void sendMessage()
+    {
+        Intent intent = new Intent(LeaderBoardFragment.UPDATE_DATA);
+        // You can also include some extra data.
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+    }
+
+    public boolean isDataReady()
+    {
+        return isReady;
     }
 }

@@ -1,14 +1,17 @@
 package com.example.letscompete.fragments;
 
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -45,6 +48,7 @@ public class LeaderBoardFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private static final String TAG = "LeaderBoardFragment";
+    public static final String UPDATE_DATA = "asdnjoasndosan";
     private TextView rank, username, number, challengeName, challengeType, challengeDuration;
     private ImageView challengePicture, profilePic;
     private AppDatabase database;
@@ -53,6 +57,18 @@ public class LeaderBoardFragment extends Fragment {
     private LeaderBoardDatabaseService service;
     private Intent sIntent;
     private boolean mBound = false;
+    private RecieverData r;
+
+    private class RecieverData extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+                if(intent.getAction().equals(UPDATE_DATA))
+                {
+                    setLeaderboardStats(getView());
+                }
+        }
+    }
 
     private ServiceConnection connection = new ServiceConnection() {
 
@@ -107,6 +123,7 @@ public class LeaderBoardFragment extends Fragment {
         database = AppDatabase.getInstance(getActivity());
         firebaseAuth = FirebaseAuth.getInstance();
         user = firebaseAuth.getCurrentUser();
+        r = new RecieverData();
 
     }
 
@@ -173,9 +190,17 @@ public class LeaderBoardFragment extends Fragment {
     public void onResume() {
         super.onResume();
         sIntent = new Intent(getView().getContext(), LeaderBoardDatabaseService.class);
+        try {
+            sIntent.putExtra("Challenge", getArguments().getString("Challenge"));
+        }
+        catch (Exception e)
+        {
+
+        }
         getActivity().bindService(sIntent, connection, Context.BIND_AUTO_CREATE);
         getActivity().startService(sIntent);
-        setLeaderboardStats(getView());
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(r,
+                new IntentFilter(UPDATE_DATA));
     }
 
     private void setLeaderboardStats(View view)
@@ -216,6 +241,7 @@ public class LeaderBoardFragment extends Fragment {
         //database.userDao().deleteAll();
         getActivity().stopService(sIntent);
         getActivity().unbindService(connection);
+        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(r);
         //database.clearAllTables();
     }
 
