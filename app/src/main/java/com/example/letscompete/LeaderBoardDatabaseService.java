@@ -6,7 +6,11 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
+import com.example.letscompete.models.ModelChallenge;
 import com.example.letscompete.models.ModelParticipant;
+import com.example.letscompete.models.ModelUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -67,47 +71,59 @@ public class LeaderBoardDatabaseService extends Service {
         Log.i(TAG, "On Destroy");
         super.onDestroy();
     }
-
     public void getDatabaseData(String name)
+    {
+        getDatabaseData(name, false);
+    }
+
+    public void getDatabaseData(String name, boolean isSame)
     {
         Log.i(TAG, "Checking if this works");
         DatabaseReference a = database.getReference("Participants");
         Query query = a.orderByChild("challengeTitle").equalTo(name);
+        if(!isSame)
+        {
+            localDatabase.userDao().deleteAll();
+        }
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 userList.clear();
-                localDatabase.userDao().deleteAll();
                 for(DataSnapshot ds:  dataSnapshot.getChildren()) {
                     ModelParticipant modelUser = ds.getValue(ModelParticipant.class);
                     userList.add(modelUser);
                 }
                 Log.i(TAG, "Value is: " + userList + "\n" + userList.size());
-                for(ModelParticipant a: userList)
+                List<UserLeaderBoardStats> users = new ArrayList<>();
+                for(int i = 0; i < userList.size(); i++)
                 {
-                    String rank = a.getRank();
-                    UserLeaderBoardStats user = new UserLeaderBoardStats();
-                    if(a.getUserName() != null){
-                        user.setUsername(a.getUserName());
+                    users.add(new UserLeaderBoardStats());
+                    String rank = userList.get(i).getRank();
+                    String username = userList.get(i).getUserName();
+                    if(username != null){
+                        users.get(i).setUsername(username);
                     }
                     else
                     {
-                        user.setUsername("none");
+                        users.get(i).setUsername("none");
                     }
                     if(rank!= null && !rank.isEmpty())
                     {
-                        user.setStat(a.getRank());
+                        users.get(i).setStat(rank);
                     }
                     else
                     {
-                        user.setStat("0");
+                        users.get(i).setStat("0");
                     }
-                    localDatabase.userDao().insertAll(user);
+                    //localDatabase.userDao().insertAll(user);
+                    //localDatabase.userDao().insertAll(user);
                     //Log.i(TAG, "Value is: " + a);
                 }
-                stopSelf();
+                localDatabase.userDao().insertAllList(users);
+                getUserProfilePic(users);
+                //stopSelf();
             }
 
             @Override
@@ -117,5 +133,38 @@ public class LeaderBoardDatabaseService extends Service {
             }
         });
         //stopSelf();
+    }
+    public void getUserProfilePic(List<UserLeaderBoardStats> users) {
+        for (UserLeaderBoardStats user : users) {
+            String name = user.getUsername();
+            DatabaseReference b = database.getReference("Users");
+            Query query2 = b.orderByChild("email").equalTo(name);
+            query2.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    List<ModelUser> modelusers = new ArrayList<>();
+                    for (DataSnapshot ds : snapshot.getChildren()) {
+                        ModelUser modeluser = ds.getValue(ModelUser.class);
+                        modelusers.add(modeluser);
+                    }
+                    if (modelusers.size() == 0) {
+                        return;
+                    }
+                    ModelUser c = modelusers.get(0);
+                    Log.i(TAG, "Got data " + c.getImage());
+                    if (c == null) {
+                        return;
+                    }
+                    localDatabase.userDao().updatePicture(c.getImage(), c.getEmail());
+                }
+
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+
+            });
+        }
     }
 }

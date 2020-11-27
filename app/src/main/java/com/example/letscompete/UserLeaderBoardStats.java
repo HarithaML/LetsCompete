@@ -21,16 +21,15 @@ public class UserLeaderBoardStats {
     @ColumnInfo(name = "stat")
     public String stat;
 
-    @Ignore
     @ColumnInfo(name = "picture")
-    Bitmap picture;
+    String picture;
 
 
-    public Bitmap getPicture() {
+    public String getPicture() {
         return picture;
     }
 
-    public void setPicture(Bitmap picture) {
+    public void setPicture(String picture) {
         this.picture = picture;
     }
 

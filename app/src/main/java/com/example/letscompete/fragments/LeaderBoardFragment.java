@@ -46,7 +46,7 @@ public class LeaderBoardFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     private static final String TAG = "LeaderBoardFragment";
     private TextView rank, username, number, challengeName, challengeType, challengeDuration;
-    private ImageView challengePicture;
+    private ImageView challengePicture, profilePic;
     private AppDatabase database;
     private FirebaseAuth firebaseAuth;
     private FirebaseUser user;
@@ -120,6 +120,7 @@ public class LeaderBoardFragment extends Fragment {
         challengeType = view.findViewById(R.id.ctype);
         challengeDuration = view.findViewById(R.id.cduration);
         challengePicture= view.findViewById(R.id.lchallengePic);
+        profilePic= view.findViewById(R.id.profile);
         try {
             challengeName.setText(getArguments().getString("Challenge"));
             challengeType.setText("Type: " + getArguments().getString("Type"));
@@ -130,20 +131,21 @@ public class LeaderBoardFragment extends Fragment {
             challengeName.setText("");
         }
         try {
-            Picasso.get().load(getArguments().getString("Picture")).into(challengePicture);
+            String pic = getArguments().getString("Picture");
+            Log.i(TAG, pic);
+            if(pic != null && pic != null)
+            {
+                Picasso.get().load(pic).into(challengePicture);
+            }
         }
         catch(Exception e)
         {
-            Picasso.get().load(R.drawable.ic_default_img_black).into(challengePicture);
+            //Picasso.get().load(R.drawable.ic_default_img_black).into(challengePicture);
         }
         rank = view.findViewById(R.id.RankLeader);
         username = view.findViewById(R.id.UserLeader);
         number = view.findViewById(R.id.numberLeader);
-        UserLeaderBoardStats usern = new UserLeaderBoardStats();
         Log.i("Help", getArguments().getString("Challenge"));
-        usern.setUsername("ok");
-        usern.setRank(1);
-        usern.setStat("12");
         //database.userDao().insertAll(user);
         Button button = view.findViewById(R.id.button);
         Button button2 = view.findViewById(R.id.change_challenge_btn);
@@ -179,12 +181,19 @@ public class LeaderBoardFragment extends Fragment {
     private void setLeaderboardStats(View view)
     {
         Log.i(TAG, user.getEmail());
+        //remember this check
         List<UserLeaderBoardStats> ownStats = database.userDao().getUser(user.getEmail());
         if(ownStats.size() == 1)
         {
             username.setText(ownStats.get(0).getUsername());
             rank.setText("Your Rank: " + ownStats.get(0).getRank() + "");
             number.setText(ownStats.get(0).getStat() + "");
+            try{
+                Picasso.get().load(ownStats.get(0).getPicture()).into(profilePic);
+            }
+            catch (Exception e)
+            {
+            }
         }
         else
         {
@@ -214,7 +223,7 @@ public class LeaderBoardFragment extends Fragment {
     {
         if(mBound)
         {
-            service.getDatabaseData(getArguments().getString("Challenge"));
+            service.getDatabaseData(getArguments().getString("Challenge"),true);
             setLeaderboardStats(getView());
         }
     }

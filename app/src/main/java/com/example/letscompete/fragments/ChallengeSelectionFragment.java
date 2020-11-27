@@ -99,12 +99,14 @@ public class ChallengeSelectionFragment extends Fragment {
         View v = getView();
         RecyclerView content = v.findViewById(R.id.leaderboard_list2);
         List<UserLeaderBoardChallenges> ok = new ArrayList<>();
+        /*
         UserLeaderBoardChallenges u = new UserLeaderBoardChallenges();
         u.setChallengename("Cooking Challenge");
         u.setPicture("https://firebasestorage.googleapis.com/v0/b/letscompete-209e6.appspot.com/o/Images%2F1605652627992.jpg?alt=media&token=d4224e99-a7ba-4077-ac38-bcdcf50b4f0d");
         u.setDuration("1/10/21");
         u.setType("Score");
         ok.add(u);
+        */
         ok.addAll(database.leaderDao().getAll());
         Log.i("help", ok.size() + "");
         AdapterChallengesLeaderboard ad = new AdapterChallengesLeaderboard(ok, getActivity());
