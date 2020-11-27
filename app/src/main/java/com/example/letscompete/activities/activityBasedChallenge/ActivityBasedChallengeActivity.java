@@ -1,4 +1,4 @@
-package com.example.letscompete.activities;
+package com.example.letscompete.activities.activityBasedChallenge;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.letscompete.R;
+import com.example.letscompete.activities.DashBoardActivity;
 import com.example.letscompete.adapters.ChallengeFragmentAdapter;
 import com.example.letscompete.fragments.InfoFragment;
 import com.example.letscompete.notifications.APIService;
@@ -19,9 +20,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class TimeChallengeActivity extends AppCompatActivity {
+public class ActivityBasedChallengeActivity extends AppCompatActivity {
     ViewPager viewPager;
     String challengeTitle;
+    String username;
 
     FirebaseAuth firebaseAuth;
     APIService apiService;
@@ -33,12 +35,13 @@ public class TimeChallengeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_time_challenge);
+        setContentView(R.layout.activity_activity_based_challenge);
          viewPager = findViewById(R.id.challenge_content);
         //challengeTitle
         Intent intent = getIntent();
 
         challengeTitle = intent.getStringExtra("challengeTitle");
+        username = intent.getStringExtra("username");
 
 
         ActionBar actionBar = getSupportActionBar();
@@ -60,7 +63,7 @@ public class TimeChallengeActivity extends AppCompatActivity {
 
 
         TabLayout tabLayout = findViewById(R.id.challenge_tablayout);
-        final ChallengeFragmentAdapter adapter = new ChallengeFragmentAdapter(this, getSupportFragmentManager(), tabLayout.getTabCount(),challengeTitle);
+        final ChallengeFragmentAdapter adapter = new ChallengeFragmentAdapter(this, getSupportFragmentManager(), tabLayout.getTabCount(),challengeTitle,username);
 
         viewPager.setAdapter(adapter);
 
@@ -93,7 +96,7 @@ public class TimeChallengeActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()) {
             case android.R.id.home:
-                startActivity(new Intent(TimeChallengeActivity.this, DashBoardActivity.class));
+                startActivity(new Intent(ActivityBasedChallengeActivity.this, DashBoardActivity.class));
                 finish();
                 return true;
         }

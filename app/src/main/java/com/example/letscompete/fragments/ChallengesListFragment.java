@@ -1,5 +1,6 @@
 package com.example.letscompete.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,8 +11,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.letscompete.R;
+import com.example.letscompete.adapters.AdapterChallenges;
 import com.example.letscompete.adapters.AdapterChallengesCard;
 import com.example.letscompete.models.ModelChallenge;
 import com.example.letscompete.models.ModelParticipant;
@@ -21,6 +26,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -33,9 +39,9 @@ import java.util.List;
  * Use the {@link OngoingFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class OngoingFragment extends Fragment {
+public class ChallengesListFragment extends Fragment {
     RecyclerView recyclerView;
-    AdapterChallengesCard adapterChallengesCard;
+    AdapterChallenges adapterChallenges;
     String titleKey;
     List<ModelChallenge> challengeList;
 
@@ -55,7 +61,7 @@ public class OngoingFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public OngoingFragment() {
+    public ChallengesListFragment() {
         // Required empty public constructor
     }
 
@@ -90,7 +96,7 @@ public class OngoingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_ongoing, container, false);
+        View view = inflater.inflate(R.layout.fragment_challenges_list, container, false);
         //init firebase
         firebaseAuth = FirebaseAuth.getInstance();
         user = firebaseAuth.getCurrentUser();
@@ -98,7 +104,7 @@ public class OngoingFragment extends Fragment {
         databaseReference = firebaseDatabase.getReference("Users");
         storageReference = FirebaseStorage.getInstance().getReference();
         // init views
-        recyclerView = view.findViewById(R.id.onging_recyclerView);
+        recyclerView = view.findViewById(R.id.recview);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         challengeList = new ArrayList<>();
@@ -111,33 +117,36 @@ public class OngoingFragment extends Fragment {
     }
 
     private void getAllOngoing(){
-        //retrieve challenge under current user
-        //Query query = databaseReference.orderByChild("id").equalTo(user.getUid());
-        DatabaseReference participantsRef = FirebaseDatabase.getInstance().getReference().child("Participants");
+
+        DatabaseReference participantsRef = FirebaseDatabase.getInstance().getReference().child("Challenge");
         participantsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 challengeList.clear();
                 for(DataSnapshot ds : snapshot.getChildren()){
-                    ModelParticipant modelParticipant = ds.getValue(ModelParticipant.class);
-                    if (modelParticipant.getUserUID() != null) {
-                        if (modelParticipant.getUserUID().equals(user.getUid()) && modelParticipant.getStatus().equals("Ongoing")) {
-                            titleKey = modelParticipant.getChallengeTitle();
+                    //ModelParticipant modelParticipant = ds.getValue(ModelParticipant.class);
+                    ModelChallenge modelChallenge = ds.getValue(ModelChallenge.class);
+                    if (modelChallenge.getUserID() != null) {
+                        if (!modelChallenge.getUserID().equals(user.getUid())) {
+                            titleKey = modelChallenge.getChallengeTitle();
                             //get Chanllenge table
-                            DatabaseReference chaRef = FirebaseDatabase.getInstance().getReference().child("Challenge");
+                            DatabaseReference chaRef = FirebaseDatabase.getInstance().getReference().child("Participants");
                             chaRef.addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                                        ModelChallenge modelChallenge = dataSnapshot.getValue(ModelChallenge.class);
-                                        if(modelChallenge.getChallengeTitle()!=null){
-                                            if(modelChallenge.getChallengeTitle().equals(modelParticipant.getChallengeTitle())){
+                                        ModelParticipant modelParticipant = dataSnapshot.getValue(ModelParticipant.class);
+                                            if(modelChallenge.getChallengeTitle().equals(modelParticipant.getChallengeTitle()))
+
+
+                                            {
+
                                                 challengeList.add(modelChallenge);
                                             }
-                                        }
+
                                     }
-                                    adapterChallengesCard = new AdapterChallengesCard(getActivity(), challengeList,modelParticipant.getUserName());
-                                    recyclerView.setAdapter(adapterChallengesCard);
+                                    adapterChallenges = new AdapterChallenges(getActivity(), challengeList);
+                                    recyclerView.setAdapter(adapterChallenges);
                                 }
 
                                 @Override

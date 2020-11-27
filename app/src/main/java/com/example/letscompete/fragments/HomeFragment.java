@@ -15,12 +15,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.example.letscompete.activities.CreateChallengeActivity;
 import com.example.letscompete.activities.MainActivity;
 import com.example.letscompete.R;
-import com.example.letscompete.activities.TimeChallengeActivity;
 import com.example.letscompete.adapters.HomeUpAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
@@ -145,6 +143,11 @@ public class HomeFragment extends Fragment {
                 //transfer to new challenge fragment_Harika
             } else if(which == 1) {
                 //join a current challenge clicked
+                ChallengesListFragment fragment1 = new ChallengesListFragment();
+                FragmentTransaction ft1 = getFragmentManager().beginTransaction();
+                ft1.replace(R.id.content,fragment1,"");
+                ft1.addToBackStack(null).commit();
+
             }
         });
         //create and show dialog
