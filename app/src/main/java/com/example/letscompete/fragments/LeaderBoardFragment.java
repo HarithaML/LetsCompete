@@ -21,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -164,7 +165,7 @@ public class LeaderBoardFragment extends Fragment {
         number = view.findViewById(R.id.numberLeader);
         Log.i("Help", getArguments().getString("Challenge"));
         //database.userDao().insertAll(user);
-        Button button = view.findViewById(R.id.button);
+        ImageButton button = view.findViewById(R.id.button);
         Button button2 = view.findViewById(R.id.change_challenge_btn);
         //please change latter
         button.setOnClickListener(new View.OnClickListener() {
@@ -211,8 +212,8 @@ public class LeaderBoardFragment extends Fragment {
         if(ownStats.size() == 1)
         {
             username.setText(ownStats.get(0).getUsername());
-            rank.setText("Your Rank: " + ownStats.get(0).getRank() + "");
-            number.setText(ownStats.get(0).getStat() + "");
+            rank.setText("Your Rank: " + ownStats.get(0).getRank());
+            number.setText(ownStats.get(0).getStat());
             try{
                 Picasso.get().load(ownStats.get(0).getPicture()).into(profilePic);
             }

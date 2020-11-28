@@ -78,6 +78,8 @@
         android:fontFamily="sans-serif"
         android:text="Type"
         android:textColor="@color/colorPrimary"
+        app:layout_constraintEnd_toStartOf="@+id/change_challenge_btn"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/lchallengePic"
         app:layout_constraintTop_toTopOf="@+id/lchallengePic" />
 
@@ -89,7 +91,10 @@
         android:text="Duration"
         android:textColor="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="@+id/lchallengePic"
-        app:layout_constraintStart_toStartOf="@+id/ctype" />
+        app:layout_constraintEnd_toStartOf="@+id/change_challenge_btn"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/ctype"
+        app:layout_constraintTop_toBottomOf="@+id/ctype" />
 
     <TextView
         android:id="@+id/textView4"
@@ -148,40 +153,51 @@
         android:id="@+id/view3"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorPrimaryVariant"
         app:layout_constraintBottom_toTopOf="@+id/leaderboard_list"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view2" />
+
+    <View
+        android:id="@+id/view5"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/colorPrimary"
+        app:layout_constraintBottom_toTopOf="@+id/leaderboard_list"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/leaderboard_list"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="7dp"
         android:background="@color/colorSecondary"
         app:layout_constraintBottom_toTopOf="@+id/guideline10"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view2"
-        app:layout_constraintVertical_bias="1.0"></androidx.recyclerview.widget.RecyclerView>
+        />
 
-    <Button
+    <ImageButton
         android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/setting_custom"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_refresh_24px"
         android:text="Test"
-        app:layout_constraintBottom_toTopOf="@+id/guideline10"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@+id/topview"
+        app:layout_constraintEnd_toStartOf="@+id/guideline6"
+        app:layout_constraintTop_toBottomOf="@+id/change_challenge_btn" />
 
     <Button
         android:id="@+id/change_challenge_btn"
-        style="@style/Widget.AppCompat.Button"
-        android:layout_width="130dp"
-        android:layout_height="54dp"
-        android:text="Change Challenge"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="88dp"
+        android:layout_height="45dp"
+        android:text="Switch"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline6"
         app:layout_constraintTop_toTopOf="@+id/guideline8" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

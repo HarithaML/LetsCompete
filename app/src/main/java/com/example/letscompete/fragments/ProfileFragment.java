@@ -24,6 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -99,6 +100,7 @@ public class ProfileFragment extends Fragment {
     ImageView avatarTv,coverTv;
     TextView name_tv, email_tv, phone_tv;
     FloatingActionButton fab;
+    ImageButton setting;
 
     //Videos
     private ArrayList<ModelVideo> videoArrayList;
@@ -166,6 +168,7 @@ public class ProfileFragment extends Fragment {
         phone_tv = view.findViewById(R.id.phone_tv);
         coverTv =view.findViewById(R.id.coverTv);
         fab =  view.findViewById(R.id.fab);
+        setting = view.findViewById(R.id.ProfileSettingButton);
         /*We have to get info of currently signed in user. We can get it using user's email or uid
         I'm gonna retrieve user detail using email
         By using orderByChild query we will Show the detail from a node
@@ -208,6 +211,13 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
+            }
+        });
+        setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //showEditProfileDialog();
+                goToSettingsActivity();
             }
         });
 

@@ -24,10 +24,11 @@
             </ImageView>
 
             <LinearLayout
-                android:id = "@+id/profileSection"
+                android:id="@+id/profileSection"
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:layout_marginTop="100dp"
+                android:layout_toStartOf="@+id/imageButton"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -76,13 +77,14 @@
             </LinearLayout>
 
             <ImageButton
-                android:id="@+id/imageButton"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_alignParentTop="true"
+                android:id="@+id/ProfileSettingButton"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignBottom="@+id/coverTv"
                 android:layout_alignParentEnd="true"
-                android:layout_marginTop="40dp"
-                android:background="@drawable/rounded"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/setting_custom"
                 android:scaleType="fitXY"
                 android:src="@drawable/ic_settings_24px" />
 
