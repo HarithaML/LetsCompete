@@ -105,7 +105,8 @@ public class ProfileFragment extends Fragment {
     private AdapterVideo adapterVideo;
     private RecyclerView videosRv;
 
-
+    //other
+    private String imgURL;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -180,7 +181,7 @@ public class ProfileFragment extends Fragment {
                     String name = ""+ds.child("name").getValue();
                     String email = ""+ds.child("email").getValue();
                     String phone = ""+ds.child("phone").getValue();
-                    String image = ""+ds.child("image").getValue();
+                    imgURL = ""+ds.child("image").getValue();
                     String cover = ""+ds.child("cover").getValue();
 
                     //set data
@@ -189,7 +190,7 @@ public class ProfileFragment extends Fragment {
                     phone_tv.setText(phone);
                     try{
                         //if image is recieved then set
-                        Picasso.get().load(image).into(avatarTv);
+                        Picasso.get().load(imgURL).into(avatarTv);
                     }catch(Exception e){
                         //if there is any exception in getting image
                         Picasso.get().load(R.drawable.ic_default_img_black).into(avatarTv);
@@ -281,6 +282,7 @@ public class ProfileFragment extends Fragment {
     private void goToSettingsActivity()
     {
         Intent intent = new Intent(getActivity(), Setting_Activity.class);
+        intent.putExtra("Image", imgURL);
         startActivity(intent);
     }
 

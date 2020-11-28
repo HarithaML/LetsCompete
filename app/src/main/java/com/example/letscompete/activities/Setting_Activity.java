@@ -6,6 +6,7 @@ import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Credentials;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -30,9 +31,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.letscompete.adapters.CustomAdapter;
 import com.example.letscompete.R;
 import com.example.letscompete.fragments.ProfileFragment;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -46,8 +51,10 @@ import java.util.HashMap;
 
 public class Setting_Activity extends AppCompatActivity {
 
-    FirebaseAuth firebaseAuth;
-    FirebaseUser user;
+    private static final String TAG= "Setting_Activity";
+
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser user;
     DatabaseReference databaseReference;
     //Uri of picked image
     Uri image_uri;
@@ -107,6 +114,13 @@ public class Setting_Activity extends AppCompatActivity {
                 ""
         };
         avatarTv = (ImageView) findViewById(R.id.imageView);
+        try{
+            //if image is recieved then set
+            Picasso.get().load(getIntent().getStringExtra("Image")).into(avatarTv);
+        }catch(Exception e){
+            //if there is any exception in getting image
+            Picasso.get().load(R.drawable.ic_default_img_black).into(avatarTv);
+        }
 /*
         try{
             //if image is recieved then set
@@ -347,6 +361,81 @@ public class Setting_Activity extends AppCompatActivity {
         builder.create().show();
     }
 
+    public void changePassword()
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Update Password");
+        //set layout of dialog
+        LinearLayout linearLayout = new LinearLayout(this);
+        linearLayout.setOrientation(LinearLayout.VERTICAL);
+        linearLayout.setPadding(10,10,10,10);
+        //add edit text
+        EditText editText = new EditText(this);
+        editText.setHint("Old Password");
+        editText.setPadding(20,15,20,15);
+        EditText editText2 = new EditText(this);
+        editText2.setHint("New Password");
+        editText2.setPadding(20,15,20,15);
+        linearLayout.addView(editText);
+        linearLayout.addView(editText2);
+
+        builder.setView(linearLayout);
+        builder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //input text from edit text
+                String value= editText.getText().toString().trim();
+                String value2= editText2.getText().toString().trim();
+                //validate if user has entered something or not
+                Log.d(TAG, user.getEmail() + " " + value);
+                if(!TextUtils.isEmpty(value) && !TextUtils.isEmpty(value2)){
+                    AuthCredential c = EmailAuthProvider.getCredential(user.getEmail(),value);
+                    user.reauthenticate(c).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            user.updatePassword(value2).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        Log.d(TAG, "User password updated.");
+                                        Toast.makeText(getApplicationContext(),"User password updated.",Toast.LENGTH_SHORT).show();
+                                    }
+
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.d(TAG, "User password update failed.");
+                                    Toast.makeText(getApplicationContext(),"Password update failed.",Toast.LENGTH_SHORT).show();
+
+                                }
+                            });
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.d(TAG, "User password update failed.");
+                            Toast.makeText(getApplicationContext(),"Password update failed.",Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
+
+                }else{
+                    Toast.makeText(getApplicationContext(),"Please enter Passwords", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+        //add button in dialog to cancel
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.create().show();
+    }
+
     public void promptLogout()
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -372,6 +461,10 @@ public class Setting_Activity extends AppCompatActivity {
         builder.create().show();
     }
 
+    public void setProfileOrCoverPhoto(String profileOrCoverPhoto) {
+        this.profileOrCoverPhoto = profileOrCoverPhoto;
+    }
+
     private void checkUserStatus() {
         //get current user
         FirebaseUser user = firebaseAuth.getCurrentUser();
@@ -387,7 +480,5 @@ public class Setting_Activity extends AppCompatActivity {
         }
     }
 
-    public void setProfileOrCoverPhoto(String profileOrCoverPhoto) {
-        this.profileOrCoverPhoto = profileOrCoverPhoto;
-    }
+
 }
