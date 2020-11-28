@@ -1,6 +1,5 @@
 package com.example.letscompete.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,13 +10,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.example.letscompete.R;
 import com.example.letscompete.adapters.AdapterChallenges;
-import com.example.letscompete.adapters.AdapterChallengesCard;
 import com.example.letscompete.models.ModelChallenge;
 import com.example.letscompete.models.ModelParticipant;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,7 +21,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -44,6 +38,7 @@ public class ChallengesListFragment extends Fragment {
     AdapterChallenges adapterChallenges;
     String titleKey;
     List<ModelChallenge> challengeList;
+    List<String> joinedParticipantsList;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -108,41 +103,42 @@ public class ChallengesListFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         challengeList = new ArrayList<>();
-
-
-        getAllOngoing();
+        joinedParticipantsList = new ArrayList<>();
+        getUnjoined();
 
 
         return view;
     }
 
-    private void getAllOngoing(){
-
-        DatabaseReference participantsRef = FirebaseDatabase.getInstance().getReference().child("Challenge");
+    private void getUnjoined(){
+        //get unjoined title list
+        DatabaseReference participantsRef = FirebaseDatabase.getInstance().getReference().child("Participants");
         participantsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 challengeList.clear();
+                joinedParticipantsList.clear();
                 for(DataSnapshot ds : snapshot.getChildren()){
-                    //ModelParticipant modelParticipant = ds.getValue(ModelParticipant.class);
-                    ModelChallenge modelChallenge = ds.getValue(ModelChallenge.class);
-                    if (modelChallenge.getUserID() != null) {
-                        if (!modelChallenge.getUserID().equals(user.getUid())) {
-                            titleKey = modelChallenge.getChallengeTitle();
-                            //get Chanllenge table
-                            DatabaseReference chaRef = FirebaseDatabase.getInstance().getReference().child("Participants");
+                    ModelParticipant modelParticipant = ds.getValue(ModelParticipant.class);
+                    if (modelParticipant.getUserUID() != null) {
+                        if (modelParticipant.getUserUID().equals(user.getUid())) {
+                            titleKey = modelParticipant.getChallengeTitle();
+                            joinedParticipantsList.add(titleKey);
+                            System.out.println("you already join     "+titleKey);
+                            //get challengeList-ModelChallenge  from unjoinedList-String
+                            DatabaseReference chaRef = FirebaseDatabase.getInstance().getReference().child("Challenge");
                             chaRef.addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    challengeList.clear();
                                     for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                                        ModelParticipant modelParticipant = dataSnapshot.getValue(ModelParticipant.class);
-                                            if(modelChallenge.getChallengeTitle().equals(modelParticipant.getChallengeTitle()))
-
-
-                                            {
-
-                                                challengeList.add(modelChallenge);
-                                            }
+                                        ModelChallenge modelChallenge = dataSnapshot.getValue(ModelChallenge.class);
+                                        if(!joinedParticipantsList.contains(modelChallenge.getChallengeTitle()))
+                                        //if(modelChallenge.getChallengeTitle().equals(titleKey))
+                                        {
+                                            challengeList.add(modelChallenge);
+                                            System.out.println("you can join     "+modelChallenge.getChallengeTitle());
+                                        }
 
                                     }
                                     adapterChallenges = new AdapterChallenges(getActivity(), challengeList);
@@ -152,6 +148,25 @@ public class ChallengesListFragment extends Fragment {
                                 @Override
                                 public void onCancelled(@NonNull DatabaseError error) {
 
+                                }
+                            });
+                        }
+                        //in case for users don't have challengs at all.
+                        if(joinedParticipantsList.isEmpty()){
+                            DatabaseReference chaRef = FirebaseDatabase.getInstance().getReference().child("Challenge");
+                            chaRef.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    challengeList.clear();
+                                    for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                                        ModelChallenge modelChallenge = dataSnapshot.getValue(ModelChallenge.class);
+                                        challengeList.add(modelChallenge);
+                                    }
+                                    adapterChallenges = new AdapterChallenges(getActivity(), challengeList);
+                                    recyclerView.setAdapter(adapterChallenges);
+                                }
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
                                 }
                             });
                         }
