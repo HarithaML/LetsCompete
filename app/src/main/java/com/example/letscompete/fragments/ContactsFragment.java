@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -38,6 +39,7 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class ContactsFragment extends Fragment {
+    private static final String TAG = "ContactsFragment";
     RecyclerView recyclerView;
     AdapterUsers adapterUsers;
     List<ModelUser> userList;
@@ -123,6 +125,11 @@ public class ContactsFragment extends Fragment {
                 for(DataSnapshot ds:  snapshot.getChildren()){
                     ModelUser modelUser = ds.getValue(ModelUser.class);
 
+                    if(modelUser == null || modelUser.getUid() == null)
+                    {
+                        Log.w(TAG, "Unknown User");
+                        continue;
+                    }
                     //get all users except currently signed in user
                     if(!modelUser.getUid().equals(fuser.getUid())){
                         userList.add(modelUser);

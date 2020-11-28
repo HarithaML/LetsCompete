@@ -82,7 +82,7 @@ public class ProfileFragment extends Fragment {
     private static final int CAMERA_REQUEST_CODE =100;
     private static final int STORAGE_REQUEST_CODE = 200;
     private static final int IMAGE_PICK_GALLERY_REQUEST_CODE = 300;
-    private static final int IMAGE_PICK_CAMERA_REQUEST_CODE=400;
+    private static final int IMAGE_PICK_CAMERA_REQUEST_CODE = 400;
 
     //Uri of picked image
     Uri image_uri;
@@ -168,7 +168,7 @@ public class ProfileFragment extends Fragment {
         phone_tv = view.findViewById(R.id.phone_tv);
         coverTv =view.findViewById(R.id.coverTv);
         fab =  view.findViewById(R.id.fab);
-        setting = view.findViewById(R.id.ProfileSettingButton);
+        //setting = view.findViewById(R.id.ProfileSettingButton);
         /*We have to get info of currently signed in user. We can get it using user's email or uid
         I'm gonna retrieve user detail using email
         By using orderByChild query we will Show the detail from a node
@@ -213,6 +213,7 @@ public class ProfileFragment extends Fragment {
 
             }
         });
+        /*
         setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -220,7 +221,7 @@ public class ProfileFragment extends Fragment {
                 goToSettingsActivity();
             }
         });
-
+        */
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
