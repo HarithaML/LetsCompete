@@ -10,7 +10,9 @@ import android.net.Credentials;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.InputType;
 import android.text.TextUtils;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -373,9 +375,13 @@ public class Setting_Activity extends AppCompatActivity {
         EditText editText = new EditText(this);
         editText.setHint("Old Password");
         editText.setPadding(20,15,20,15);
+        editText.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        editText.setTransformationMethod(PasswordTransformationMethod.getInstance());
         EditText editText2 = new EditText(this);
         editText2.setHint("New Password");
         editText2.setPadding(20,15,20,15);
+        editText2.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        editText2.setTransformationMethod(PasswordTransformationMethod.getInstance());
         linearLayout.addView(editText);
         linearLayout.addView(editText2);
 
