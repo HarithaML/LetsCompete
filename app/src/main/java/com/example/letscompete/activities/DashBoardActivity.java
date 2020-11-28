@@ -7,6 +7,7 @@ import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -35,6 +36,7 @@ import com.google.firebase.iid.FirebaseInstanceId;
 public class DashBoardActivity extends AppCompatActivity
     implements ChallengeSelectionFragment.OnChallengeSelectionListener {
     // firebase auth
+    private static String TAG = "DashBoardActivity";
     private UserLeaderBoardDatabaseService service;
     private Intent sIntent;
     FirebaseAuth firebaseAuth;
@@ -85,6 +87,9 @@ public class DashBoardActivity extends AppCompatActivity
 
         //update token
         updateToken(FirebaseInstanceId.getInstance().getToken());
+        sIntent = new Intent(this, UserLeaderBoardDatabaseService.class);
+        bindService(sIntent, connection, Context.BIND_AUTO_CREATE);
+        startService(sIntent);
 
     }
 
@@ -92,16 +97,19 @@ public class DashBoardActivity extends AppCompatActivity
     protected void onResume() {
         checkUserStatus();
         super.onResume();
-        sIntent = new Intent(this, UserLeaderBoardDatabaseService.class);
-        bindService(sIntent, connection, Context.BIND_AUTO_CREATE);
-        startService(sIntent);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
         stopService(sIntent);
         unbindService(connection);
+        Log.i(TAG, "onDestroy Dashboard");
     }
 
     public void updateToken(String token){
