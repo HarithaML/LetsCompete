@@ -210,7 +210,7 @@ public class CompleteChallengeActivity extends AppCompatActivity  {
 
          */
         //options to show in dialog
-        String options[] = {"Camera","Gallery"};
+        String []options = {"Camera","Gallery"};
 
         android.app.AlertDialog.Builder builder = new AlertDialog.Builder(this);
         //set Title

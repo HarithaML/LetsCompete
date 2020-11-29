@@ -9,7 +9,6 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -88,39 +87,14 @@ public class LeaderBoardFragment extends Fragment {
         }
     };
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     public LeaderBoardFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment LeaderBoardFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static LeaderBoardFragment newInstance(String param1, String param2) {
-        LeaderBoardFragment fragment = new LeaderBoardFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
         database = AppDatabase.getInstance(getActivity());
         firebaseAuth = FirebaseAuth.getInstance();
         user = firebaseAuth.getCurrentUser();
@@ -228,8 +202,8 @@ public class LeaderBoardFragment extends Fragment {
             number.setText("N/A");
         }
         RecyclerView content = view.findViewById(R.id.leaderboard_list);
-        List<UserLeaderBoardStats> ok = new ArrayList<>();
-        ok.addAll(database.userDao().getAll());
+        List<UserLeaderBoardStats> ok = new ArrayList<>(database.userDao().getAll());
+        //ok.addAll(database.userDao().getAll());
         //Log.i("ok", ok.get(0).stat.toString());
         LeaderBoardAdapter ad = new LeaderBoardAdapter(ok);
         content.setAdapter(ad);

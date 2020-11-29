@@ -1,12 +1,10 @@
 package com.example.letscompete.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,9 +18,8 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 public class AdapterChallenges extends RecyclerView.Adapter<AdapterChallenges.MyHolder> {
-    Context context;
-    List<ModelChallenge> challengeList;
-    ModelChallenge model;
+    private final Context context;
+    private final List<ModelChallenge> challengeList;
 
     public AdapterChallenges(Context context, List<ModelChallenge> challengeList){
         this.context = context;
@@ -76,8 +73,8 @@ public class AdapterChallenges extends RecyclerView.Adapter<AdapterChallenges.My
     }
 
     class MyHolder extends RecyclerView.ViewHolder{
-        ImageView img1;
-        TextView ChalName,ChalDuration,ChalDesc;
+        final ImageView img1;
+        final TextView ChalName,ChalDuration,ChalDesc;
 
         public MyHolder(@NonNull View itemView) {
             super(itemView);

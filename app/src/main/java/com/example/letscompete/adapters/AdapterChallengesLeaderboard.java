@@ -14,16 +14,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.letscompete.R;
 import com.example.letscompete.UserLeaderBoardChallenges;
 import com.example.letscompete.activities.DashBoardActivity;
-import com.example.letscompete.activities.Setting_Activity;
-import com.example.letscompete.models.ModelChallenge;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class AdapterChallengesLeaderboard extends RecyclerView.Adapter<AdapterChallengesLeaderboard.MyHolder> {
 
-    private Context mContext;
-    List<UserLeaderBoardChallenges> modelChallengeList;
+    final private Context mContext;
+    final List<UserLeaderBoardChallenges> modelChallengeList;
 
     public AdapterChallengesLeaderboard(List<UserLeaderBoardChallenges> modelChallengeList, Context context) {
         this.modelChallengeList = modelChallengeList;
@@ -84,8 +82,8 @@ public class AdapterChallengesLeaderboard extends RecyclerView.Adapter<AdapterCh
 
     //view Holder class
     class MyHolder extends RecyclerView.ViewHolder{
-        TextView mTitle;
-        ImageView mPic;
+        final TextView mTitle;
+        final ImageView mPic;
         public MyHolder(@NonNull View itemView) {
             super(itemView);
             mTitle = (TextView) itemView.findViewById(R.id.textView5);

@@ -15,9 +15,6 @@ import android.widget.Toast;
 
 
 import com.example.letscompete.R;
-import com.example.letscompete.activities.CreateChallengeActivity;
-import com.example.letscompete.activities.DashBoardActivity;
-import com.example.letscompete.activities.MainActivity;
 import com.example.letscompete.models.ModelParticipant;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -27,7 +24,6 @@ import com.squareup.picasso.Picasso;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.

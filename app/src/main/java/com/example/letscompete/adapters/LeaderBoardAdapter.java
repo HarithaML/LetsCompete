@@ -1,6 +1,5 @@
 package com.example.letscompete.adapters;
 
-import android.media.Image;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LeaderBoardAdapter extends RecyclerView.Adapter<LeaderBoardAdapter.ViewHolder> {
-    private List<UserLeaderBoardStats> rankings;
+    final private List<UserLeaderBoardStats> rankings;
     private final static String TAG = "LeaderBoardAdapter";
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -87,6 +86,7 @@ public class LeaderBoardAdapter extends RecyclerView.Adapter<LeaderBoardAdapter.
             }
             else
             {
+                Log.i(TAG,"No image Available");
                 //Picasso.get().load(R.drawable.ic_default_img_black).into(viewHolder.getProfilePic());
             }
         }

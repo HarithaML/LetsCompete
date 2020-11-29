@@ -27,12 +27,10 @@ public class HomeUpAdapter extends FragmentPagerAdapter {
         switch (position) {
             case 0:
                 System.out.println("loading ongoing challenge");
-                OngoingFragment ongoingFragment = new OngoingFragment();
-                return ongoingFragment;
+                return new OngoingFragment();
             case 1:
                 System.out.println("loading completed challenges");
-                CompletedFragment completedFragment = new CompletedFragment();
-                return completedFragment;
+                return new CompletedFragment();
             default:
                 return null;
         }

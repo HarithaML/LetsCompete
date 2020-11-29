@@ -1,6 +1,5 @@
 package com.example.letscompete;
 
-import android.graphics.Bitmap;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;

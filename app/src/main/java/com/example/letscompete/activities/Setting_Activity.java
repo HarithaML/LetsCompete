@@ -6,7 +6,7 @@ import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Credentials;
+
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -26,19 +26,16 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.letscompete.adapters.CustomAdapter;
 import com.example.letscompete.R;
-import com.example.letscompete.fragments.ProfileFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -62,7 +59,7 @@ public class Setting_Activity extends AppCompatActivity {
     Uri image_uri;
 
     //path where images of user profile and cover will be stored
-    String storagePath = "Users_Profile_Cover_Imgs/";
+    final String storagePath = "Users_Profile_Cover_Imgs/";
 
     //for checking profile or cover photo
     String profileOrCoverPhoto;
@@ -75,7 +72,6 @@ public class Setting_Activity extends AppCompatActivity {
     String []storagePermissions;
     ImageView avatarTv;
 
-    private TextView mTextView;
     private static final int CAMERA_REQUEST_CODE =100;
     private static final int STORAGE_REQUEST_CODE = 200;
     private static final int IMAGE_PICK_GALLERY_REQUEST_CODE = 300;
@@ -160,8 +156,7 @@ public class Setting_Activity extends AppCompatActivity {
 
     //fu
     private boolean checkStoragePermission(){
-        boolean result = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)==(PackageManager.PERMISSION_GRANTED);
-        return result;
+        return ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)==(PackageManager.PERMISSION_GRANTED);
     }
     private void requestStoragePermission(){
         //request runtime Storage Permission
@@ -185,7 +180,7 @@ public class Setting_Activity extends AppCompatActivity {
 
          */
         //options to show in dialog
-        String options[] = {"Camera","Gallery"};
+        String[] options = {"Camera","Gallery"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         //set Title
@@ -263,13 +258,13 @@ public class Setting_Activity extends AppCompatActivity {
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
-                                    Toast.makeText(getApplicationContext(),"added to databse successfully",Toast.LENGTH_SHORT);
+                                    Toast.makeText(getApplicationContext(),"added to databse successfully",Toast.LENGTH_SHORT).show();
                                 }
                             });
 
 
                 }else{
-                    Toast.makeText(getApplicationContext(),"Error Occurred",Toast.LENGTH_SHORT);
+                    Toast.makeText(getApplicationContext(),"Error Occurred",Toast.LENGTH_SHORT).show();
                 }
 
             }

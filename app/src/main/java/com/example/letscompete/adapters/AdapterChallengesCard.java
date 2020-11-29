@@ -20,9 +20,9 @@ import com.example.letscompete.models.ModelChallenge;
 import java.util.List;
 
 public class AdapterChallengesCard extends RecyclerView.Adapter<AdapterChallengesCard.MyHolder> {
-    Context context;
-    List<ModelChallenge> challengeList;
-    String username;
+    final Context context;
+    final List<ModelChallenge> challengeList;
+    final String username;
 
     public AdapterChallengesCard(Context context, List<ModelChallenge> challengeList,String username){
         this.context = context;
@@ -80,8 +80,8 @@ public class AdapterChallengesCard extends RecyclerView.Adapter<AdapterChallenge
     }
 
     class MyHolder extends RecyclerView.ViewHolder{
-        TextView challengeTitle, challengeDescription, challengeDuration, challengeImage, challengeType, challengeStartdate;
-        LinearLayout challenge;
+        final TextView challengeTitle, challengeDescription, challengeDuration, challengeImage, challengeType, challengeStartdate;
+        final LinearLayout challenge;
         public MyHolder(View itemView){
             super(itemView);
             challenge = itemView.findViewById(R.id.challengeLayout);

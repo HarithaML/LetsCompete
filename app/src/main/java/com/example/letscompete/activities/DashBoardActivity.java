@@ -19,7 +19,6 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.letscompete.LeaderBoardDatabaseService;
 import com.example.letscompete.UserLeaderBoardDatabaseService;
 import com.example.letscompete.fragments.ChallengeSelectionFragment;
-import com.example.letscompete.fragments.ChatListFragment;
 import com.example.letscompete.fragments.ContactsFragment;
 import com.example.letscompete.fragments.HomeFragment;
 import com.example.letscompete.fragments.LeaderBoardFragment;
@@ -97,11 +96,6 @@ public class DashBoardActivity extends AppCompatActivity
     protected void onResume() {
         checkUserStatus();
         super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
     }
 
     @Override

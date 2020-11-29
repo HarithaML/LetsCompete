@@ -54,7 +54,6 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Set;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -77,7 +76,7 @@ public class ProfileFragment extends Fragment {
     //storage
     StorageReference storageReference;
     //path where images of user profile and cover will be stored
-    String storagePath = "Users_Profile_Cover_Imgs/";
+    final String storagePath = "Users_Profile_Cover_Imgs/";
     //permissions constants
     private static final int CAMERA_REQUEST_CODE =100;
     private static final int STORAGE_REQUEST_CODE = 200;
@@ -305,7 +304,7 @@ public class ProfileFragment extends Fragment {
         4)Edit Phone
          */
         //options to show in dialog
-        String options[] = {"Edit Profile Picture","Edit Cover Photo","Edit Name","Edit Phone number"};
+        String []options = {"Edit Profile Picture","Edit Cover Photo","Edit Name","Edit Phone number"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         //set Title
@@ -347,7 +346,7 @@ public class ProfileFragment extends Fragment {
 
          */
         //options to show in dialog
-        String options[] = {"Camera","Gallery"};
+        String []options= {"Camera","Gallery"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         //set Title

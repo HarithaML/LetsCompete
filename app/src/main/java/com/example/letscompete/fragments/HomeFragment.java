@@ -132,7 +132,7 @@ public class HomeFragment extends Fragment {
         * 1. create a new challenge
         * 2. join a current challenge
         * */
-        String options[] = {"Create your challenge", "Join a challenge"};
+        String []options = {"Create your challenge", "Join a challenge"};
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Add new a challenge");
         builder.setItems(options, (dialog, which) -> {

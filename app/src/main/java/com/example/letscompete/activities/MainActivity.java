@@ -33,23 +33,17 @@ public class MainActivity extends AppCompatActivity {
         mRegisterBtn = findViewById(R.id.register_btn);
         mLoginBtn = findViewById(R.id.login_btn);
 
-        mRegisterBtn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
+        mRegisterBtn.setOnClickListener(v -> {
                 // start RegisterActivity
                 startActivity(new Intent(MainActivity.this, RegisterActivity.class));
-            }
         });
-        mLoginBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        mLoginBtn.setOnClickListener(v -> {
                 // start LoginActivity
                 startActivity(new Intent(MainActivity.this, LoginActivity.class));
-            }
         });
 
 
-        int images [] = {R.drawable.slide1, R.drawable.slide2, R.drawable.slide3, R.drawable.slide4,R.drawable.slide5,R.drawable.slide6};
+        int []images = {R.drawable.slide1, R.drawable.slide2, R.drawable.slide3, R.drawable.slide4,R.drawable.slide5,R.drawable.slide6};
 
         v_flipper = findViewById(R.id.logo);
 
@@ -72,12 +66,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-
-    public void something() {
-        Intent intent = new Intent(this, Setting_Activity.class);
-        startActivity(intent);
-    }
 }
 
 
