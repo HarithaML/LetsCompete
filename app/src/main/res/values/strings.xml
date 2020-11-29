@@ -8,11 +8,11 @@
     <string name="hello_world">Hello Square World!</string>
     <string name="settings0">Change Profile Picture</string>
     <string name="settings1">Change Profile Dashboard</string>
-    <string name="settings1des"></string>
+    <string name="settings1des" />
     <string name="settings2">Change Username</string>
-    <string name="settings2des"></string>
+    <string name="settings2des" />
     <string name="settings3">Change Password</string>
-    <string name="settings3des"></string>
+    <string name="settings3des" />
     <string name="settings4">Log Out</string>
     <string name="register">Register</string>
     <string name="email">Email</string>
@@ -29,4 +29,37 @@
     <string name="forgot_password_recover">forgot_password_recover</string>
     <string name="challenge_title">Challenge Title</string>
     <string name="create_challenge">Create Challenge</string>
+    <string name="start_typing">Start typing</string>
+    <string name="generic_username">name</string>
+    <string name="online">online</string>
+    <string name="send">send</string>
+
+    <!-- relate to LeaderBoard -->
+    <string name="name_of_challenge">Name of Challenge</string>
+    <string name="challenge_picture">The challenge picture</string>
+    <string name="challenge_type_default">Type</string>
+    <string name="change_challenge_btn_txt">Switch</string>
+    <string name="refresh">Refresh</string>
+    <string name="your_rank_title">Your Rank</string>
+    <string name="duration">Duration</string>
+
+    <!-- Relate to LeaderboardRow-->
+    <string name ="rank">rank</string>
+    <string name ="numberStat">0</string>
+    <string name ="leader_stat">Stat</string>
+    <string name ="profile_pic">Profile Picture</string>
+
+    <!-- Relate to Settings-->
+    <string name ="menu">menu</string>
+    <string name ="submenu">submenu</string>
+
+    <!-- Relate to Start Page-->
+    <string name="register_intro">Get Started with your account</string>
+    <string name="acquire_email">Enter Email address</string>
+    <string name="acquire_pass">Enter your Password</string>
+    <string name="already_have_an_account">already have an account</string>
+    <string name="register_picture">Register Picture</string>
+    <string name="title_login">Lets Compete</string>
+    <string name="login_text">Login</string>
+
 </resources>

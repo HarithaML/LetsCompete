@@ -12,10 +12,13 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.letscompete.R;
 import com.example.letscompete.activities.Setting_Activity;
+
+import org.jetbrains.annotations.NotNull;
 
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder> {
     private Context mContext;
@@ -62,8 +65,9 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
     }
 
     // Create new views (invoked by the layout manager)
+    @NotNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         // Create a new view, which defines the UI of the list item
         View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.setting_row_layout, viewGroup, false);
@@ -121,20 +125,23 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
                 default:
                     break;
             }
-            view.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View view, MotionEvent motionEvent) {
-                    if(motionEvent.getAction() == MotionEvent.ACTION_DOWN)
-                    {
-                        view.setBackgroundColor(mContext.getColor(R.color.colorPrimaryVariant));
-                    }
-                    else
-                    {
-                        view.setBackgroundColor(mContext.getColor(R.color.colorSecondary));
-                    }
-                    return false;
+            view.setOnTouchListener((v, motionEvent) -> {
+                switch(motionEvent.getAction())
+                {
+                    case MotionEvent.ACTION_DOWN:
+                        v.setBackgroundColor(mContext.getColor(R.color.colorPrimaryVariant));
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        v.performClick();
+                    case MotionEvent.ACTION_OUTSIDE:
+                        v.setBackgroundColor(mContext.getColor(R.color.colorSecondary));
+                        break;
+                    default:
+                        break;
                 }
-            });
+
+                    return false;
+                });
         }
     }
     private void sometext(View view)
@@ -144,23 +151,19 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         bdialog.setTitle("Change Privacy");
 
         String []choices = {"Public", "Friends Only", "Private"};
-        bdialog.setItems(choices, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        switch (i)
-                        {
-                            case 0:
-                                break;
-                            case 1:
-                                break;
-                            case 2:
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                }
-        );
+        bdialog.setItems(choices, (dialogInterface,i) -> {
+            switch (i)
+            {
+                case 0:
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    break;
+                default:
+                    break;
+            }
+        });
         AlertDialog dialog = bdialog.create();
         Window window = dialog.getWindow();
         window.setGravity(Gravity.BOTTOM);

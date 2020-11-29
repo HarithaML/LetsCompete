@@ -5,9 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20px"
-    tools:context=".activities.MainActivity"
-    >
+    android:padding="20dp"
+    tools:context=".activities.MainActivity">
 
     <!--Button: Register-->
 
@@ -15,9 +14,9 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="50dp"
-        android:gravity="center"
-        android:text="Lets Compete"
         android:fontFamily="sans-serif-smallcaps"
+        android:gravity="center"
+        android:text="@string/title_login"
         android:textColor="@color/colorPrimary"
         android:textSize="40sp" />
 
@@ -31,25 +30,27 @@
         android:layout_marginTop="150dp"
 
         tools:ignore="MissingConstraints" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="50dp"
-        android:gravity="center"
-        android:text="Lets Compete"
         android:fontFamily="sans-serif-smallcaps"
+        android:gravity="center"
+        android:text="@string/title_login"
         android:textColor="@color/colorPrimary"
         android:textSize="40sp" />
+
     <Button
         android:id="@+id/register_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/logo"
-        app:cornerRadius="16dp"
-        android:layout_marginTop="60dp"
         android:layout_marginStart="50dp"
+        android:layout_marginTop="60dp"
         android:layout_marginEnd="50dp"
-        android:text="Register" />
+        android:text="@string/register"
+        app:cornerRadius="16dp" />
 
     <Button
         android:id="@+id/login_btn"
@@ -57,9 +58,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/register_btn"
 
-        android:layout_marginTop="20dp"
-        app:cornerRadius="16dp"
         android:layout_marginStart="50dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="50dp"
-        android:text="Login" />
+        android:text="@string/login_text"
+        app:cornerRadius="16dp" />
 </RelativeLayout>

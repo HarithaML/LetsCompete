@@ -13,5 +13,5 @@
     -->
     <dimen name="inner_frame_layout_padding">5dp</dimen>
     <dimen name="leader_frame_size"> 70dp </dimen>
-    <dimen name="leader_text_size">12dp </dimen>
+    <dimen name="leader_text_size">12sp </dimen>
 </resources>

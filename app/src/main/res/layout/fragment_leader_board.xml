@@ -12,7 +12,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/colorSecondary"
-        app:layout_constraintBottom_toTopOf="@+id/view"
+        app:layout_constraintBottom_toTopOf="@+id/leaderviewborder1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -55,7 +55,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-medium"
-        android:text="Name of Challenge"
+        android:text="@string/name_of_challenge"
         android:textColor="@color/colorPrimary"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="@+id/guideline9"
@@ -63,6 +63,7 @@
 
     <ImageView
         android:id="@+id/lchallengePic"
+        android:contentDescription="@string/challenge_picture"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginTop="5dp"
@@ -76,7 +77,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
         android:fontFamily="sans-serif"
-        android:text="Type"
+        android:text="@string/challenge_type_default"
         android:textColor="@color/colorPrimary"
         app:layout_constraintEnd_toStartOf="@+id/change_challenge_btn"
         app:layout_constraintHorizontal_bias="0.0"
@@ -88,7 +89,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif"
-        android:text="Duration"
+        android:text="@string/duration"
         android:textColor="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="@+id/lchallengePic"
         app:layout_constraintEnd_toStartOf="@+id/change_challenge_btn"
@@ -101,15 +102,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif"
-        android:text="Your Rank"
+        android:text="@string/your_rank_title"
         android:textColor="@color/colorPrimary"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/include"
         app:layout_constraintStart_toStartOf="@+id/guideline9"
-        app:layout_constraintTop_toBottomOf="@+id/view" />
+        app:layout_constraintTop_toBottomOf="@+id/leaderviewborder1" />
 
     <View
-        android:id="@+id/view"
+        android:id="@+id/leaderviewborder1"
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_marginTop="16dp"
@@ -129,7 +130,7 @@
         app:layout_constraintTop_toBottomOf="@id/textView4" />
 
     <View
-        android:id="@+id/view2"
+        android:id="@+id/leaderviewborder2"
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_marginTop="110dp"
@@ -156,7 +157,7 @@
         android:background="@color/colorPrimaryVariant"
         app:layout_constraintBottom_toTopOf="@+id/leaderboard_list"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view2" />
+        app:layout_constraintTop_toBottomOf="@+id/leaderviewborder2" />
 
     <View
         android:id="@+id/view5"
@@ -176,17 +177,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view2"
+        app:layout_constraintTop_toBottomOf="@+id/leaderviewborder2"
         />
 
     <ImageButton
         android:id="@+id/button"
+        android:contentDescription="@string/refresh"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:background="@drawable/setting_custom"
         android:scaleType="fitXY"
         android:src="@drawable/ic_refresh_24px"
-        android:text="Test"
         app:layout_constraintBottom_toBottomOf="@+id/topview"
         app:layout_constraintEnd_toStartOf="@+id/guideline6"
         app:layout_constraintTop_toBottomOf="@+id/change_challenge_btn" />
@@ -195,7 +196,7 @@
         android:id="@+id/change_challenge_btn"
         android:layout_width="88dp"
         android:layout_height="45dp"
-        android:text="Switch"
+        android:text="@string/change_challenge_btn_txt"
         android:textSize="12sp"
         app:layout_constraintEnd_toStartOf="@+id/guideline6"
         app:layout_constraintTop_toTopOf="@+id/guideline8" />

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/recyleSetting"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
@@ -14,6 +13,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="16dp"
         android:src="@drawable/ic_profile_black"
+        android:contentDescription="@string/profile_pic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -25,7 +25,7 @@
         android:layout_marginStart="10dp"
         android:layout_toEndOf="@id/profile"
         android:fontFamily="sans-serif"
-        android:text="Hello"
+        android:text="@string/rank"
         app:layout_constraintStart_toEndOf="@+id/profile"
         app:layout_constraintTop_toTopOf="@+id/profile" />
 
@@ -36,7 +36,7 @@
         android:layout_below="@+id/RankLeader"
         android:layout_alignStart="@+id/RankLeader"
         android:fontFamily="sans-serif-light"
-        android:text="Rank"
+        android:text="@string/generic_username"
         android:textColor="#EE5F02"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/RankLeader"
@@ -51,7 +51,7 @@
         android:layout_alignStart="@+id/statLeader"
         android:layout_alignParentEnd="true"
         android:fontFamily="sans-serif-light"
-        android:text="TextView"
+        android:text="@string/numberStat"
         android:textColor="#EE5F02"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/statLeader"
@@ -67,14 +67,14 @@
         android:layout_alignParentEnd="true"
         android:layout_marginTop="10dp"
         android:fontFamily="sans-serif"
-        android:text="Stat"
+        android:text="@string/leader_stat"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/view"
+        app:layout_constraintStart_toEndOf="@+id/leaderrowviewborder1"
         app:layout_constraintTop_toTopOf="parent" />
 
     <View
-        android:id="@+id/view"
+        android:id="@+id/leaderrowviewborder1"
         android:layout_width="2dp"
         android:layout_height="@dimen/leader_frame_size"
         android:layout_alignParentEnd="true"
@@ -87,7 +87,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <View
-        android:id="@+id/view2"
+        android:id="@+id/leaderrowviewborder2"
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_alignParentBottom="true"

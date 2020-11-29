@@ -122,45 +122,46 @@ public class DashBoardActivity extends AppCompatActivity
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                     //handle item clicks
-                    switch(item.getItemId()){
-                        case R.id.nav_home:
-                            //home fragment transaction
-                            actionBar.setTitle("Home");
-                            HomeFragment fragment1 = new HomeFragment();
-                            FragmentTransaction ft1 = getSupportFragmentManager().beginTransaction();
-                            ft1.replace(R.id.content,fragment1,"");
-                            ft1.commit();
-                            return true;
-                        case R.id.nav_users:
-
-                            actionBar.setTitle("Users");
-                            ContactsFragment fragment2 = new ContactsFragment();
-                            FragmentTransaction ft2 = getSupportFragmentManager().beginTransaction();
-                            ft2.replace(R.id.content,fragment2,"");
-                            ft2.commit();
-                            return true;
-                        case R.id.nav_Profile:
-                            actionBar.setTitle("Profile");
-                            ProfileFragment fragment3 = new ProfileFragment();
-                            FragmentTransaction ft3 = getSupportFragmentManager().beginTransaction();
-                            ft3.replace(R.id.content,fragment3,"");
-                            ft3.commit();
-                            return true;
-                        case R.id.nav_leaderBoard:
-                            actionBar.setTitle("LeaderBoard");
-                            //LeaderBoardFragment fragment5 = new LeaderBoardFragment();
-                            ChallengeSelectionFragment fragment5 = new ChallengeSelectionFragment();
-                            Bundle args = new Bundle();
-                            args.putString("Challenge", "Other");
-                            fragment5.setArguments(args);
-                            FragmentTransaction ft5 = getSupportFragmentManager().beginTransaction();
-                            ft5.replace(R.id.content,fragment5,"");
-                            ft5.commit();
-                            return true;
+                    int id = item.getItemId();
+                    if (id == R.id.nav_home) {
+                        //home fragment transaction
+                        actionBar.setTitle("Home");
+                        HomeFragment fragment1 = new HomeFragment();
+                        FragmentTransaction ft1 = getSupportFragmentManager().beginTransaction();
+                        ft1.replace(R.id.content, fragment1, "");
+                        ft1.commit();
+                        return true;
+                    } else if (id == R.id.nav_users) {
+                        actionBar.setTitle("Users");
+                        ContactsFragment fragment2 = new ContactsFragment();
+                        FragmentTransaction ft2 = getSupportFragmentManager().beginTransaction();
+                        ft2.replace(R.id.content, fragment2, "");
+                        ft2.commit();
+                        return true;
+                    } else if (id == R.id.nav_Profile) {
+                        actionBar.setTitle("Profile");
+                        ProfileFragment fragment3 = new ProfileFragment();
+                        FragmentTransaction ft3 = getSupportFragmentManager().beginTransaction();
+                        ft3.replace(R.id.content, fragment3, "");
+                        ft3.commit();
+                        return true;
+                    } else if (id == R.id.nav_leaderBoard) {
+                        actionBar.setTitle("LeaderBoard");
+                        //LeaderBoardFragment fragment5 = new LeaderBoardFragment();
+                        ChallengeSelectionFragment fragment5 = new ChallengeSelectionFragment();
+                        Bundle args = new Bundle();
+                        args.putString("Challenge", "Other");
+                        fragment5.setArguments(args);
+                        FragmentTransaction ft5 = getSupportFragmentManager().beginTransaction();
+                        ft5.replace(R.id.content, fragment5, "");
+                        ft5.commit();
+                        return true;
+                    } else {
+                        return false;
                     }
-                    return false;
                 }
             };
+
     private void checkUserStatus() {
         //get current user
         FirebaseUser user = firebaseAuth.getCurrentUser();
@@ -197,7 +198,7 @@ public class DashBoardActivity extends AppCompatActivity
     /*inflate options menu*/
 
     @Override
-    public void onAttachFragment(Fragment fragment) {
+    public void onAttachFragment(@NonNull Fragment fragment) {
         if (fragment instanceof ChallengeSelectionFragment) {
             ChallengeSelectionFragment headlinesFragment = (ChallengeSelectionFragment) fragment;
             headlinesFragment.setOnChallengeSelectionListener(this);
