@@ -20,6 +20,7 @@
         <activity android:name=".activities.activityBasedChallenge.CompleteChallengeActivity" />
         <activity android:name=".activities.activityBasedChallenge.ActivityBasedChallengeActivity" />
         <activity android:name=".activities.CreateChallengeActivity" />
+        <activity android:name=".activities.timeBasedChallenge.TimerActivity" />
         <activity
             android:name=".activities.ChatActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />

@@ -15,11 +15,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.letscompete.activities.timeBasedChallenge.TimerActivity;
 import com.example.letscompete.activities.activityBasedChallenge.CompleteChallengeActivity;
 import com.example.letscompete.R;
 import com.example.letscompete.activities.activityBasedChallenge.ActivityBasedChallengeActivity;
 import com.example.letscompete.activities.DashBoardActivity;
-import com.example.letscompete.activities.scoreBasedChallenge.ScoreBasedChallengeActivity;
 import com.example.letscompete.activities.timeBasedChallenge.TimeBasedChallengeActivity;
 import com.example.letscompete.models.ModelChallenge;
 import com.example.letscompete.models.ModelParticipant;
@@ -89,38 +89,48 @@ public class InfoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_info, container, false);
+        mCompleteChallenge = view.findViewById(R.id.complete_challenge);
         if(getActivity().getClass().equals(ActivityBasedChallengeActivity.class)){
             ActivityBasedChallengeActivity activityBasedChallengeActivity = (ActivityBasedChallengeActivity)getActivity();
             String challengeTitle = activityBasedChallengeActivity.getChallengeTitle();
+            mCompleteChallenge.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getActivity(), CompleteChallengeActivity.class);
+                    intent.putExtra("challengeTitle",mTitle.getText());
+                    intent.putExtra("username",username);
+                    startActivity(intent);
+
+                }
+            });
         }else if(getActivity().getClass().equals(TimeBasedChallengeActivity.class)){
             TimeBasedChallengeActivity timeBasedChallengeActivity = (TimeBasedChallengeActivity)getActivity();
             String challengeTitle = timeBasedChallengeActivity.getChallengeTitle();
+            mCompleteChallenge.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getActivity(), TimerActivity.class);
+                    intent.putExtra("challengeTitle",mTitle.getText());
+                    intent.putExtra("username",username);
+                    startActivity(intent);
+
+                }
+            });
         }
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_info, container, false);
         mImage = view.findViewById(R.id.challenge_image);
         mTitle = view.findViewById(R.id.challenge_title);
         mDescription = view.findViewById(R.id.challenge_description);
         mDuration = view.findViewById(R.id.challenge_duration);
         mStartDate = view.findViewById(R.id.challenge_startDate);
         mType = view.findViewById(R.id.challenge_type);
-        mCompleteChallenge = view.findViewById(R.id.complete_challenge);
         mDeleteBtn = view.findViewById(R.id.delete_btn);
         mLeaveChallenge = view.findViewById(R.id.leave_btn);
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
         changeCompleteButtonVisibility();
         checkAuth();
-        mCompleteChallenge.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), CompleteChallengeActivity.class);
-                intent.putExtra("challengeTitle",mTitle.getText());
-                intent.putExtra("username",username);
-                startActivity(intent);
-
-            }
-        });
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Challenge");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
