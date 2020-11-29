@@ -11,7 +11,7 @@ import java.util.List;
 
 @Dao
 public interface UserLeaderBoardStatsDao {
-    @Query("SELECT * FROM userleaderboardstats")
+    @Query("SELECT * FROM userleaderboardstats Order by rank")
     List<UserLeaderBoardStats> getAll();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

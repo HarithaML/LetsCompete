@@ -75,7 +75,7 @@ public class LeaderBoardAdapter extends RecyclerView.Adapter<LeaderBoardAdapter.
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
         Log.i("position", position + "");
-        viewHolder.getRank().setText("Ranking: " + rankings.get(position).getRank() + "");
+        viewHolder.getRank().setText("Ranking: " + (position + 1));
         viewHolder.getUser().setText(rankings.get(position).getUsername());
         viewHolder.getStat().setText(rankings.get(position).getStat());
         try {

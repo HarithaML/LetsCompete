@@ -37,11 +37,6 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link LeaderBoardFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class LeaderBoardFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
@@ -208,11 +203,15 @@ public class LeaderBoardFragment extends Fragment {
     {
         Log.i(TAG, user.getEmail());
         //remember this check
+        RecyclerView content = view.findViewById(R.id.leaderboard_list);
+        List<UserLeaderBoardStats> ok = new ArrayList<>();
+        ok.addAll(database.userDao().getAll());
+        //Log.i("ok", ok.get(0).stat.toString());
         List<UserLeaderBoardStats> ownStats = database.userDao().getUser(user.getEmail());
         if(ownStats.size() == 1)
         {
             username.setText(ownStats.get(0).getUsername());
-            rank.setText("Your Rank: " + ownStats.get(0).getRank());
+            rank.setText("Your Rank: " + (ok.indexOf(ownStats.get(0)) + 1 ));
             number.setText(ownStats.get(0).getStat());
             try{
                 Picasso.get().load(ownStats.get(0).getPicture()).into(profilePic);
@@ -227,10 +226,6 @@ public class LeaderBoardFragment extends Fragment {
             rank.setText("Your Rank: No data");
             number.setText("N/A");
         }
-        RecyclerView content = view.findViewById(R.id.leaderboard_list);
-        List<UserLeaderBoardStats> ok = new ArrayList<>();
-        ok.addAll(database.userDao().getAll());
-        //Log.i("ok", ok.get(0).stat.toString());
         LeaderBoardAdapter ad = new LeaderBoardAdapter(ok);
         content.setAdapter(ad);
         content.setLayoutManager(new LinearLayoutManager(view.getContext()));
