@@ -19,6 +19,8 @@ import com.example.letscompete.activities.activityBasedChallenge.CompleteChallen
 import com.example.letscompete.R;
 import com.example.letscompete.activities.activityBasedChallenge.ActivityBasedChallengeActivity;
 import com.example.letscompete.activities.DashBoardActivity;
+import com.example.letscompete.activities.scoreBasedChallenge.ScoreBasedChallengeActivity;
+import com.example.letscompete.activities.timeBasedChallenge.TimeBasedChallengeActivity;
 import com.example.letscompete.models.ModelChallenge;
 import com.example.letscompete.models.ModelParticipant;
 import com.google.firebase.auth.FirebaseAuth;
@@ -87,10 +89,13 @@ public class InfoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        //get challengeTitle from TimeChallengeActivity.java
-        ActivityBasedChallengeActivity activityBasedChallengeActivity = (ActivityBasedChallengeActivity)getActivity();
-        String challengeTitle = activityBasedChallengeActivity.getChallengeTitle();
-
+        if(getActivity().getClass().equals(ActivityBasedChallengeActivity.class)){
+            ActivityBasedChallengeActivity activityBasedChallengeActivity = (ActivityBasedChallengeActivity)getActivity();
+            String challengeTitle = activityBasedChallengeActivity.getChallengeTitle();
+        }else if(getActivity().getClass().equals(TimeBasedChallengeActivity.class)){
+            TimeBasedChallengeActivity timeBasedChallengeActivity = (TimeBasedChallengeActivity)getActivity();
+            String challengeTitle = timeBasedChallengeActivity.getChallengeTitle();
+        }
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_info, container, false);
         mImage = view.findViewById(R.id.challenge_image);

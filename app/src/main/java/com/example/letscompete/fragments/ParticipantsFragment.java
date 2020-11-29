@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.example.letscompete.R;
 import com.example.letscompete.activities.activityBasedChallenge.ActivityBasedChallengeActivity;
+import com.example.letscompete.activities.timeBasedChallenge.TimeBasedChallengeActivity;
 import com.example.letscompete.adapters.AdapterParticipant;
 import com.example.letscompete.models.ModelParticipant;
 import com.google.firebase.database.DataSnapshot;
@@ -73,6 +74,13 @@ public class ParticipantsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        if(getActivity().getClass().equals(ActivityBasedChallengeActivity.class)){
+            ActivityBasedChallengeActivity activityBasedChallengeActivity = (ActivityBasedChallengeActivity)getActivity();
+            String challengeTitle = activityBasedChallengeActivity.getChallengeTitle();
+        }else if(getActivity().getClass().equals(TimeBasedChallengeActivity.class)){
+            TimeBasedChallengeActivity timeBasedChallengeActivity = (TimeBasedChallengeActivity)getActivity();
+            String challengeTitle = timeBasedChallengeActivity.getChallengeTitle();
+        }
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_participants, container, false);
         //init recyclerView
@@ -90,9 +98,6 @@ public class ParticipantsFragment extends Fragment {
     }
 
     private void getAllParticipants() {
-        //get challengeTitle from TimeChallengeActivity.java
-        ActivityBasedChallengeActivity activityBasedChallengeActivity = (ActivityBasedChallengeActivity)getActivity();
-        String challengeTitle = activityBasedChallengeActivity.getChallengeTitle();
         //get path of database named "Participants" containing users info
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Participants");
         //get all data from path
