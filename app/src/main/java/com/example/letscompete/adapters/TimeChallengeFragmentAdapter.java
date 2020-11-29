@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.letscompete.activities.TimerActivity;
 import com.example.letscompete.activities.activityBasedChallenge.ActivityBasedChallengeActivity;
+import com.example.letscompete.activities.activityBasedChallenge.CompleteChallengeActivity;
 import com.example.letscompete.fragments.ChallengeVideosFragment;
 import com.example.letscompete.fragments.InfoFragment;
 import com.example.letscompete.fragments.ParticipantsFragment;
@@ -38,9 +39,6 @@ public class TimeChallengeFragmentAdapter extends FragmentPagerAdapter {
                 return ParticipantsFragment.newInstance(challenegTitle);
             case 2:
                 return TimeCompleteFragment.newInstance(challenegTitle);
-//                Intent intent = new Intent(context, TimerActivity.class);
-//                intent.putExtra("username",username);
-//                context.startActivity(intent);
             default:
                 return null;
         }

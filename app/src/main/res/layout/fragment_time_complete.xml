@@ -6,34 +6,37 @@
     tools:context=".fragments.TimeCompleteFragment">
 
     <LinearLayout
+        android:layout_marginTop="40dp"
         android:gravity="center"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <Chronometer
             android:id="@+id/complete_chronometer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="30sp"/>
+            android:text="50dp"
+            android:textSize="40sp" />
 
         <Button
+            android:id="@+id/startChronometer"
+            android:layout_marginTop="30dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Start"
-            android:onClick="startChronometer"
             />
         <Button
+            android:id="@+id/pauseChronometer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Pause"
-            android:onClick="pauseChronometer"
             />
         <Button
+            android:id="@+id/resetChronometer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Reset"
-            android:onClick="resetChronometer"
-            />
+            android:text="Reset" />
 
 
 

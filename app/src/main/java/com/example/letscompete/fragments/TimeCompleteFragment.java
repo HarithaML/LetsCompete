@@ -1,16 +1,21 @@
 package com.example.letscompete.fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Chronometer;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.letscompete.R;
@@ -32,6 +37,7 @@ import java.util.ArrayList;
  */
 public class TimeCompleteFragment extends Fragment {
 
+    private static final String TAG = "TimeCompleteFragment";
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -47,6 +53,11 @@ public class TimeCompleteFragment extends Fragment {
     DatabaseReference databaseReference;
     private String challengeTitle;
 
+    //Chronometer
+    Button startbtn, pausebtn, resetbtn;
+    private Chronometer chronometer;
+    private boolean running;
+    private long pauseOffset;
 
     //image
     private ArrayList<ModelImage> imageArrayList;
@@ -94,12 +105,61 @@ public class TimeCompleteFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+//        //xml layout initial
         View view = inflater.inflate(R.layout.fragment_time_complete, container, false);
+        //TIMER
+        chronometer = view.findViewById(R.id.complete_chronometer);
+        startbtn = view.findViewById(R.id.startChronometer);
+        pausebtn = view.findViewById(R.id.pauseChronometer);
+        resetbtn = view.findViewById(R.id.resetChronometer);
+        //button listener
+        startbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!running){
+                    chronometer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
+                    chronometer.start();
+                    running = true;
+                }
+            }
+        });
+        pausebtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(running){
+                    chronometer.stop();
+                    pauseOffset = SystemClock.elapsedRealtime() - chronometer.getBase();
+                    running = false;
+                }
+            }
+        });
+        resetbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chronometer.setBase(SystemClock.elapsedRealtime());
+                pauseOffset = 0;
+            }
+        });
+        //firebase inital
         firebaseAuth = FirebaseAuth.getInstance();
         user = firebaseAuth.getCurrentUser();
         firebaseDatabase = FirebaseDatabase.getInstance();
-
         return view;
     }
+
+    public void startThread(View view){
+        for(int i = 0; i < 10; i++){
+            Log.d(TAG, "start timer");
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e){
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void stopThread(View view){
+
+    }
+
 }
