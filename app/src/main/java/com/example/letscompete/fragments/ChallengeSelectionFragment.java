@@ -36,16 +36,12 @@ public class ChallengeSelectionFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     public static final String UPDATE_DATA = "jaskfnjksa";
-    private AppDatabase database;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     OnChallengeSelectionListener callback;
 
     public interface OnChallengeSelectionListener {
-        public void onChallengeSelected(String name);
+        void onChallengeSelected(String name);
     }
 
     public void setOnChallengeSelectionListener(OnChallengeSelectionListener callback) {
@@ -78,10 +74,6 @@ public class ChallengeSelectionFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
         //need androidx.fragment:fragment:1.3.0-alpha04 implementation?
 
     }
@@ -96,10 +88,10 @@ public class ChallengeSelectionFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        database = AppDatabase.getInstance(getActivity());
+        AppDatabase database = AppDatabase.getInstance(getActivity());
         View v = getView();
         RecyclerView content = v.findViewById(R.id.leaderboard_list2);
-        List<UserLeaderBoardChallenges> ok = new ArrayList<>();
+        List<UserLeaderBoardChallenges> ok = new ArrayList<>(database.leaderDao().getAll());
         /*
         UserLeaderBoardChallenges u = new UserLeaderBoardChallenges();
         u.setChallengename("Cooking Challenge");
@@ -108,7 +100,7 @@ public class ChallengeSelectionFragment extends Fragment {
         u.setType("Score");
         ok.add(u);
         */
-        ok.addAll(database.leaderDao().getAll());
+        //ok.addAll(database.leaderDao().getAll());
         Log.i("help", ok.size() + "");
         AdapterChallengesLeaderboard ad = new AdapterChallengesLeaderboard(ok, getActivity());
         content.setLayoutManager(new GridLayoutManager(v.getContext(), 3));

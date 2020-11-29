@@ -42,8 +42,6 @@ public class ChallengeDescriptionFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
     ModelParticipant participants;
     String title, duration, description, imageurl;
     String role = "Participant";
@@ -89,10 +87,6 @@ public class ChallengeDescriptionFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -112,9 +106,7 @@ public class ChallengeDescriptionFragment extends Fragment {
 
         Picasso.get().load(imageurl).resize(362, 285).into(imageholder);
         //Picasso.get().load(imageUri).into(imageholder);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v){
+        button.setOnClickListener(v -> {
                 FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
                 String userid = currentFirebaseUser.getUid();
                 String username = currentFirebaseUser.getEmail();
@@ -136,8 +128,6 @@ public class ChallengeDescriptionFragment extends Fragment {
                 FragmentTransaction ft1 = getFragmentManager().beginTransaction();
                 ft1.replace(R.id.content,fragment1,"");
                 ft1.addToBackStack(null).commit();
-            }
-
         });
         return view;
 

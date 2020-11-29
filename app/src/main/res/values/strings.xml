@@ -57,9 +57,20 @@
     <string name="register_intro">Get Started with your account</string>
     <string name="acquire_email">Enter Email address</string>
     <string name="acquire_pass">Enter your Password</string>
+    <string name="forgot_password">Forgot Password?</string>
     <string name="already_have_an_account">already have an account</string>
     <string name="register_picture">Register Picture</string>
     <string name="title_login">Lets Compete</string>
     <string name="login_text">Login</string>
+    <string name="email_address_login">Enter Email address</string>
+    <string name="generic_email">example@email.com</string>
+    <string name="greeting">Welcome back!</string>
+
+    <!--Relate to createChallenge-->
+    <string name="custom_img_des_create">Custom Image Description</string>
+    <string name="start_date">Start Date</string>
+    <string name="create">Create</string>
+    <string name="generic_picture1">Generic Picture</string>
+
 
 </resources>
