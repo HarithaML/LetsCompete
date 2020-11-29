@@ -39,20 +39,32 @@
             android:text="Reset" />
 
         <!--Image-->
+<!--        <EditText-->
+<!--            android:id="@+id/titleEt_timebased"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:background="@color/colorSecondary"-->
+<!--            android:padding="10dp"-->
+<!--            android:layout_margin="10dp"-->
+<!--            android:hint="Enter Description"-->
+<!--            android:inputType="textPersonName|textCapSentences"-->
+<!--            android:textColor="@color/black"/>-->
+
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/imageView_timebased"
             android:background="@color/colorSecondaryVariant"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
             android:layout_below="@id/titleEt"
             android:layout_margin="10dp"/>
         <!--Button: pick Image-->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/twobtn"
             android:orientation="horizontal">
             <Button
-                android:id="@+id/pickImageButton"
+                android:id="@+id/pickImageButton_timebased"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/imageView"
@@ -62,18 +74,25 @@
                 android:text = "Pick Image"
                 android:textColor="@color/white"/>
             <Button
-                android:id="@+id/uploadImageButton"
+                android:id="@+id/uploadImageButton_timebased"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/progressBar2"
                 android:layout_marginTop="2dp"
                 android:background="@color/colorPrimary"
                 android:layout_margin="5dp"
                 android:text = "Upload Image"
                 android:textColor="@color/white"/>
         </LinearLayout>
+        <TextView
+            android:id="@+id/messageWidow_timebased"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/twobtn"
+            android:layout_centerHorizontal="true"
+            android:textAlignment="center"
+            android:text = ""/>
         <ProgressBar
-            android:id="@+id/progressBar2"
+            android:id="@+id/progressBar2_timebased"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_marginTop="2dp"
             android:layout_width="match_parent"
@@ -81,7 +100,7 @@
             android:layout_height="wrap_content" />
 
         <Button
-            android:id="@+id/confirmCompletion"
+            android:id="@+id/confirmCompletion_timebased"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/button_cancel"
