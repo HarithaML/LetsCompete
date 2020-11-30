@@ -16,19 +16,14 @@
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="15sp" />
-    <VideoView
+    <ImageView
         android:layout_marginTop="40dp"
-        android:id="@+id/videoView"
+        android:id="@+id/image_profile_view"
         android:layout_below="@id/challengeTitle"
+        android:background="@color/colorSecondaryVariant"
         android:layout_width="match_parent"
         android:layout_centerHorizontal="true"
         android:layout_height="200dp" />
-    <ProgressBar
-        android:layout_alignTop="@id/videoView"
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"/>
 
 
 

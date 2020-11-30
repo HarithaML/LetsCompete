@@ -8,14 +8,18 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 
+import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
@@ -26,6 +30,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.letscompete.R;
+import com.example.letscompete.models.ModelActivityChallenge;
 import com.example.letscompete.models.ModelImage;
 import com.example.letscompete.models.ModelParticipant;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -43,7 +48,8 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-public class CompleteChallengeActivity extends AppCompatActivity  {
+public class StartChallengeActivity extends AppCompatActivity{
+
 
 
     //action bar
@@ -61,7 +67,6 @@ public class CompleteChallengeActivity extends AppCompatActivity  {
     //image
     private EditText titleEt;
     private ImageView imageView;
-    private Button uploadImageButton;
     private Button pickImageButton;
     Uri image_uri;
     //permissions constants
@@ -73,19 +78,35 @@ public class CompleteChallengeActivity extends AppCompatActivity  {
     String []cameraPermissions;
     String []storagePermissions;
     ///firebase
+    private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference ;
     private StorageReference reference ;
     ProgressBar progressBar;
 
-    //alarm
-    private TextView mTextView;
+    //steps
+    ProgressBar progress ;
+    private static final int REQUEST_WRITE_STORAGE = 112;
+    Button start;
+    Button stop;
+    TextView counter;
+//    TextView detector;
+    String countedStep;
+    String DetectedStep;
+    static final String State_Count = "Counter";
+    static final String State_Detect = "Detector";
+
+    boolean isServiceStopped;
+
+    private Intent intent;
+    private static final String TAG = "SensorEvent";
+
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_complete_challenge);
+        setContentView(R.layout.activity_start_challenge);
         firebaseAuth = FirebaseAuth.getInstance();
         Bundle bundle = getIntent().getExtras();
         if(bundle.getString("challengeTitle")!= null) {
@@ -114,37 +135,32 @@ public class CompleteChallengeActivity extends AppCompatActivity  {
         //------------------>//images
         titleEt = findViewById(R.id.titleEt);
         imageView = findViewById(R.id.imageView);
-        uploadImageButton = findViewById(R.id.uploadImageButton);
         pickImageButton = findViewById(R.id.pickImageButton);
-        progressBar = findViewById(R.id.progressBar2);
-        progressBar.setVisibility(View.INVISIBLE);
         //init arrays of Permissions
         cameraPermissions = new String[]{Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE};
         storagePermissions = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
         //firebase
-        databaseReference = FirebaseDatabase.getInstance().getReference("ChallengeImages");
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference("ChallengeImages");
         reference = FirebaseStorage.getInstance().getReference("ChallengeImages");
         //challenge complete button
         challengeComplete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Participants");
-                //get all data from path
-                Query complete = ref.orderByChild("challengeTitle").equalTo(challengeTitle).orderByChild("userUID").equalTo(userUID);
-                complete.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for(DataSnapshot ds:  snapshot.getChildren()){
-                                snapshot.getRef().child("status").setValue("Completed");
-                                Toast.makeText(CompleteChallengeActivity.this,"status has been set",Toast.LENGTH_LONG);
-                                startActivity(new Intent(CompleteChallengeActivity.this,
-                                                         ActivityBasedChallengeActivity.class));
-                            }
-                        }
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
+                if(image_uri!= null) {
+                    if(!counter.getText().toString().equals("")){
+                        updateDataToFirebase(counter);
+                        uploadImageToFirebase(image_uri);
+                        setParticipantStatusCompleted();
+
+                    }else{
+                        messageWindow.setText("Finish the activity");
                     }
-                });
+
+                }else{
+                    messageWindow.setText("Pick an image");
+                }
+
 
             }});
         pickImageButton.setOnClickListener(new View.OnClickListener() {
@@ -154,21 +170,45 @@ public class CompleteChallengeActivity extends AppCompatActivity  {
             }
 
         });
-        uploadImageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(image_uri!=null){
-                    uploadToFirebase(image_uri);
 
-                }else{
-                    messageWindow.setText("Please select image");
-                }
-            }
-        });
+
+
+        //steps
+        progress = findViewById(R.id.progress_count);
+        // ___ instantiate intent ___ \\
+        //  Instantiate the intent declared globally - which will be passed to startService and stopService.
+        intent = new Intent(this, StepCountingService.class);
+
+        init(); // Call view initialisation method.
+
 
 
     }
 
+
+
+    private void setParticipantStatusCompleted() {
+        DatabaseReference ref = firebaseDatabase.getReference("Participants");
+        //get all data from path
+        Query complete = ref.orderByChild("challengeTitle").equalTo(challengeTitle);
+        complete.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot ds:  snapshot.getChildren()){
+                    ModelParticipant modelParticipant = ds.getValue(ModelParticipant.class);
+                    if(modelParticipant.getUserUID().equals(userUID)){
+                        ds.getRef().child("status").setValue("Completed");
+                        Toast.makeText(StartChallengeActivity.this, "status has been set", Toast.LENGTH_LONG);
+                        startActivity(new Intent(StartChallengeActivity.this,
+                                                 ActivityBasedChallengeActivity.class));
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+    }
 
 
     private void changeButtonVisibility() {
@@ -194,7 +234,6 @@ public class CompleteChallengeActivity extends AppCompatActivity  {
         });
 
     }
-
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
@@ -202,7 +241,6 @@ public class CompleteChallengeActivity extends AppCompatActivity  {
     }
 
     //image
-
     private void showImageDialog() {
         /*Show dialog containing options
         1)Camera
@@ -273,6 +311,16 @@ public class CompleteChallengeActivity extends AppCompatActivity  {
 
             }
             break;
+            case REQUEST_WRITE_STORAGE: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                {
+                    //reload my activity with permission granted or use the features what required the permission
+                    Toast.makeText(StartChallengeActivity.this, "The app was allowed to access storage", Toast.LENGTH_LONG).show();
+                } else
+                {
+                    Toast.makeText(StartChallengeActivity.this, "The app was not allowed to write to your storage. Hence, it cannot function properly. Please consider granting it this permission", Toast.LENGTH_LONG).show();
+                }
+            }
         }
     }
     @Override
@@ -295,7 +343,7 @@ public class CompleteChallengeActivity extends AppCompatActivity  {
     }
     private void uploadImage(Uri image_uri) {
         imageView.setImageURI(image_uri);
-        messageWindow.setText(" ");
+        messageWindow.setText("Image Picked");
     }
     private void pickFromGallery() {
         //pic from gallery
@@ -332,7 +380,7 @@ public class CompleteChallengeActivity extends AppCompatActivity  {
         //request runtime Storage Permission
         requestPermissions(cameraPermissions,CAMERA_REQUEST_CODE);
     }
-    private void uploadToFirebase(Uri uri) {
+    private void uploadImageToFirebase(Uri uri) {
         StorageReference fileRef = reference.child(System.currentTimeMillis()+"."+getFileExtension(uri));
         fileRef.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
@@ -354,7 +402,6 @@ public class CompleteChallengeActivity extends AppCompatActivity  {
         }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
-                progressBar.setVisibility(View.VISIBLE);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -363,13 +410,105 @@ public class CompleteChallengeActivity extends AppCompatActivity  {
             }
         });
     }
-
     private String getFileExtension(Uri uri) {
         ContentResolver cr = getContentResolver();
         MimeTypeMap mine = MimeTypeMap.getSingleton();
         return mine.getExtensionFromMimeType(cr.getType(uri));
     }
 
+    //steps
+    /*string array to capture
+     * a. start date/time,
+     * b. step count
+     * c. Distance walked
+     * d. Total time taken*/
+
+    // Initialise step_detector layout view
+
+    // Initialise views.
+    public void init() {
+        isServiceStopped = true; // variable for managing service state - required to invoke "stopService" only once to avoid Exception.
+        // ________________ Service Management (Start & Stop Service). ________________ //
+        // ___ start Service & register broadcast receiver ___ \\
+        start = (Button)findViewById(R.id.btn_start);
+        start.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // start Service.
+                startService(new Intent(getBaseContext(), StepCountingService.class));
+                // register our BroadcastReceiver by passing in an IntentFilter. * identifying the message that is broadcasted by using static string "BROADCAST_ACTION".
+                registerReceiver(broadcastReceiver, new IntentFilter(StepCountingService.BROADCAST_ACTION));
+                isServiceStopped = false;
+            }
+        });
+
+        // ___ unregister receiver & stop service ___ \\
+        stop = (Button)findViewById(R.id.btn_stop);
+        stop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!isServiceStopped) {
+                    // call unregisterReceiver - to stop listening for broadcasts.
+                    unregisterReceiver(broadcastReceiver);
+
+                    // stop Service.
+                    stopService(new Intent(getBaseContext(), StepCountingService.class));
+
+                    isServiceStopped = true;
+
+                }
+            }
+        });
+        // ___________________________________________________________________________ \\
+        counter = findViewById(R.id.counter);
+//        detector = findViewById(R.id.detector);
+    }
+
+    private void updateDataToFirebase(TextView counter) {
+        DatabaseReference ref = firebaseDatabase.getReference("ActivityChallenge");
+        ModelActivityChallenge modelActivityChallenge  = new ModelActivityChallenge();
+        modelActivityChallenge.setChallengeTitle(challengeTitle);
+        modelActivityChallenge.setCounter(counter.getText().toString());
+        modelActivityChallenge.setUserId(userUID);
+        modelActivityChallenge.setUserName(username);
+        String modelId = ref.push().getKey();
+        ref.child(modelId).setValue(modelActivityChallenge);
+    }
+
+    protected void onPause() {
+        super.onPause();
+    }
+
+
+    protected void onResume() {
+        super.onResume();
+
+    }
+    // --------------------------------------------------------------------------- \\
+    // ___ create Broadcast Receiver ___ \\
+    // create a BroadcastReceiver - to receive the message that is going to be broadcast from the Service
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // call updateUI passing in our intent which is holding the data to display.
+            updateViews(intent);
+        }
+    };
+    // ___________________________________________________________________________ \\
+
+    // ___ retrieve data from intent & set data to textviews __ \\
+    private void updateViews(Intent intent) {
+        // retrieve data out of the intent.
+        countedStep = intent.getStringExtra("Counted_Step");
+        DetectedStep = intent.getStringExtra("Detected_Step");
+        Log.d(TAG, String.valueOf(countedStep));
+        Log.d(TAG, String.valueOf(DetectedStep));
+        progress.setProgress(Integer.parseInt(countedStep));
+        counter.setText(String.valueOf(countedStep) );
+//        detector.setText("Steps Detected = " + String.valueOf(DetectedStep));
+
+    }
+    // ___________________________________________________________________________ \\
 
 
 }

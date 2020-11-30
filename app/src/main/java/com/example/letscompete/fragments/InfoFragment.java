@@ -15,7 +15,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.letscompete.activities.activityBasedChallenge.CompleteChallengeActivity;
+import com.example.letscompete.activities.activityBasedChallenge.StartChallengeActivity;
 import com.example.letscompete.R;
 import com.example.letscompete.activities.activityBasedChallenge.ActivityBasedChallengeActivity;
 import com.example.letscompete.activities.DashBoardActivity;
@@ -109,7 +109,7 @@ public class InfoFragment extends Fragment {
         mCompleteChallenge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), CompleteChallengeActivity.class);
+                Intent intent = new Intent(getActivity(), StartChallengeActivity.class);
                 intent.putExtra("challengeTitle",mTitle.getText());
                 intent.putExtra("username",username);
                 startActivity(intent);
@@ -210,9 +210,11 @@ public class InfoFragment extends Fragment {
                         if (modelParticipant.getRole().equals("Moderator")) {
                             mLeaveChallenge.setVisibility(View.GONE);
                             mDeleteBtn.setVisibility(View.VISIBLE);
+                            mCompleteChallenge.setVisibility(View.GONE);
                         } else {
                             mLeaveChallenge.setVisibility(View.VISIBLE);
                             mDeleteBtn.setVisibility(View.GONE);
+                            mCompleteChallenge.setVisibility(View.VISIBLE);
                         }
                         break;
                     }
