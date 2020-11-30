@@ -32,8 +32,8 @@ import android.widget.Toast;
 import com.example.letscompete.activities.MainActivity;
 import com.example.letscompete.R;
 import com.example.letscompete.activities.Setting_Activity;
-import com.example.letscompete.adapters.AdapterVideo;
-import com.example.letscompete.models.ModelVideo;
+import com.example.letscompete.adapters.AdapterImage;
+import com.example.letscompete.models.ModelImage;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -53,7 +53,6 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Set;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -101,9 +100,9 @@ public class ProfileFragment extends Fragment {
     FloatingActionButton fab;
 
     //Videos
-    private ArrayList<ModelVideo> videoArrayList;
-    private AdapterVideo adapterVideo;
-    private RecyclerView videosRv;
+    private ArrayList<ModelImage> imageArrayList;
+    private AdapterImage adapterImage;
+    private RecyclerView imagesRv;
 
 
 
@@ -220,7 +219,7 @@ public class ProfileFragment extends Fragment {
 
 
         //videos
-        videosRv = view.findViewById(R.id.videosRv);
+        imagesRv = view.findViewById(R.id.imagesRv);
         loadVideosFromFireBase();
 
         // Inflate the layout for this fragment
@@ -228,17 +227,19 @@ public class ProfileFragment extends Fragment {
     }
 
     private void loadVideosFromFireBase() {
-        videoArrayList = new ArrayList<>();
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("ChallengeVideos");
+        imageArrayList = new ArrayList<>();
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("ChallengeImages");
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot ds: snapshot.getChildren()){
-                    ModelVideo modelVideo = ds.getValue(ModelVideo.class);
-                    if(modelVideo.getUuid().equals(user.getUid())){
-                        videoArrayList.add(modelVideo);
-                        adapterVideo = new AdapterVideo(getActivity(),videoArrayList);
-                        videosRv.setAdapter(adapterVideo);
+                    ModelImage modelimage = ds.getValue(ModelImage.class);
+                    System.out.println(modelimage.getUserUid()+" is equal to"+ user.getUid());
+
+                    if(modelimage.getUserUid().equals(user.getUid())){
+                        imageArrayList.add(modelimage);
+                        adapterImage = new AdapterImage(getActivity(), imageArrayList);
+                        imagesRv.setAdapter(adapterImage);
                     }
                 }
             }
@@ -248,16 +249,7 @@ public class ProfileFragment extends Fragment {
 
             }
         });
-//        ModelVideo modelVideo = new ModelVideo();
-//        modelVideo.setChallengeTitle("Test1");
-//        modelVideo.setVideoUrl("https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4");
-//        videoArrayList.add(modelVideo);
-//        ModelVideo modelVideo1 = new ModelVideo();
-//        modelVideo1.setChallengeTitle("Test2");
-//        modelVideo1.setVideoUrl("https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4");
-//        videoArrayList.add(modelVideo1);
-//        adapterVideo = new AdapterVideo(getActivity(),videoArrayList);
-//        videosRv.setAdapter(adapterVideo);
+
     }
 
     private boolean checkStoragePermission(){

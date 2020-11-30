@@ -76,12 +76,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/videosRv"
+                android:id="@+id/imagesRv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="0dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/row_video"/>
+                tools:listitem="@layout/row_image"/>
 
             <!--Floating ActionButton-->
             <com.google.android.material.floatingactionbutton.FloatingActionButton

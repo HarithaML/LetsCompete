@@ -1,12 +1,11 @@
 package com.example.letscompete.adapters;
 import android.content.Context;
-import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.example.letscompete.fragments.ChallengeVideosFragment;
+import com.example.letscompete.fragments.ChallengeImagesFragment;
 import com.example.letscompete.fragments.InfoFragment;
 import com.example.letscompete.fragments.ParticipantsFragment;
 
@@ -35,7 +34,7 @@ public class ChallengeFragmentAdapter extends FragmentPagerAdapter {
             case 1:
                 return ParticipantsFragment.newInstance(challenegTitle);
             case 2:
-                return ChallengeVideosFragment.newInstance(challenegTitle);
+                return ChallengeImagesFragment.newInstance(challenegTitle);
             default:
                 return null;
         }
