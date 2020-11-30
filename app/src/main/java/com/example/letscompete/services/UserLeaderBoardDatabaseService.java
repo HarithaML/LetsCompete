@@ -12,6 +12,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import com.example.letscompete.AppDatabase;
 import com.example.letscompete.entities.UserLeaderBoardChallenges;
 import com.example.letscompete.fragments.ChallengeSelectionFragment;
+import com.example.letscompete.fragments.LeaderBoardFragment;
 import com.example.letscompete.models.ModelChallenge;
 import com.example.letscompete.models.ModelParticipant;
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,10 +30,13 @@ import java.util.List;
 public class UserLeaderBoardDatabaseService extends Service {
     private final static String TAG = "UserLeaderBoardDatabaseService";
     FirebaseDatabase database;
+    DatabaseReference ref;
     FirebaseUser user;
     AppDatabase localDatabase;
     List<ModelParticipant> userList;
+    private int count = 0;
     Query query;
+    private ValueEventListener listener;
 
     public class DatabaseServiceBinder extends Binder {
         public UserLeaderBoardDatabaseService getService(){
@@ -55,8 +59,10 @@ public class UserLeaderBoardDatabaseService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         database = FirebaseDatabase.getInstance();
+        ref = database.getReference();
         localDatabase = AppDatabase.getInstance(this);
         userList = new ArrayList<>();
+        count = 0;
         Log.i(TAG, "Starting Service");
         Log.i(TAG, "Thread ID: " + Thread.currentThread().getId());
         Runnable a= new Runnable(){
@@ -74,17 +80,27 @@ public class UserLeaderBoardDatabaseService extends Service {
     @Override
     public void onDestroy() {
         Log.i(TAG, "On Destroy");
+        if(listener !=null)
+        {
+            ref.removeEventListener(listener);
+            listener = null;
+        }
         super.onDestroy();
     }
 
     public void getDatabaseData()
     {
+
+        if(listener !=null)
+        {
+            ref.removeEventListener(listener);
+        }
         Log.i(TAG, "Checking if this works");
         localDatabase.leaderDao().deleteAll();
         DatabaseReference a = database.getReference("Participants");
         user = FirebaseAuth.getInstance().getCurrentUser();
         query = a.orderByChild("userUID").equalTo(user.getUid());
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
+        listener = query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
@@ -105,6 +121,7 @@ public class UserLeaderBoardDatabaseService extends Service {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             List<ModelChallenge> modelchallenges = new ArrayList<>();
+                            ++count;
                             for(DataSnapshot ds:  snapshot.getChildren()) {
                                 ModelChallenge modelchallenge = ds.getValue(ModelChallenge.class);
                                 modelchallenges.add(modelchallenge);
@@ -140,6 +157,11 @@ public class UserLeaderBoardDatabaseService extends Service {
                                 Log.i(TAG, "Got data " + challengeTitle);
                                 localDatabase.leaderDao().insertAll(user);
                             }
+                            if(count >= userList.size())
+                            {
+                                count = 0;
+                                sendMessage();
+                            }
                         }
 
                         @Override
@@ -171,8 +193,9 @@ public class UserLeaderBoardDatabaseService extends Service {
     //For Later
     private void sendMessage()
     {
-        Intent intent = new Intent(ChallengeSelectionFragment.UPDATE_DATA);
+        Intent intent = new Intent(ChallengeSelectionFragment.UPDATE_DATA_SELECTION);
         // You can also include some extra data.
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+
     }
 }
