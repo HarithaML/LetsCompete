@@ -20,7 +20,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,9 +30,6 @@ import androidx.core.content.ContextCompat;
 
 import com.example.letscompete.R;
 import com.example.letscompete.activities.DashBoardActivity;
-import com.example.letscompete.activities.activityBasedChallenge.ActivityBasedChallengeActivity;
-import com.example.letscompete.activities.activityBasedChallenge.CompleteChallengeActivity;
-import com.example.letscompete.fragments.HomeFragment;
 import com.example.letscompete.models.ModelImage;
 import com.example.letscompete.models.ModelParticipant;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -44,7 +40,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
@@ -64,7 +59,7 @@ public class TimerActivity<storageReference> extends AppCompatActivity {
     private String completeTimeinString;
     private TextView messageWindow;
     private int completeTimeinMin, completeTimeinSecond, completeTimeTotal;
-    Button startbtn, pausebtn, resetbtn, challengeComplete;
+    Button startbtn, pausebtn, resetbtn, completebtn;
     private Handler timerHandler;
     private Runnable timerRunnable;
     //image
@@ -112,7 +107,7 @@ public class TimerActivity<storageReference> extends AppCompatActivity {
         actionBar.setTitle("Complete: " + challengeTitle);
         actionBar.setDisplayHomeAsUpEnabled(true);
         messageWindow = findViewById(R.id.messageWidow_timebased);
-        challengeComplete = findViewById(R.id.confirmCompletion_timebased);
+        completebtn = findViewById(R.id.confirmCompletion_timebased);
         //TIMER
         timerHandler = new Handler();
         timerRunnable = new Runnable() {
@@ -126,6 +121,14 @@ public class TimerActivity<storageReference> extends AppCompatActivity {
         chronometer = (Chronometer) findViewById(R.id.complete_chronometer);
         chronometer.setFormat("Time: %s");
         chronometer.setBase(SystemClock.elapsedRealtime());
+        chronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
+            @Override
+            public void onChronometerTick(Chronometer chronometer) {
+                if(chronometer.getBase() != 0){
+                    completebtn.setEnabled(true);
+                }
+            }
+        });
         startbtn = (Button) findViewById(R.id.startChronometer);
         pausebtn = (Button) findViewById(R.id.pauseChronometer);
         resetbtn = (Button) findViewById(R.id.resetChronometer);
@@ -192,11 +195,10 @@ public class TimerActivity<storageReference> extends AppCompatActivity {
                 }
             }
         });
-        challengeComplete.setOnClickListener(new View.OnClickListener() {
+        completebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(image_uri!=null){
-                    System.out.println("line 198");
                     changeToCompleted();
                 }else{
                     messageWindow.setText("Please select image");
@@ -220,7 +222,6 @@ public class TimerActivity<storageReference> extends AppCompatActivity {
                             //setvalue
                             ref.child(participKey).child("status").setValue("Completed");
                             ref.child(participKey).child("rank").setValue(String.valueOf(completeTimeTotal));
-                            System.out.println("check db   "+participKey);
                             startActivity(new Intent(TimerActivity.this, DashBoardActivity.class));
                         }
                     }

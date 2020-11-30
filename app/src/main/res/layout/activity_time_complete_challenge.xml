@@ -104,12 +104,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/button_cancel"
-            android:layout_marginTop="50dp"
-            android:background="@color/colorPrimary"
             android:layout_margin="10dp"
+            android:layout_marginTop="50dp"
             android:layout_marginBottom="10dp"
-            android:text = "Confirm Challenge Completion"
-            android:textColor="@color/white"/>
+            android:background="@color/colorPrimary"
+            android:enabled="false"
+            android:text="Confirm Challenge Completion"
+            android:textColor="@color/white" />
     </LinearLayout>
 
 </ScrollView>
