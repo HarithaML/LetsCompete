@@ -32,6 +32,7 @@ import com.example.letscompete.R;
 import com.example.letscompete.activities.DashBoardActivity;
 import com.example.letscompete.models.ModelImage;
 import com.example.letscompete.models.ModelParticipant;
+import com.example.letscompete.models.ModelTimeChallenge;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -200,6 +201,7 @@ public class TimerActivity<storageReference> extends AppCompatActivity {
             public void onClick(View v) {
                 if(image_uri!=null){
                     changeToCompleted();
+                    updateDataToFirebase(String.valueOf(completeTimeTotal));
                 }else{
                     messageWindow.setText("Please select image");
                 }
@@ -219,10 +221,11 @@ public class TimerActivity<storageReference> extends AppCompatActivity {
                     if (modelParticipant.getUserUID() != null) {
                         if (modelParticipant.getUserUID().equals(userUID) && modelParticipant.getChallengeTitle().equals(challengeTitle)){
                             participKey = ds.getKey();
-                            //setvalue
+                            //setvalue to completed
                             ref.child(participKey).child("status").setValue("Completed");
-                            ref.child(participKey).child("rank").setValue(String.valueOf(completeTimeTotal));
+                            //ref.child(participKey).child("rank").setValue(String.valueOf(completeTimeTotal));
                             startActivity(new Intent(TimerActivity.this, DashBoardActivity.class));
+                            finish();
                         }
                     }
                 }
@@ -232,6 +235,17 @@ public class TimerActivity<storageReference> extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
+    }
+
+    private void updateDataToFirebase(String time){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("TimeChallenge");
+        ModelTimeChallenge modelTimeChallenge = new ModelTimeChallenge();
+        modelTimeChallenge.setChallengeTitle(challengeTitle.trim());
+        modelTimeChallenge.setTime(time);
+        modelTimeChallenge.setUserId(userUID);
+        modelTimeChallenge.setUserName(username);
+        String modelId = reference.push().getKey();
+        reference.child(modelId).setValue(modelTimeChallenge);
     }
 
     private void getTimeinNumbers(String completeTimeinString) {
