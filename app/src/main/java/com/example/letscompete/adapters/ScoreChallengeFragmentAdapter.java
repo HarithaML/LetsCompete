@@ -1,23 +1,26 @@
 package com.example.letscompete.adapters;
-import android.content.Context;
 
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
+        import android.content.Context;
 
-import com.example.letscompete.fragments.ChallengeImagesFragment;
-import com.example.letscompete.fragments.InfoFragment;
-import com.example.letscompete.fragments.ParticipantsFragment;
+        import androidx.fragment.app.Fragment;
+        import androidx.fragment.app.FragmentManager;
+        import androidx.fragment.app.FragmentPagerAdapter;
 
-public class TimeChallengeFragmentAdapter extends FragmentPagerAdapter {
-    private Context context;
+        import com.example.letscompete.fragments.ChallengeImagesFragment;
+        import com.example.letscompete.fragments.InfoFragment;
+        import com.example.letscompete.fragments.ParticipantsFragment;
+
+
+public class ScoreChallengeFragmentAdapter extends FragmentPagerAdapter {
+
+    private Context myContext;
     int totalTabs;
     String challenegTitle;
     String username;
 
-    public TimeChallengeFragmentAdapter(Context context, FragmentManager fm, int totalTabs,String challenegTitle,String username) {
+    public ScoreChallengeFragmentAdapter(Context context, FragmentManager fm, int totalTabs, String challenegTitle, String username) {
         super(fm);
-        context = context;
+        myContext = context;
         this.totalTabs = totalTabs;
         this.challenegTitle = challenegTitle;
         this.username = username;

@@ -18,6 +18,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.letscompete.services.UserLeaderBoardDatabaseService;
 import com.example.letscompete.fragments.ChallengeSelectionFragment;
+import com.example.letscompete.fragments.ChallengesListFragment;
 import com.example.letscompete.fragments.ContactsFragment;
 import com.example.letscompete.fragments.HomeFragment;
 import com.example.letscompete.fragments.LeaderBoardFragment;
@@ -67,6 +68,8 @@ public class DashBoardActivity extends AppCompatActivity
         //ActionBar and its title
         actionBar = getSupportActionBar();
         actionBar.setTitle("Home");
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
 
         //init
         firebaseAuth = FirebaseAuth.getInstance();
@@ -222,5 +225,17 @@ public class DashBoardActivity extends AppCompatActivity
                 R.anim.fade_in,R.anim.slide_out_right, R.anim.fade_in, R.anim.slide_in_right);
         ft5.replace(R.id.content,fragment5,"");
         ft5.commit();
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case android.R.id.home:
+                HomeFragment fragment1 = new HomeFragment();
+                FragmentTransaction ft1 = getSupportFragmentManager().beginTransaction();
+                ft1.replace(R.id.content,fragment1,"");
+                ft1.addToBackStack(null).commit();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

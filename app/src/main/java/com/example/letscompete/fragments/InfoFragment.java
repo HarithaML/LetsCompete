@@ -14,6 +14,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.example.letscompete.activities.scoreBasedChallenge.CompleteChallengeActivity;
+import com.example.letscompete.activities.scoreBasedChallenge.ScoreBasedChallengeActivity;
 import com.example.letscompete.activities.timeBasedChallenge.TimerActivity;
 import com.example.letscompete.R;
 import com.example.letscompete.activities.DashBoardActivity;
@@ -112,6 +114,20 @@ public class InfoFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(getActivity(), TimerActivity.class);
+                    intent.putExtra("challengeTitle",mTitle.getText());
+                    intent.putExtra("username",username);
+                    startActivity(intent);
+
+                }
+            });
+        }
+        else if(getActivity().getClass().equals(ScoreBasedChallengeActivity.class)){
+            ScoreBasedChallengeActivity scoreBasedChallengeActivity = (ScoreBasedChallengeActivity)getActivity();
+            String challengeTitle = scoreBasedChallengeActivity.getChallengeTitle();
+            mCompleteChallenge.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getActivity(), CompleteChallengeActivity.class);
                     intent.putExtra("challengeTitle",mTitle.getText());
                     intent.putExtra("username",username);
                     startActivity(intent);
