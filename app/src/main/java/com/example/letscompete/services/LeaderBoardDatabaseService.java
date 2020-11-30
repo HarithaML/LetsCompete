@@ -284,12 +284,18 @@ public class LeaderBoardDatabaseService extends Service {
         return isReady;
     }
 
-    public void updateRank(String name)
+    public void updateRank(String name, String order)
     {
         DatabaseReference a = database.getReference("Participants");
         Query query = a.orderByChild("challengeTitle").equalTo(name);
         List<UserLeaderBoardStats> ok = new ArrayList<>();
-        ok.addAll(localDatabase.userDao().getAll());
+        if(order.equals("asc"))
+        {
+            ok.addAll(localDatabase.userDao().getAllAsc());
+        }
+        else {
+            ok.addAll(localDatabase.userDao().getAll());
+        }
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

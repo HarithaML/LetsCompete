@@ -60,7 +60,20 @@ public class LeaderBoardFragment extends Fragment {
         public void onReceive(Context context, Intent intent) {
                 if(intent.getAction().equals(UPDATE_DATA))
                 {
+                    String chall;
+                    String type;
                     setLeaderboardStats(getView());
+                    try {
+                        chall = getArguments().getString("Challenge");
+                        type = getArguments().getString("Type");
+                    }
+                    catch (Exception e)
+                    {
+                        return;
+                    }
+                    if(type.equals("Time based")) {
+                        service.updateRank(chall, "desc");
+                    }
                 }
         }
     }
@@ -250,7 +263,9 @@ public class LeaderBoardFragment extends Fragment {
             service.getDatabaseData(chall, type,true);
 
             setLeaderboardStats(getView());
-            service.updateRank(chall);
+            if(type.equals("Time based")) {
+                service.updateRank(chall, "desc");
+            }
         }
     }
 
