@@ -16,15 +16,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.letscompete.LeaderBoardDatabaseService;
+import com.example.letscompete.R;
 import com.example.letscompete.UserLeaderBoardDatabaseService;
 import com.example.letscompete.fragments.ChallengeSelectionFragment;
-import com.example.letscompete.fragments.ChatListFragment;
 import com.example.letscompete.fragments.ContactsFragment;
 import com.example.letscompete.fragments.HomeFragment;
 import com.example.letscompete.fragments.LeaderBoardFragment;
 import com.example.letscompete.fragments.ProfileFragment;
-import com.example.letscompete.R;
 import com.example.letscompete.notifications.Token;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;

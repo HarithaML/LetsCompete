@@ -1,17 +1,16 @@
 package com.example.letscompete.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.letscompete.R;
 import com.example.letscompete.fragments.ChallengeDescriptionFragment;
 import com.example.letscompete.models.ModelChallenge;
