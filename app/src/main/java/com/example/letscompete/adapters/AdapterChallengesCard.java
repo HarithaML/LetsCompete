@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.letscompete.R;
 import com.example.letscompete.activities.activityBasedChallenge.ActivityBasedChallengeActivity;
-import com.example.letscompete.activities.customBasedChallenge.CustomBasedChallengeActivity;
 import com.example.letscompete.activities.scoreBasedChallenge.ScoreBasedChallengeActivity;
 import com.example.letscompete.activities.timeBasedChallenge.TimeBasedChallengeActivity;
 import com.example.letscompete.models.ModelChallenge;
@@ -105,13 +104,8 @@ public class AdapterChallengesCard extends RecyclerView.Adapter<AdapterChallenge
                         intent.putExtra("challengeTitle",challengeTitle.getText());
                         intent.putExtra("username",username);
                         context.startActivity(intent);
-                    }else if(challengeType.getText().equals("Time based")){
+                    }else if (challengeType.getText().equals("Time based")){
                         Intent intent = new Intent(context, TimeBasedChallengeActivity.class);
-                        intent.putExtra("challengeTitle",challengeTitle.getText());
-                        intent.putExtra("username",username);
-                        context.startActivity(intent);
-                    }else{
-                        Intent intent = new Intent(context, CustomBasedChallengeActivity.class);
                         intent.putExtra("challengeTitle",challengeTitle.getText());
                         intent.putExtra("username",username);
                         context.startActivity(intent);

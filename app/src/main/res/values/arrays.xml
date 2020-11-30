@@ -4,6 +4,5 @@
         <item>Time based</item>
         <item>Score based</item>
         <item>Activity based</item>
-        <item>Custom based</item>
     </string-array>
 </resources>
