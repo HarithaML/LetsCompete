@@ -1,7 +1,7 @@
 package com.example.letscompete.models;
 
 public class ModelChallengeGeneric {
-    String challengeTitle,  userId,  userName;
+    String challengeTitle,  userName;
     public ModelChallengeGeneric() {
     }
 
@@ -13,14 +13,6 @@ public class ModelChallengeGeneric {
         this.challengeTitle = challengeTitle;
     }
 
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
     public String getUserName() {
         return userName;
     }
@@ -29,9 +21,8 @@ public class ModelChallengeGeneric {
         this.userName = userName;
     }
 
-    public ModelChallengeGeneric(String challengeTitle, String userId, String userName) {
+    public ModelChallengeGeneric(String challengeTitle, String userName) {
         this.challengeTitle = challengeTitle;
-        this.userId = userId;
         this.userName = userName;
     }
 }

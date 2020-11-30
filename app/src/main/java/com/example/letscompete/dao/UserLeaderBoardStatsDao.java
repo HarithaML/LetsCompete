@@ -12,10 +12,10 @@ import java.util.List;
 
 @Dao
 public interface UserLeaderBoardStatsDao {
-    @Query("SELECT * FROM userleaderboardstats Order by rank")
+    @Query("SELECT * FROM userleaderboardstats Order by stat desc")
     List<UserLeaderBoardStats> getAll();
 
-    @Query("SELECT * FROM userleaderboardstats Order by rank Asc")
+    @Query("SELECT * FROM userleaderboardstats Order by stat Asc")
     List<UserLeaderBoardStats> getAllAsc();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

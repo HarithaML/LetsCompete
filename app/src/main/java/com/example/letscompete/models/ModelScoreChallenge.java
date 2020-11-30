@@ -1,30 +1,22 @@
 package com.example.letscompete.models;
 
-public class ModelScoreChallenge {
+import com.google.firebase.database.Exclude;
 
-    private String userName;
+import java.util.HashMap;
+import java.util.Map;
+
+public class ModelScoreChallenge extends ModelChallengeGeneric{
+
     private String userUid;
-    private String challengeTitle;
     private String score;
 
     public ModelScoreChallenge() {
     }
 
     public ModelScoreChallenge( String userName, String userUid, String challengeTitle,String score) {
-
-        this.userName = userName;
+        super(userName, challengeTitle);
         this.userUid = userUid;
-        this.challengeTitle = challengeTitle;
         this.score = score;
-    }
-
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
     }
 
     public String getUserUid() {
@@ -35,19 +27,22 @@ public class ModelScoreChallenge {
         this.userUid = userUid;
     }
 
-    public String getChallengeTitle() {
-        return challengeTitle;
-    }
-
-    public void setChallengeTitle(String challengeTitle) {
-        this.challengeTitle = challengeTitle;
-    }
-
     public String getScore() {
         return score;
     }
 
     public void setScore(String score) {
         this.score = score;
+    }
+
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("challengeTitle", challengeTitle);
+        result.put("userUid", userUid);
+        result.put("userName", userName);
+        result.put("score", score);
+
+        return result;
     }
 }

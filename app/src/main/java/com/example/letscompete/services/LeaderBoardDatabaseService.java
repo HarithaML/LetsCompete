@@ -14,6 +14,7 @@ import com.example.letscompete.entities.UserLeaderBoardStats;
 import com.example.letscompete.fragments.LeaderBoardFragment;
 import com.example.letscompete.models.ModelChallengeGeneric;
 import com.example.letscompete.models.ModelParticipant;
+import com.example.letscompete.models.ModelScoreChallenge;
 import com.example.letscompete.models.ModelTimeChallenge;
 import com.example.letscompete.models.ModelUser;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -33,6 +34,7 @@ import java.util.Map;
 public class LeaderBoardDatabaseService extends Service {
     private final static String TAG = "LeaderBoardDatabaseService";
     private final static String TIMED_BASED = "Time based";
+    private final static String SCORE_BASED = "Score based";
     FirebaseDatabase database;
     AppDatabase localDatabase;
     List<ModelParticipant> userList;
@@ -106,6 +108,10 @@ public class LeaderBoardDatabaseService extends Service {
         {
             a= database.getReference("TimeChallenge");
         }
+        else if(type.equals(SCORE_BASED))
+        {
+            a= database.getReference("ScoreChallenge");
+        }
         else {
             a = database.getReference("Participants");
         }
@@ -114,7 +120,7 @@ public class LeaderBoardDatabaseService extends Service {
         {
             localDatabase.userDao().deleteAll();
         }
-        if(type.equals(TIMED_BASED))
+        if(type.equals(TIMED_BASED) || type.equals(SCORE_BASED))
         {
             query.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -129,7 +135,7 @@ public class LeaderBoardDatabaseService extends Service {
                         }
                         else
                         {
-                            modelUser = ds.getValue(ModelTimeChallenge.class);
+                            modelUser = ds.getValue(ModelScoreChallenge.class);
                         }
                         userList2.add(modelUser);
                     }
@@ -138,10 +144,13 @@ public class LeaderBoardDatabaseService extends Service {
                     for (int i = 0; i < userList2.size(); i++) {
                         users.add(new UserLeaderBoardStats());
                         String stat = null;
-                                if(type.equals(TIMED_BASED))
-                                {
-                                    stat = ((ModelTimeChallenge) userList2.get(i)).getTime();
-                                }
+                        if(type.equals(TIMED_BASED))
+                        {
+                            stat = ((ModelTimeChallenge) userList2.get(i)).getTime();
+                        }
+                        else {
+                            stat = ((ModelScoreChallenge) userList2.get(i)).getScore();
+                        }
                         String username = userList2.get(i).getUserName();
                         if (username != null) {
                             users.get(i).setUsername(username);
@@ -203,6 +212,12 @@ public class LeaderBoardDatabaseService extends Service {
                     }
                     localDatabase.userDao().insertAllList(users);
                     getUserProfilePic(users);
+                    if(type.equals("Time based")) {
+                        updateRank(name, "asc");
+                    }
+                    else if(type.equals("Score based")) {
+                        updateRank(name, "desc");
+                    }
                     //stopSelf();
                 }
 
@@ -246,6 +261,7 @@ public class LeaderBoardDatabaseService extends Service {
                     if(count >= userList.size())
                     {
                         sendMessage();
+
                     }
                 }
 

@@ -71,9 +71,6 @@ public class LeaderBoardFragment extends Fragment {
                     {
                         return;
                     }
-                    if(type.equals("Time based")) {
-                        service.updateRank(chall, "desc");
-                    }
                 }
         }
     }
@@ -218,7 +215,14 @@ public class LeaderBoardFragment extends Fragment {
         //remember this check
         RecyclerView content = view.findViewById(R.id.leaderboard_list);
         List<UserLeaderBoardStats> ok = new ArrayList<>();
-        ok.addAll(database.userDao().getAll());
+        if(getArguments().getString("Type").equals("Score based"))
+        {
+            ok.addAll(database.userDao().getAll());
+        }
+        else
+        {
+            ok.addAll(database.userDao().getAllAsc());
+        }
         //Log.i("ok", ok.get(0).stat.toString());
         List<UserLeaderBoardStats> ownStats = database.userDao().getUser(user.getEmail());
         if(ownStats.size() == 1)
@@ -263,9 +267,6 @@ public class LeaderBoardFragment extends Fragment {
             service.getDatabaseData(chall, type,true);
 
             setLeaderboardStats(getView());
-            if(type.equals("Time based")) {
-                service.updateRank(chall, "desc");
-            }
         }
     }
 
