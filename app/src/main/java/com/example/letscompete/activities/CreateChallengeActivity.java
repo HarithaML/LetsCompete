@@ -1,5 +1,6 @@
 package com.example.letscompete.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,6 +11,8 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,16 +34,20 @@ import com.example.letscompete.models.ModelParticipant;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import com.example.letscompete.R;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 
@@ -61,7 +68,7 @@ public class CreateChallengeActivity<storageReference> extends AppCompatActivity
     StorageReference storageReference;
     private Button btnSelect, btnUpload;
     private StorageReference mStorage;
-
+    ArrayList<String> allTitle = new ArrayList<>();
 
     private ProgressDialog mProgressDialog;
     private AlertDialog mAlertDialog;
@@ -92,7 +99,30 @@ public class CreateChallengeActivity<storageReference> extends AppCompatActivity
         actionBar.setTitle("Create Challenge");
         actionBar.setDisplayHomeAsUpEnabled(true);
         mStorage = FirebaseStorage.getInstance().getReference();
+        Create = (Button) findViewById(R.id.create);
         ChallengeTitle = (EditText) findViewById(R.id.challengetitle);
+        //check if the new title name is already existed
+        getTitleList();
+        ChallengeTitle.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(allTitle.contains(ChallengeTitle.getText().toString())){
+                    System.out.println("there should be eror dispaly");
+                    ChallengeTitle.setError("This challenge title is taken");
+                    Create.setEnabled(false);
+                }
+            }
+        });
         ChallengeDuration = (EditText) findViewById(R.id.challengeduration);
         ChallengeDescription = (EditText) findViewById(R.id.challengedescription);
         txtdata = (EditText)findViewById(R.id.txtdata);
@@ -169,7 +199,6 @@ public class CreateChallengeActivity<storageReference> extends AppCompatActivity
         });
 
 
-        Create = (Button) findViewById(R.id.create);
         ChallengeType = (Spinner) findViewById(R.id.challengetype);
         modelChallenge = new ModelChallenge();
         reference = FirebaseDatabase.getInstance().getReference().child("Challenge");
@@ -218,6 +247,26 @@ public class CreateChallengeActivity<storageReference> extends AppCompatActivity
         });
 
     }
+
+    private void getTitleList() {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Challenge");
+        databaseReference.orderByChild("challengeTitle").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                allTitle.clear();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    ModelChallenge modelChallenge = dataSnapshot.getValue(ModelChallenge.class);
+                    allTitle.add(modelChallenge.getChallengeTitle());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 

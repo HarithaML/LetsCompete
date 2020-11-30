@@ -7,11 +7,11 @@
     -->
     <string name="hello_world">Hello Square World!</string>
     <string name="settings0">Change Profile Picture</string>
-    <string name="settings1">Change Username</string>
+    <string name="settings1">Change Profile Dashboard</string>
     <string name="settings1des"></string>
-    <string name="settings2">Change Password</string>
+    <string name="settings2">Change Username</string>
     <string name="settings2des"></string>
-    <string name="settings3">Change Privacy</string>
+    <string name="settings3">Change Password</string>
     <string name="settings3des"></string>
     <string name="settings4">Log Out</string>
     <string name="register">Register</string>

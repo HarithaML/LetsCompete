@@ -7,7 +7,10 @@ import android.os.IBinder;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.example.letscompete.fragments.ChallengeSelectionFragment;
+import com.example.letscompete.fragments.LeaderBoardFragment;
 import com.example.letscompete.models.ModelChallenge;
 import com.example.letscompete.models.ModelParticipant;
 import com.google.firebase.auth.FirebaseAuth;
@@ -117,7 +120,6 @@ public class UserLeaderBoardDatabaseService extends Service {
                             UserLeaderBoardChallenges user = new UserLeaderBoardChallenges();
                             String challengeTitle = c.getChallengeTitle();
                             String challengeImage = c.getImageURL();
-//                            Log.i(TAG,c.getImageURL());
                             String challengeType = c.getChallengeType();
                             String challengeDuration = c.getChallengeDuration();
                             if(challengeImage != null){
@@ -163,5 +165,13 @@ public class UserLeaderBoardDatabaseService extends Service {
             }
         });
         //stopSelf();
+    }
+
+    //For Later
+    private void sendMessage()
+    {
+        Intent intent = new Intent(ChallengeSelectionFragment.UPDATE_DATA);
+        // You can also include some extra data.
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 }
