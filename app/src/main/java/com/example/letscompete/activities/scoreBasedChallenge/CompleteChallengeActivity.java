@@ -112,10 +112,8 @@ public class CompleteChallengeActivity extends AppCompatActivity  {
         changeButtonVisibility();
         //init action bar
         actionBar = getSupportActionBar();
-        //title
-        actionBar.setTitle("Complete Challenge");
-        actionBar.setDisplayShowHomeEnabled(true);
-        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setTitle("Complete: " + challengeTitle);
+        actionBar.setDisplayHomeAsUpEnabled(true);
         //------------------>//images
         titleEt = findViewById(R.id.titleEt);
         imageView = findViewById(R.id.imageView);
