@@ -24,6 +24,7 @@
         <activity android:name=".activities.activityBasedChallenge.activityTracker.PedometerListActivity" />
         <activity android:name=".activities.customBasedChallenge.CustomBasedChallengeActivity" />
         <activity android:name=".activities.scoreBasedChallenge.ScoreBasedChallengeActivity" />
+        <activity android:name=".activities.scoreBasedChallenge.CompleteChallengeActivity" />
         <activity android:name=".activities.timeBasedChallenge.TimeBasedChallengeActivity" />
         <activity android:name=".activities.activityBasedChallenge.StartChallengeActivity" />
         <activity android:name=".activities.activityBasedChallenge.ActivityBasedChallengeActivity" />
