@@ -2,23 +2,16 @@ package com.example.letscompete.activities.activityBasedChallenge;
 
 /** Service - for Counting the steps in the Background using Step Counter Sensor, and broadcasting Sensor values to Main Activity. */
 
-import android.app.Notification;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
-import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.os.AsyncTask;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
-
-import java.util.Date;
 
 // _________ Extend Service class & implement Service lifecycle callback methods. _________ //
 public class StepCountingService extends Service implements SensorEventListener {

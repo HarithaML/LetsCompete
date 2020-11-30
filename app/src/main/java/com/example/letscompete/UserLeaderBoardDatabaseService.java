@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.example.letscompete.fragments.ChallengeSelectionFragment;
-import com.example.letscompete.fragments.LeaderBoardFragment;
 import com.example.letscompete.models.ModelChallenge;
 import com.example.letscompete.models.ModelParticipant;
 import com.google.firebase.auth.FirebaseAuth;
