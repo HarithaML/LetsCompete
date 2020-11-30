@@ -11,9 +11,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.letscompete.R;
 import com.example.letscompete.activities.ChatActivity;
 import com.example.letscompete.models.ModelUser;
-import com.example.letscompete.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;

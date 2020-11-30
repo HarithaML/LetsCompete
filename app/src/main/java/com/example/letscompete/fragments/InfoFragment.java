@@ -4,10 +4,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,12 +11,17 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+
 import com.example.letscompete.activities.timeBasedChallenge.TimerActivity;
 import com.example.letscompete.activities.activityBasedChallenge.CompleteChallengeActivity;
 import com.example.letscompete.R;
+import com.example.letscompete.activities.DashBoardActivity;
 import com.example.letscompete.activities.activityBasedChallenge.ActivityBasedChallengeActivity;
 import com.example.letscompete.activities.DashBoardActivity;
 import com.example.letscompete.activities.timeBasedChallenge.TimeBasedChallengeActivity;
+import com.example.letscompete.activities.activityBasedChallenge.StartChallengeActivity;
 import com.example.letscompete.models.ModelChallenge;
 import com.example.letscompete.models.ModelParticipant;
 import com.google.firebase.auth.FirebaseAuth;
@@ -129,8 +130,8 @@ public class InfoFragment extends Fragment {
         mLeaveChallenge = view.findViewById(R.id.leave_btn);
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
-        changeCompleteButtonVisibility();
         checkAuth();
+                Intent intent = new Intent(getActivity(), StartChallengeActivity.class);
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Challenge");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -176,11 +177,11 @@ public class InfoFragment extends Fragment {
                 alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // continue with delete
-                        //remove challenge from table
-                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Challenge");
-                        Query applesQuery = ref.orderByChild("challengeTitle").equalTo(challengeTitle);
+                        //remove challenge from challenge table
+                        DatabaseReference ref1 = FirebaseDatabase.getInstance().getReference().child("Challenge");
+                        Query applesQuery1 = ref1.orderByChild("challengeTitle").equalTo(challengeTitle);
 
-                        applesQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                        applesQuery1.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
@@ -189,11 +190,162 @@ public class InfoFragment extends Fragment {
                                 }
                             }
 
+
                             @Override
                             public void onCancelled(DatabaseError databaseError) {
 
                             }
                         });
+                        //remove challenge from activity challenge table
+                        DatabaseReference ref2 = FirebaseDatabase.getInstance().getReference().child("ActivityChallenge");
+                        Query applesQuery2 = ref2.orderByChild("challengeTitle").equalTo(challengeTitle);
+
+                        applesQuery2.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
+                                    appleSnapshot.getRef().removeValue();
+                                    startActivity(new Intent(getActivity(), DashBoardActivity.class));
+                                }
+                            }
+
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+                        //remove challenge from  challenge images table
+                        DatabaseReference ref3 = FirebaseDatabase.getInstance().getReference().child("ChallengeImages");
+                        Query applesQuery3 = ref3.orderByChild("challengeTitle").equalTo(challengeTitle);
+
+                        applesQuery3.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
+                                    appleSnapshot.getRef().removeValue();
+                                    startActivity(new Intent(getActivity(), DashBoardActivity.class));
+                                }
+                            }
+
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+                        //remove challenge from participants table
+                        DatabaseReference ref4 = FirebaseDatabase.getInstance().getReference().child("Participants");
+                        Query applesQuery4 = ref4.orderByChild("challengeTitle").equalTo(challengeTitle);
+
+                        applesQuery4.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
+                                    appleSnapshot.getRef().removeValue();
+                                    startActivity(new Intent(getActivity(), DashBoardActivity.class));
+                                }
+                            }
+
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+
+
+                    }
+                });
+                alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // close dialog
+                        dialog.cancel();
+                    }
+                });
+                alert.show();
+            }
+        });
+
+        mLeaveChallenge.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
+
+                alert.setTitle("Delete entry");
+                alert.setMessage("Are you sure you want to Leave?");
+                alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // continue with delete
+                        //remove challenge from activity challenge table
+                        DatabaseReference ref2 = FirebaseDatabase.getInstance().getReference().child("ActivityChallenge");
+                        Query applesQuery2 = ref2.orderByChild("challengeTitle").equalTo(challengeTitle);
+
+                        applesQuery2.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
+                                    if(appleSnapshot.child("userId").getValue().equals(firebaseUser.getUid())) {
+
+                                        appleSnapshot.getRef().removeValue();
+                                        startActivity(new Intent(getActivity(),
+                                                                 DashBoardActivity.class));
+                                    }
+                                }
+                            }
+
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+                        //remove challenge from  challenge images table
+                        DatabaseReference ref3 = FirebaseDatabase.getInstance().getReference().child("ChallengeImages");
+                        Query applesQuery3 = ref3.orderByChild("challengeTitle").equalTo(challengeTitle);
+
+                        applesQuery3.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
+                                    if(appleSnapshot.child("userUid").getValue().equals(firebaseUser.getUid())) {
+                                        appleSnapshot.getRef().removeValue();
+                                        startActivity(new Intent(getActivity(),
+                                                                 DashBoardActivity.class));
+                                    }
+                                }
+                            }
+
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+                        //remove challenge from participants table
+                        DatabaseReference ref4 = FirebaseDatabase.getInstance().getReference("/Participants");
+                        Query applesQuery4 = ref4.orderByChild("challengeTitle").equalTo(challengeTitle);
+
+                        applesQuery4.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
+                                    if(appleSnapshot.child("userUID").getValue().equals(firebaseUser.getUid())) {
+                                        appleSnapshot.getRef().removeValue();
+                                        startActivity(new Intent(getActivity(),
+                                                                 DashBoardActivity.class));
+                                    }
+                                }
+                            }
+
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
 
 
                     }
@@ -225,35 +377,18 @@ public class InfoFragment extends Fragment {
                         if (modelParticipant.getRole().equals("Moderator")) {
                             mLeaveChallenge.setVisibility(View.GONE);
                             mDeleteBtn.setVisibility(View.VISIBLE);
-                        } else {
-                            mLeaveChallenge.setVisibility(View.VISIBLE);
-                            mDeleteBtn.setVisibility(View.GONE);
-                        }
-                        break;
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-
-    private void changeCompleteButtonVisibility() {
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("/Participants");
-        Query complete = ref.orderByChild("userUID").equalTo(firebaseUser.getUid());
-        complete.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot ds:  snapshot.getChildren()) {
-                    ModelParticipant modelParticipant = ds.getValue(ModelParticipant.class);
-                    if(modelParticipant.getChallengeTitle().equals(challengeTitle)) {
-                        if (modelParticipant.getStatus().equals("Completed")) {
                             mCompleteChallenge.setVisibility(View.GONE);
+
                         } else {
-                            mCompleteChallenge.setVisibility(View.VISIBLE);
+                            if(modelParticipant.getStatus().equals("Completed") && modelParticipant.getChallengeTitle().equals(challengeTitle)) {
+                                mCompleteChallenge.setVisibility(View.GONE);
+                                mLeaveChallenge.setVisibility(View.VISIBLE);
+                                mDeleteBtn.setVisibility(View.GONE);
+                            }else{
+                                mLeaveChallenge.setVisibility(View.VISIBLE);
+                                mDeleteBtn.setVisibility(View.GONE);
+                                mCompleteChallenge.setVisibility(View.VISIBLE);
+                            }
                         }
                         break;
                     }
@@ -266,4 +401,5 @@ public class InfoFragment extends Fragment {
             }
         });
     }
+
 }

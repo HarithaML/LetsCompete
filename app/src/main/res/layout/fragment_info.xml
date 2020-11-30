@@ -52,7 +52,7 @@
               android:textColor="@color/colorPrimary"
               android:layout_below="@id/challenge_description"
               android:layout_centerHorizontal="true"
-              android:text="Time Based Challenge" />
+              android:text="Activity Based Challenge" />
           <TextView
               android:id="@+id/challenge_duration"
               android:layout_width="wrap_content"
@@ -80,7 +80,7 @@
           android:layout_marginTop="10dp"
           android:layout_below="@id/info_box"
           android:background="#C70039"
-          android:text="Complete Challenge"
+          android:text="Start Challenge"
           android:layout_centerHorizontal="true"
           android:visibility="visible"/>
 

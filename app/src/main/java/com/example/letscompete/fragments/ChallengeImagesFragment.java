@@ -1,18 +1,17 @@
 package com.example.letscompete.fragments;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.example.letscompete.R;
-import com.example.letscompete.adapters.AdapterVideo;
-import com.example.letscompete.models.ModelVideo;
+import com.example.letscompete.adapters.AdapterImage;
+import com.example.letscompete.models.ModelImage;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -26,10 +25,10 @@ import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link ChallengeVideosFragment#newInstance} factory method to
+ * Use the {@link ChallengeImagesFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ChallengeVideosFragment extends Fragment {
+public class ChallengeImagesFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -47,8 +46,8 @@ public class ChallengeVideosFragment extends Fragment {
     private String challengeTitle;
 
     //Videos
-    private ArrayList<ModelVideo> videoArrayList;
-    private AdapterVideo adapterVideo;
+    private ArrayList<ModelImage> imageArrayList;
+    private AdapterImage adapterImage;
     private RecyclerView videosRv;
 
     //permissions constants
@@ -62,7 +61,7 @@ public class ChallengeVideosFragment extends Fragment {
     String []cameraPermissions;
     String []storagePermissions;
 
-    public ChallengeVideosFragment() {
+    public ChallengeImagesFragment() {
         // Required empty public constructor
     }
 
@@ -74,8 +73,8 @@ public class ChallengeVideosFragment extends Fragment {
      * @return A new instance of fragment ChallengeVideosFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ChallengeVideosFragment newInstance(String challengeTitle) {
-        ChallengeVideosFragment fragment = new ChallengeVideosFragment();
+    public static ChallengeImagesFragment newInstance(String challengeTitle) {
+        ChallengeImagesFragment fragment = new ChallengeImagesFragment();
         Bundle args = new Bundle();
         args.putString("challengeTitle", challengeTitle);
         fragment.setArguments(args);
@@ -104,17 +103,17 @@ public class ChallengeVideosFragment extends Fragment {
         return view;
     }
     private void loadVideosFromFireBase() {
-        videoArrayList = new ArrayList<>();
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("ChallengeVideos");
+        imageArrayList = new ArrayList<>();
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("ChallengeImages");
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot ds: snapshot.getChildren()){
-                    ModelVideo modelVideo = ds.getValue(ModelVideo.class);
-                    if(modelVideo.getChallengeTitle().equals(challengeTitle)){
-                        videoArrayList.add(modelVideo);
-                        adapterVideo = new AdapterVideo(getActivity(),videoArrayList);
-                        videosRv.setAdapter(adapterVideo);
+                    ModelImage modelImage = ds.getValue(ModelImage.class);
+                    if(modelImage.getChallengeTitle().equals(challengeTitle)){
+                        imageArrayList.add(modelImage);
+                        adapterImage = new AdapterImage(getActivity(), imageArrayList);
+                        videosRv.setAdapter(adapterImage);
                     }
                 }
             }
