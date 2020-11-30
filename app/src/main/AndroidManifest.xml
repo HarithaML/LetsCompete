@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
 
     <application
         android:allowBackup="true"
@@ -14,10 +15,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.LetsCompete">
-        <activity android:name=".activities.customBasedChallenge.CustomBasedChallengeActivity"></activity>
+        <service
+            android:name=".activities.activityBasedChallenge.StepCountingService"
+            android:enabled="true"
+            android:exported="true"></service>
+
+        <activity android:name=".activities.activityBasedChallenge.activityTracker.trackSteps.TrackStepsActivity" />
+        <activity android:name=".activities.activityBasedChallenge.activityTracker.PedometerListActivity" />
+        <activity android:name=".activities.customBasedChallenge.CustomBasedChallengeActivity" />
         <activity android:name=".activities.scoreBasedChallenge.ScoreBasedChallengeActivity" />
         <activity android:name=".activities.timeBasedChallenge.TimeBasedChallengeActivity" />
-        <activity android:name=".activities.activityBasedChallenge.CompleteChallengeActivity" />
+        <activity android:name=".activities.activityBasedChallenge.StartChallengeActivity" />
         <activity android:name=".activities.activityBasedChallenge.ActivityBasedChallengeActivity" />
         <activity android:name=".activities.CreateChallengeActivity" />
         <activity
