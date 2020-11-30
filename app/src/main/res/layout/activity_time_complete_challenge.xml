@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.timeBasedChallenge.TimerActivity">
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Chronometer
+            android:id="@+id/complete_chronometer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="50dp"
+            android:textSize="40sp" />
+
+        <Button
+            android:id="@+id/startChronometer"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Start"
+            />
+        <Button
+            android:id="@+id/pauseChronometer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pause"
+            />
+        <Button
+            android:id="@+id/resetChronometer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reset" />
+
+        <!--Image-->
+<!--        <EditText-->
+<!--            android:id="@+id/titleEt_timebased"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:background="@color/colorSecondary"-->
+<!--            android:padding="10dp"-->
+<!--            android:layout_margin="10dp"-->
+<!--            android:hint="Enter Description"-->
+<!--            android:inputType="textPersonName|textCapSentences"-->
+<!--            android:textColor="@color/black"/>-->
+
+        <ImageView
+            android:id="@+id/imageView_timebased"
+            android:background="@color/colorSecondaryVariant"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_below="@id/titleEt"
+            android:layout_margin="10dp"/>
+        <!--Button: pick Image-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/twobtn"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/pickImageButton_timebased"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/imageView"
+                android:layout_marginTop="2dp"
+                android:background="@color/colorPrimary"
+                android:layout_margin="5dp"
+                android:text = "Pick Image"
+                android:textColor="@color/white"/>
+            <Button
+                android:id="@+id/uploadImageButton_timebased"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:background="@color/colorPrimary"
+                android:layout_margin="5dp"
+                android:text = "Upload Image"
+                android:textColor="@color/white"/>
+        </LinearLayout>
+        <TextView
+            android:id="@+id/messageWidow_timebased"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/twobtn"
+            android:layout_centerHorizontal="true"
+            android:textAlignment="center"
+            android:text = ""/>
+        <ProgressBar
+            android:id="@+id/progressBar2_timebased"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_marginTop="2dp"
+            android:layout_width="match_parent"
+            android:layout_below="@id/pickImageButton"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/confirmCompletion_timebased"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/progressBar2_timebased"
+            android:layout_margin="10dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/colorPrimary"
+            android:enabled="false"
+            android:text="Confirm Challenge Completion"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+</ScrollView>
