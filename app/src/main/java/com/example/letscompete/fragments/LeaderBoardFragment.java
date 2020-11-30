@@ -245,8 +245,12 @@ public class LeaderBoardFragment extends Fragment {
     {
         if(mBound)
         {
-            service.getDatabaseData(getArguments().getString("Challenge"),true);
+            String chall = getArguments().getString("Challenge");
+            String type = getArguments().getString("Type");
+            service.getDatabaseData(chall, type,true);
+
             setLeaderboardStats(getView());
+            service.updateRank(chall);
         }
     }
 
@@ -259,5 +263,6 @@ public class LeaderBoardFragment extends Fragment {
         fm.commit();
 
     }
+
 
 }

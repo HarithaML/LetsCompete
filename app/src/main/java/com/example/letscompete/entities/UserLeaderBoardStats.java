@@ -64,6 +64,7 @@ public class UserLeaderBoardStats {
         return username.equals(that.username);
     }
 
+
     @Override
     public int hashCode() {
         return Objects.hash(username);
