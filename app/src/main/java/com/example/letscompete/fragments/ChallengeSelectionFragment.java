@@ -2,10 +2,8 @@ package com.example.letscompete.fragments;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
@@ -15,11 +13,8 @@ import android.view.ViewGroup;
 
 import com.example.letscompete.AppDatabase;
 import com.example.letscompete.R;
-import com.example.letscompete.UserLeaderBoardChallenges;
-import com.example.letscompete.UserLeaderBoardStats;
+import com.example.letscompete.entities.UserLeaderBoardChallenges;
 import com.example.letscompete.adapters.AdapterChallengesLeaderboard;
-import com.example.letscompete.adapters.LeaderBoardAdapter;
-import com.example.letscompete.models.ModelChallenge;
 
 import java.util.ArrayList;
 import java.util.List;

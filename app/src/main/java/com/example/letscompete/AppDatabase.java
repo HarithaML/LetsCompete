@@ -6,6 +6,9 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
+import com.example.letscompete.entities.UserLeaderBoardChallenges;
+import com.example.letscompete.entities.UserLeaderBoardStats;
+
 @Database(entities = {UserLeaderBoardStats.class, UserLeaderBoardChallenges.class}, version = 7, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase{
     private static AppDatabase sInstance;

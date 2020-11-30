@@ -1,6 +1,5 @@
 package com.example.letscompete.adapters;
 
-import android.media.Image;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +10,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.letscompete.R;
-import com.example.letscompete.UserLeaderBoardStats;
+import com.example.letscompete.entities.UserLeaderBoardStats;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

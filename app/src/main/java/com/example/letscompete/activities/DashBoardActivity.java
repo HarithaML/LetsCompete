@@ -16,10 +16,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.letscompete.LeaderBoardDatabaseService;
-import com.example.letscompete.UserLeaderBoardDatabaseService;
+import com.example.letscompete.services.UserLeaderBoardDatabaseService;
 import com.example.letscompete.fragments.ChallengeSelectionFragment;
-import com.example.letscompete.fragments.ChatListFragment;
 import com.example.letscompete.fragments.ContactsFragment;
 import com.example.letscompete.fragments.HomeFragment;
 import com.example.letscompete.fragments.LeaderBoardFragment;

@@ -9,7 +9,6 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -26,9 +25,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.letscompete.AppDatabase;
-import com.example.letscompete.LeaderBoardDatabaseService;
+import com.example.letscompete.services.LeaderBoardDatabaseService;
 import com.example.letscompete.R;
-import com.example.letscompete.UserLeaderBoardStats;
+import com.example.letscompete.entities.UserLeaderBoardStats;
 import com.example.letscompete.adapters.LeaderBoardAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

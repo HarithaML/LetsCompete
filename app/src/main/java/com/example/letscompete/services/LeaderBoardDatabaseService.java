@@ -1,4 +1,4 @@
-package com.example.letscompete;
+package com.example.letscompete.services;
 
 import android.app.Service;
 import android.content.Intent;
@@ -9,8 +9,9 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.example.letscompete.AppDatabase;
+import com.example.letscompete.entities.UserLeaderBoardStats;
 import com.example.letscompete.fragments.LeaderBoardFragment;
-import com.example.letscompete.models.ModelChallenge;
 import com.example.letscompete.models.ModelParticipant;
 import com.example.letscompete.models.ModelUser;
 import com.google.firebase.database.DataSnapshot;
