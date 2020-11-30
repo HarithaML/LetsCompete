@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
+import com.example.letscompete.fragments.ChallengeImagesFragment;
 import com.example.letscompete.fragments.InfoFragment;
 import com.example.letscompete.fragments.ParticipantsFragment;
 
@@ -30,8 +31,8 @@ public class TimeChallengeFragmentAdapter extends FragmentPagerAdapter {
                 return InfoFragment.newInstance(challenegTitle,username);
             case 1:
                 return ParticipantsFragment.newInstance(challenegTitle);
-//            case 2:
-//                return TimeCompleteFragment.newInstance(challenegTitle);
+            case 2:
+                return ChallengeImagesFragment.newInstance(challenegTitle);
             default:
                 return null;
         }
