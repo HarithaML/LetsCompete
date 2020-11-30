@@ -63,7 +63,8 @@ public class LeaderBoardDatabaseService extends Service {
             public void run() {
                 Log.i(TAG, "Inside run()");
                 if(intent!= null) {
-                    getDatabaseData(intent.getStringExtra("Challenge"));
+                    getDatabaseData(intent.getStringExtra("Challenge"),
+                            intent.getStringExtra("Type"), false);
                 }
             }
         };
@@ -79,14 +80,20 @@ public class LeaderBoardDatabaseService extends Service {
     }
     public void getDatabaseData(String name)
     {
-        getDatabaseData(name, false);
+        getDatabaseData(name,"score" ,false);
     }
 
     public void getDatabaseData(String name, boolean isSame)
     {
+        getDatabaseData(name, "score", isSame);
+    }
+
+    public void getDatabaseData(String name, String type, boolean isSame)
+    {
         isReady = false;
         Log.i(TAG, "Checking if this works");
         DatabaseReference a = database.getReference("Participants");
+
         Query query = a.orderByChild("challengeTitle").equalTo(name);
         if(!isSame)
         {

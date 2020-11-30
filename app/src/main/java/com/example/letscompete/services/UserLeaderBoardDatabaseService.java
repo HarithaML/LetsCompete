@@ -84,7 +84,7 @@ public class UserLeaderBoardDatabaseService extends Service {
         DatabaseReference a = database.getReference("Participants");
         user = FirebaseAuth.getInstance().getCurrentUser();
         query = a.orderByChild("userUID").equalTo(user.getUid());
-        query.addValueEventListener(new ValueEventListener() {
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again

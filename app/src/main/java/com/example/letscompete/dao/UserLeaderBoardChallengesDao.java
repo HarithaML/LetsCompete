@@ -1,4 +1,4 @@
-package com.example.letscompete;
+package com.example.letscompete.dao;
 
 import androidx.room.Dao;
 import androidx.room.Delete;

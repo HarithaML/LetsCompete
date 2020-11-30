@@ -187,6 +187,7 @@ public class LeaderBoardFragment extends Fragment {
         sIntent = new Intent(getView().getContext(), LeaderBoardDatabaseService.class);
         try {
             sIntent.putExtra("Challenge", getArguments().getString("Challenge"));
+            sIntent.putExtra("Type", getArguments().getString("Type"));
         }
         catch (Exception e)
         {
