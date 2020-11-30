@@ -98,7 +98,7 @@ public class InfoFragment extends Fragment {
             mCompleteChallenge.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(getActivity(), CompleteChallengeActivity.class);
+                    Intent intent = new Intent(getActivity(), StartChallengeActivity.class);
                     intent.putExtra("challengeTitle",mTitle.getText());
                     intent.putExtra("username",username);
                     startActivity(intent);
@@ -130,7 +130,6 @@ public class InfoFragment extends Fragment {
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
         checkAuth();
-                Intent intent = new Intent(getActivity(), StartChallengeActivity.class);
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Challenge");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
