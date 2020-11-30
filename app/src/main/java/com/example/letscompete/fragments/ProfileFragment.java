@@ -229,15 +229,15 @@ public class ProfileFragment extends Fragment {
         });
 
 
-        //videos
+//        //videos
         imagesRv = view.findViewById(R.id.imagesRv);
-        loadVideosFromFireBase();
+        loadImagesFromFireBase();
 
         // Inflate the layout for this fragment
         return view;
     }
 
-    private void loadVideosFromFireBase() {
+    private void loadImagesFromFireBase() {
         imageArrayList = new ArrayList<>();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("ChallengeImages");
         ref.addValueEventListener(new ValueEventListener() {
