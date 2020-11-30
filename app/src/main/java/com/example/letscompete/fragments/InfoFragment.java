@@ -15,7 +15,6 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.letscompete.activities.timeBasedChallenge.TimerActivity;
-import com.example.letscompete.activities.activityBasedChallenge.CompleteChallengeActivity;
 import com.example.letscompete.R;
 import com.example.letscompete.activities.DashBoardActivity;
 import com.example.letscompete.activities.activityBasedChallenge.ActivityBasedChallengeActivity;
