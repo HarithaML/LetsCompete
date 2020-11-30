@@ -1,5 +1,10 @@
 package com.example.letscompete.models;
 
+import com.google.firebase.database.Exclude;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class ModelParticipant {
     /*role= Challenge giver/Challenge Taker
     *progress = ongoing/completed
@@ -84,5 +89,28 @@ public class ModelParticipant {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        this.challengeTitle = challengeTitle;
+        this.userName = userName;
+        this.userImage = userImage;
+        this.userUID = userUID;
+        this.progress = progress;
+        this.role = role;
+        this.rank = rank;
+        this.status = status;
+        result.put("challengeTitle", challengeTitle);
+        result.put("userName", userName);
+        result.put("userImage", userImage);
+        result.put("userUID", userUID);
+        result.put("progress", progress);
+        result.put("role", role);
+        result.put("rank", rank);
+        result.put("status", status);
+
+        return result;
     }
 }

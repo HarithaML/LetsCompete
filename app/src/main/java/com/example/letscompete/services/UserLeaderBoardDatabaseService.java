@@ -1,4 +1,4 @@
-package com.example.letscompete;
+package com.example.letscompete.services;
 
 import android.app.Service;
 import android.content.Intent;
@@ -9,6 +9,8 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.example.letscompete.AppDatabase;
+import com.example.letscompete.entities.UserLeaderBoardChallenges;
 import com.example.letscompete.fragments.ChallengeSelectionFragment;
 import com.example.letscompete.models.ModelChallenge;
 import com.example.letscompete.models.ModelParticipant;
@@ -82,7 +84,7 @@ public class UserLeaderBoardDatabaseService extends Service {
         DatabaseReference a = database.getReference("Participants");
         user = FirebaseAuth.getInstance().getCurrentUser();
         query = a.orderByChild("userUID").equalTo(user.getUid());
-        query.addValueEventListener(new ValueEventListener() {
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again

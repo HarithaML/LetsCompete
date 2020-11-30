@@ -7,6 +7,13 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.os.IBinder;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,16 +24,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.letscompete.AppDatabase;
-import com.example.letscompete.LeaderBoardDatabaseService;
+import com.example.letscompete.services.LeaderBoardDatabaseService;
 import com.example.letscompete.R;
-import com.example.letscompete.UserLeaderBoardStats;
+import com.example.letscompete.entities.UserLeaderBoardStats;
 import com.example.letscompete.adapters.LeaderBoardAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -35,11 +36,6 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link LeaderBoardFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class LeaderBoardFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
@@ -64,7 +60,17 @@ public class LeaderBoardFragment extends Fragment {
         public void onReceive(Context context, Intent intent) {
                 if(intent.getAction().equals(UPDATE_DATA))
                 {
+                    String chall;
+                    String type;
                     setLeaderboardStats(getView());
+                    try {
+                        chall = getArguments().getString("Challenge");
+                        type = getArguments().getString("Type");
+                    }
+                    catch (Exception e)
+                    {
+                        return;
+                    }
                 }
         }
     }
@@ -191,6 +197,7 @@ public class LeaderBoardFragment extends Fragment {
         sIntent = new Intent(getView().getContext(), LeaderBoardDatabaseService.class);
         try {
             sIntent.putExtra("Challenge", getArguments().getString("Challenge"));
+            sIntent.putExtra("Type", getArguments().getString("Type"));
         }
         catch (Exception e)
         {
@@ -206,11 +213,22 @@ public class LeaderBoardFragment extends Fragment {
     {
         Log.i(TAG, user.getEmail());
         //remember this check
+        RecyclerView content = view.findViewById(R.id.leaderboard_list);
+        List<UserLeaderBoardStats> ok = new ArrayList<>();
+        if(getArguments().getString("Type").equals("Score based"))
+        {
+            ok.addAll(database.userDao().getAll());
+        }
+        else
+        {
+            ok.addAll(database.userDao().getAllAsc());
+        }
+        //Log.i("ok", ok.get(0).stat.toString());
         List<UserLeaderBoardStats> ownStats = database.userDao().getUser(user.getEmail());
         if(ownStats.size() == 1)
         {
             username.setText(ownStats.get(0).getUsername());
-            rank.setText("Your Rank: " + ownStats.get(0).getRank());
+            rank.setText("Your Rank: " + (ok.indexOf(ownStats.get(0)) + 1 ));
             number.setText(ownStats.get(0).getStat());
             try{
                 Picasso.get().load(ownStats.get(0).getPicture()).into(profilePic);
@@ -225,10 +243,6 @@ public class LeaderBoardFragment extends Fragment {
             rank.setText("Your Rank: No data");
             number.setText("N/A");
         }
-        RecyclerView content = view.findViewById(R.id.leaderboard_list);
-        List<UserLeaderBoardStats> ok = new ArrayList<>();
-        ok.addAll(database.userDao().getAll());
-        //Log.i("ok", ok.get(0).stat.toString());
         LeaderBoardAdapter ad = new LeaderBoardAdapter(ok);
         content.setAdapter(ad);
         content.setLayoutManager(new LinearLayoutManager(view.getContext()));
@@ -248,7 +262,10 @@ public class LeaderBoardFragment extends Fragment {
     {
         if(mBound)
         {
-            service.getDatabaseData(getArguments().getString("Challenge"),true);
+            String chall = getArguments().getString("Challenge");
+            String type = getArguments().getString("Type");
+            service.getDatabaseData(chall, type,true);
+
             setLeaderboardStats(getView());
         }
     }
@@ -262,5 +279,6 @@ public class LeaderBoardFragment extends Fragment {
         fm.commit();
 
     }
+
 
 }

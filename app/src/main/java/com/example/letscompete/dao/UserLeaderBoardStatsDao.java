@@ -1,4 +1,4 @@
-package com.example.letscompete;
+package com.example.letscompete.dao;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -6,12 +6,17 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
+import com.example.letscompete.entities.UserLeaderBoardStats;
+
 import java.util.List;
 
 @Dao
 public interface UserLeaderBoardStatsDao {
-    @Query("SELECT * FROM userleaderboardstats")
+    @Query("SELECT * FROM userleaderboardstats Order by stat desc")
     List<UserLeaderBoardStats> getAll();
+
+    @Query("SELECT * FROM userleaderboardstats Order by stat Asc")
+    List<UserLeaderBoardStats> getAllAsc();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(UserLeaderBoardStats... users);

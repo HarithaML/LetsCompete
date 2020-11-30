@@ -36,11 +36,11 @@
         <activity android:name=".activities.LoginActivity" />
 
         <service
-            android:name=".LeaderBoardDatabaseService"
+            android:name=".services.LeaderBoardDatabaseService"
             android:enabled="true"
             android:exported="true" />
         <service
-            android:name=".UserLeaderBoardDatabaseService"
+            android:name=".services.UserLeaderBoardDatabaseService"
             android:enabled="true"
             android:exported="true" />
 

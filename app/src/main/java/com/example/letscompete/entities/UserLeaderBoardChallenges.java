@@ -1,4 +1,4 @@
-package com.example.letscompete;
+package com.example.letscompete.entities;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;

@@ -1,18 +1,19 @@
 package com.example.letscompete.fragments;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
 import com.example.letscompete.AppDatabase;
 import com.example.letscompete.R;
-import com.example.letscompete.UserLeaderBoardChallenges;
+import com.example.letscompete.entities.UserLeaderBoardChallenges;
 import com.example.letscompete.adapters.AdapterChallengesLeaderboard;
 
 import java.util.ArrayList;

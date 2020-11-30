@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.letscompete.R;
-import com.example.letscompete.UserLeaderBoardChallenges;
+import com.example.letscompete.entities.UserLeaderBoardChallenges;
 import com.example.letscompete.activities.DashBoardActivity;
 import com.squareup.picasso.Picasso;
 
