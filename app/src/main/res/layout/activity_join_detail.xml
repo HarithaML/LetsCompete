@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.JoinDetailActivity">
+
+    <TextView
+        android:id="@+id/challengetitle_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:text="Challenge Title"
+        android:textColor="#000"
+        android:textSize="30sp"
+
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/imagegholder_activity"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.592" />
+
+    <ImageView
+        android:id="@+id/imagegholder_activity"
+        android:layout_width="362dp"
+        android:layout_height="285dp"
+
+        android:src="@color/common_google_signin_btn_text_dark_disabled"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.489"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.239" />
+
+
+    <TextView
+        android:id="@+id/description_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Description"
+        android:textColor="#000"
+        android:textSize="25sp"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imagegholder_activity"
+        app:layout_constraintVertical_bias="0.363" />
+
+    <TextView
+        android:id="@+id/duration_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        android:text="Challenge duration"
+        android:textColor="#000"
+        android:textSize="25sp"
+        android:gravity="center"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.524"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imagegholder_activity"
+        app:layout_constraintVertical_bias="0.073" />
+
+    <Button
+        android:id="@+id/join_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Join challenge"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imagegholder_activity"
+        app:layout_constraintVertical_bias="0.601" />
+
+    <Button
+        android:id="@+id/back_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="36dp"
+        android:text="Back"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/join_activity"
+        app:layout_constraintVertical_bias="0.227" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
