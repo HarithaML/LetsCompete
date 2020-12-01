@@ -6,7 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ModelTimeChallenge extends ModelChallengeGeneric{
-    String time, userId;
+    String userId;
+    String time;
     public ModelTimeChallenge() {
     }
 

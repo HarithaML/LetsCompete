@@ -141,15 +141,20 @@ public class LeaderBoardDatabaseService extends Service {
                     }
                     Log.i(TAG, "Value is: " + userList2 + "\n" + userList2.size());
                     List<UserLeaderBoardStats> users = new ArrayList<>();
+                    if(userList2.size() ==0)
+                    {
+                        sendMessage();
+                        return;
+                    }
                     for (int i = 0; i < userList2.size(); i++) {
                         users.add(new UserLeaderBoardStats());
-                        String stat = null;
+                        int stat = 0;
                         if(type.equals(TIMED_BASED))
                         {
-                            stat = ((ModelTimeChallenge) userList2.get(i)).getTime();
+                            stat = Integer.parseInt(((ModelTimeChallenge) userList2.get(i)).getTime());
                         }
                         else {
-                            stat = ((ModelScoreChallenge) userList2.get(i)).getScore();
+                            stat = Integer.parseInt(((ModelScoreChallenge) userList2.get(i)).getScore());
                         }
                         String username = userList2.get(i).getUserName();
                         if (username != null) {
@@ -157,10 +162,10 @@ public class LeaderBoardDatabaseService extends Service {
                         } else {
                             users.get(i).setUsername("none");
                         }
-                        if (stat != null && !stat.isEmpty()) {
+                        if (stat != 0) {
                             users.get(i).setStat(stat);
                         } else {
-                            users.get(i).setStat("0");
+                            users.get(i).setStat(0);
                         }
                         //localDatabase.userDao().insertAll(user);
                         //localDatabase.userDao().insertAll(user);
@@ -202,9 +207,9 @@ public class LeaderBoardDatabaseService extends Service {
                             users.get(i).setUsername("none");
                         }
                         if (rank != null && !rank.isEmpty()) {
-                            users.get(i).setStat(rank);
+                            users.get(i).setStat(Integer.parseInt(rank));
                         } else {
-                            users.get(i).setStat("0");
+                            users.get(i).setStat(0);
                         }
                         //localDatabase.userDao().insertAll(user);
                         //localDatabase.userDao().insertAll(user);

@@ -241,7 +241,13 @@ public class TimerActivity<storageReference> extends AppCompatActivity {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("TimeChallenge");
         ModelTimeChallenge modelTimeChallenge = new ModelTimeChallenge();
         modelTimeChallenge.setChallengeTitle(challengeTitle.trim());
-        modelTimeChallenge.setTime(time);
+        try {
+            modelTimeChallenge.setTime(time);
+        }
+        catch (Exception e)
+        {
+            modelTimeChallenge.setTime("10000000");
+        }
         modelTimeChallenge.setUserId(userUID);
         modelTimeChallenge.setUserName(username);
         String modelId = reference.push().getKey();

@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.letscompete.services.UserLeaderBoardDatabaseService;
@@ -150,11 +151,24 @@ public class DashBoardActivity extends AppCompatActivity
                         case R.id.nav_leaderBoard:
                             actionBar.setTitle("LeaderBoard");
                             //LeaderBoardFragment fragment5 = new LeaderBoardFragment();
+                            Fragment frag = getSupportFragmentManager().findFragmentByTag(TAG);
                             ChallengeSelectionFragment fragment5 = new ChallengeSelectionFragment();
                             Bundle args = new Bundle();
                             args.putString("Challenge", "Other");
                             fragment5.setArguments(args);
-                            FragmentTransaction ft5 = getSupportFragmentManager().beginTransaction();
+                            FragmentTransaction ft5;
+                            FragmentManager m = getSupportFragmentManager();
+                            if(frag != null && frag.isVisible() && frag instanceof LeaderBoardFragment)
+                            {
+                                Log.i(TAG,frag.toString());
+                                ft5 = m.beginTransaction().setCustomAnimations
+                                        (R.anim.slide_in_right,R.anim.fade_out, R.anim.fade_in, R.anim.slide_out_right);
+                                m.popBackStack();
+                            }
+                            else
+                            {
+                                ft5 = m.beginTransaction();
+                            }
                             ft5.replace(R.id.content,fragment5,"");
                             ft5.commit();
                             return true;
@@ -216,8 +230,9 @@ public class DashBoardActivity extends AppCompatActivity
         args.putString("Picture", picture);
         fragment5.setArguments(args);
         FragmentTransaction ft5 = getSupportFragmentManager().beginTransaction().setCustomAnimations(
-                R.anim.fade_in,R.anim.slide_out_right, R.anim.fade_in, R.anim.slide_in_right);
-        ft5.replace(R.id.content,fragment5,"");
+                R.anim.fade_in,R.anim.slide_out_right, R.anim.slide_in_right, R.anim.fade_out);
+        ft5.replace(R.id.content,fragment5,TAG);
+        ft5.addToBackStack(TAG);
         ft5.commit();
     }
     @Override

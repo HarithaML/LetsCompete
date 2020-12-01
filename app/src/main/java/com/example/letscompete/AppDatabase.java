@@ -11,7 +11,7 @@ import com.example.letscompete.dao.UserLeaderBoardStatsDao;
 import com.example.letscompete.entities.UserLeaderBoardChallenges;
 import com.example.letscompete.entities.UserLeaderBoardStats;
 
-@Database(entities = {UserLeaderBoardStats.class, UserLeaderBoardChallenges.class}, version = 7, exportSchema = false)
+@Database(entities = {UserLeaderBoardStats.class, UserLeaderBoardChallenges.class}, version = 8, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase{
     private static AppDatabase sInstance;
     public abstract UserLeaderBoardStatsDao userDao();

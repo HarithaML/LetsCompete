@@ -181,7 +181,7 @@ public class CompleteChallengeActivity extends AppCompatActivity  {
                         ds.getRef().child("status").setValue("Completed");
                         Toast.makeText(CompleteChallengeActivity.this, "status has been set", Toast.LENGTH_LONG);
                         startActivity(new Intent(CompleteChallengeActivity.this,
-                                HomeFragment.class));
+                                DashBoardActivity.class));
                     }
                 }
             }
@@ -197,7 +197,12 @@ public class CompleteChallengeActivity extends AppCompatActivity  {
         modelScoreChallenge.setUserName(username);
         modelScoreChallenge.setUserUid(userUID);
         modelScoreChallenge.setChallengeTitle(challengeTitle);
-        modelScoreChallenge.setScore(titleEt.getText().toString());
+        try{
+            modelScoreChallenge.setScore(titleEt.getText().toString());}
+        catch (Exception e)
+        {
+            modelScoreChallenge.setScore("0");
+        }
         databaseReference1.push().setValue(modelScoreChallenge);
     }
     private void changeButtonVisibility() {
