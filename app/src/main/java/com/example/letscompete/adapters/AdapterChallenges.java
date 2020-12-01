@@ -1,6 +1,7 @@
 package com.example.letscompete.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,11 +9,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.letscompete.R;
-import com.example.letscompete.fragments.ChallengeDescriptionFragment;
+import com.example.letscompete.activities.JoinDetailActivity;
 import com.example.letscompete.models.ModelChallenge;
 import com.squareup.picasso.Picasso;
 
@@ -59,8 +59,14 @@ public class AdapterChallenges extends RecyclerView.Adapter<AdapterChallenges.My
         holder.img1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AppCompatActivity activity =(AppCompatActivity)view.getContext();
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.content,new ChallengeDescriptionFragment(ChalName,ChalDuration,challengeDescription,imageURL)).addToBackStack(null).commit();
+//                AppCompatActivity activity =(AppCompatActivity)view.getContext();
+//                activity.getSupportFragmentManager().beginTransaction().replace(R.id.content,new ChallengeDescriptionFragment(ChalName,ChalDuration,challengeDescription,imageURL)).addToBackStack(null).commit();
+                Intent intent = new Intent(context, JoinDetailActivity.class);
+                intent.putExtra("challengeTitle",ChalName);
+                intent.putExtra("challengeDuration", ChalDuration);
+                intent.putExtra("challengeDescription",challengeDescription);
+                intent.putExtra("challengeImageURL",imageURL);
+                context.startActivity(intent);
             }
         });
 

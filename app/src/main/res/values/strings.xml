@@ -49,4 +49,5 @@
         2. Under Track Steps you can find step count history. \n \n
                                     Enjoy Walking :)
     </string>
+    <string name="title_activity_join_detail">JoinDetailActivity</string>
 </resources>
