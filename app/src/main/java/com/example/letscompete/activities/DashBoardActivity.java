@@ -90,7 +90,6 @@ public class DashBoardActivity extends AppCompatActivity
         updateToken(FirebaseInstanceId.getInstance().getToken());
         sIntent = new Intent(this, UserLeaderBoardDatabaseService.class);
         bindService(sIntent, connection, Context.BIND_AUTO_CREATE);
-        startService(sIntent);
 
     }
 
@@ -98,17 +97,18 @@ public class DashBoardActivity extends AppCompatActivity
     protected void onResume() {
         checkUserStatus();
         super.onResume();
+        startService(sIntent);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        stopService(sIntent);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        stopService(sIntent);
         unbindService(connection);
         Log.i(TAG, "onDestroy Dashboard");
     }

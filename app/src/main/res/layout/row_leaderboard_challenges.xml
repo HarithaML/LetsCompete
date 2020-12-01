@@ -8,15 +8,15 @@
 
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
+        android:layout_width="@dimen/leader_pic_size"
+        android:layout_height="@dimen/leader_pic_size"
         android:scaleType="fitXY"
+        android:src="@drawable/ic_profile_black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.25"
-        android:src="@drawable/ic_profile_black" />
+        app:layout_constraintVertical_bias="0.25" />
 
     <TextView
         android:id="@+id/textView5"

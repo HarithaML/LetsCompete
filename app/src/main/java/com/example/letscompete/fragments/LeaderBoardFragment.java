@@ -44,6 +44,7 @@ public class LeaderBoardFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     private static final String TAG = "LeaderBoardFragment";
     public static final String UPDATE_DATA = "asdnjoasndosan";
+    private static int PICTURE_SIZE = 50;
     private TextView rank, username, number, challengeName, challengeType, challengeDuration;
     private ImageView challengePicture, profilePic;
     private AppDatabase database;
@@ -157,7 +158,7 @@ public class LeaderBoardFragment extends Fragment {
             Log.i(TAG, pic);
             if(pic != null && pic != null)
             {
-                Picasso.get().load(pic).into(challengePicture);
+                Picasso.get().load(pic).resize(PICTURE_SIZE,PICTURE_SIZE).onlyScaleDown().into(challengePicture);
             }
         }
         catch(Exception e)
@@ -231,7 +232,7 @@ public class LeaderBoardFragment extends Fragment {
             rank.setText("Your Rank: " + (ok.indexOf(ownStats.get(0)) + 1 ));
             number.setText(ownStats.get(0).getStat());
             try{
-                Picasso.get().load(ownStats.get(0).getPicture()).into(profilePic);
+                Picasso.get().load(ownStats.get(0).getPicture()).resize(PICTURE_SIZE,PICTURE_SIZE).onlyScaleDown().into(profilePic);
             }
             catch (Exception e)
             {
