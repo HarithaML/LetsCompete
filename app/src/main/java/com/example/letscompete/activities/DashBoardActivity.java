@@ -68,8 +68,8 @@ public class DashBoardActivity extends AppCompatActivity
         //ActionBar and its title
         actionBar = getSupportActionBar();
         actionBar.setTitle("Home");
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeButtonEnabled(true);
+//        actionBar.setDisplayHomeAsUpEnabled(true);
+//        actionBar.setHomeButtonEnabled(true);
 
         //init
         firebaseAuth = FirebaseAuth.getInstance();
@@ -188,12 +188,6 @@ public class DashBoardActivity extends AppCompatActivity
         // check on start of app
         checkUserStatus();
         super.onStart();
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        finish();
     }
     /*inflate options menu*/
 
