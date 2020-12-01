@@ -15,10 +15,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.LetsCompete">
+        <activity android:name=".activities.JoinChallengeActivity"></activity>
+
         <service
             android:name=".activities.activityBasedChallenge.StepCountingService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
 
         <activity android:name=".activities.activityBasedChallenge.activityTracker.trackSteps.TrackStepsActivity" />
         <activity android:name=".activities.activityBasedChallenge.activityTracker.PedometerListActivity" />

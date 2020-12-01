@@ -17,6 +17,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.letscompete.R;
 import com.example.letscompete.activities.CreateChallengeActivity;
+import com.example.letscompete.activities.JoinChallengeActivity;
 import com.example.letscompete.activities.MainActivity;
 import com.example.letscompete.adapters.HomeUpAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -143,11 +144,12 @@ public class HomeFragment extends Fragment {
                 //transfer to new challenge fragment_Harika
             } else if(which == 1) {
                 //join a current challenge clicked
-                ChallengesListFragment fragment1 = new ChallengesListFragment();
-                FragmentTransaction ft1 = getFragmentManager().beginTransaction();
-                ft1.replace(R.id.content,fragment1,"");
-                ft1.addToBackStack(null).commit();
-
+//                ChallengesListFragment fragment1 = new ChallengesListFragment();
+//                FragmentTransaction ft1 = getFragmentManager().beginTransaction();
+//                ft1.replace(R.id.content,fragment1,"");
+//                ft1.addToBackStack(null).commit();
+                startActivity(new Intent(getActivity(), JoinChallengeActivity.class));
+                getActivity().finish();
             }
         });
         //create and show dialog
