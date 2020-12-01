@@ -16,6 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LetsCompete">
         <activity android:name=".activities.JoinChallengeActivity"></activity>
+        <activity android:name=".activities.JoinDetailActivity"></activity>
 
         <service
             android:name=".activities.activityBasedChallenge.StepCountingService"
