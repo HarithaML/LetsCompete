@@ -232,4 +232,16 @@ public class DashBoardActivity extends AppCompatActivity
         }
         return super.onOptionsItemSelected(item);
     }
+    @Override
+    public void onBackPressed() {
+        BottomNavigationView mBottomNavigationView = findViewById(R.id.navigation);
+        if (mBottomNavigationView.getSelectedItemId() == R.id.nav_home)
+        {
+            moveTaskToBack(true);
+        }
+        else
+        {
+            mBottomNavigationView.setSelectedItemId(R.id.nav_home);
+        }
+    }
 }

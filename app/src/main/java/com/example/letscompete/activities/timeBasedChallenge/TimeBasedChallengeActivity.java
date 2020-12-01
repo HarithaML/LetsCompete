@@ -65,7 +65,7 @@ public class TimeBasedChallengeActivity extends AppCompatActivity {
         final TimeChallengeFragmentAdapter adapter = new TimeChallengeFragmentAdapter(this, getSupportFragmentManager(), tabLayout.getTabCount(),challengeTitle,username);
 
         viewPager.setAdapter(adapter);
-
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {

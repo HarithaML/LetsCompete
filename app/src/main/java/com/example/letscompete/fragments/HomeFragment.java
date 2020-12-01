@@ -92,6 +92,7 @@ public class HomeFragment extends Fragment {
         TabLayout tabLayout = view.findViewById(R.id.home_up_tablayout);
         final HomeUpAdapter adapter = new HomeUpAdapter(getActivity().getApplicationContext(), getChildFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
