@@ -115,9 +115,9 @@ public class CreateChallengeActivity<storageReference> extends AppCompatActivity
             @Override
             public void afterTextChanged(Editable s) {
                 if(allTitle.contains(ChallengeTitle.getText().toString())){
-                    System.out.println("there should be eror dispaly");
+                    System.out.println("there should be error dispaly");
                     ChallengeTitle.setError("This challenge title is taken");
-                    Create.setEnabled(false);
+                    Create.setEnabled(true);
                 }
             }
         });
@@ -174,6 +174,7 @@ public class CreateChallengeActivity<storageReference> extends AppCompatActivity
                                 StartDate.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
                             }
                         }, year, month, day);
+                datepicker.getDatePicker().setMinDate(System.currentTimeMillis() -1000);
                 datepicker.show();
                 StartDate.setText(StartDate.getText());
             }
@@ -188,6 +189,7 @@ public class CreateChallengeActivity<storageReference> extends AppCompatActivity
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 text = parent.getItemAtPosition(position).toString();
                 Toast.makeText(parent.getContext(), text, Toast.LENGTH_SHORT).show();
+
             }
 
             @Override
@@ -204,44 +206,57 @@ public class CreateChallengeActivity<storageReference> extends AppCompatActivity
         Create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
-                String userid = currentFirebaseUser.getUid();
-                String username = currentFirebaseUser.getEmail();
-                Uri userimage = currentFirebaseUser.getPhotoUrl();
-                modelChallenge.setChallengeTitle(ChallengeTitle.getText().toString().trim());
-                modelChallenge.setChallengeDuration(ChallengeDuration.getText().toString().trim());
-                modelChallenge.setChallengeDescription(ChallengeDescription.getText().toString().trim());
-                modelChallenge.setStartdate(StartDate.getText().toString());
-                modelChallenge.setChallengeType(text);
-                modelChallenge.setImageName(txtdata.getText().toString().trim());
-                modelChallenge.setImageURL(url);
-                //challenge.setRole("Moderator");
-                modelChallenge.setUserID(userid);
-                reference.push().setValue(modelChallenge);
+                if (ChallengeTitle.length() == 0) {
+                    ChallengeTitle.setError("Enter Challenge Title");
+                } else if (ChallengeDuration.length() == 0) {
+                    ChallengeDuration.setError("Enter Challenge Duration");
+                } else if (StartDate.length() == 0) {
+                    StartDate.setError("Choose Start Date");
+                }
+                else if (ChallengeDescription.length() == 0) {
 
-                participants = new ModelParticipant();
-                reference = FirebaseDatabase.getInstance().getReference().child("Participants");
-                participants.setUserUID(userid);
-                participants.setProgress(progress);
-                participants.setRank(rank);
-                participants.setRole(role);
-                participants.setStatus(status);
-                participants.setUserName(username);
-                //Qiming commented this following setter s
-                //participants.setUserImage(userimage.toString());
-                //participants.setImageURL(imageurl1);
-                participants.setChallengeTitle(ChallengeTitle.getText().toString().trim());
-                reference.push().setValue(participants);
-                startActivity(new Intent(CreateChallengeActivity.this, DashBoardActivity.class));
-                finish();
-                Toast.makeText(CreateChallengeActivity.this, "Challenge created successfully", Toast.LENGTH_SHORT).show();
-                ChallengeTitle.setText("");
-                ChallengeDuration.setText("");
-                ChallengeDescription.setText("");
-                StartDate.setText("");
-                txtdata.setText("");
+                    ChallengeDescription.setError("Enter Challenge Description");
+                }
+
+                else {
+                    FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                    String userid = currentFirebaseUser.getUid();
+                    String username = currentFirebaseUser.getEmail();
+                    Uri userimage = currentFirebaseUser.getPhotoUrl();
+                    modelChallenge.setChallengeTitle(ChallengeTitle.getText().toString().trim());
+                    modelChallenge.setChallengeDuration(ChallengeDuration.getText().toString().trim());
+                    modelChallenge.setChallengeDescription(ChallengeDescription.getText().toString().trim());
+                    modelChallenge.setStartdate(StartDate.getText().toString());
+                    modelChallenge.setChallengeType(text);
+                    modelChallenge.setImageName(txtdata.getText().toString().trim());
+                    modelChallenge.setImageURL(url);
+                    //challenge.setRole("Moderator");
+                    modelChallenge.setUserID(userid);
+                    reference.push().setValue(modelChallenge);
+
+                    participants = new ModelParticipant();
+                    reference = FirebaseDatabase.getInstance().getReference().child("Participants");
+                    participants.setUserUID(userid);
+                    participants.setProgress(progress);
+                    participants.setRank(rank);
+                    participants.setRole(role);
+                    participants.setStatus(status);
+                    participants.setUserName(username);
+                    //Qiming commented this following setter s
+                    //participants.setUserImage(userimage.toString());
+                    //participants.setImageURL(imageurl1);
+                    participants.setChallengeTitle(ChallengeTitle.getText().toString().trim());
+                    reference.push().setValue(participants);
+                    startActivity(new Intent(CreateChallengeActivity.this, DashBoardActivity.class));
+                    finish();
+                    Toast.makeText(CreateChallengeActivity.this, "Challenge created successfully", Toast.LENGTH_SHORT).show();
+                    ChallengeTitle.setText("");
+                    ChallengeDuration.setText("");
+                    ChallengeDescription.setText("");
+                    StartDate.setText("");
+                    txtdata.setText("");
+                }
             }
-
         });
 
     }

@@ -90,6 +90,7 @@ public class ChallengeDescriptionFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_challenge_description, container, false);
         TextView name = view.findViewById(R.id.challengetitle);
@@ -97,6 +98,7 @@ public class ChallengeDescriptionFragment extends Fragment {
         TextView ChalDescription = view.findViewById(R.id.description);
         ImageView imageholder = view.findViewById(R.id.imagegholder);
         Button button = (Button) view.findViewById(R.id.buttonjoin);
+        Button Back = (Button) view.findViewById(R.id.button2);
 
         name.setText(title);
         ChalDuration.setText(duration);
@@ -128,6 +130,17 @@ public class ChallengeDescriptionFragment extends Fragment {
                 FragmentTransaction ft1 = getFragmentManager().beginTransaction();
                 ft1.replace(R.id.content,fragment1,"");
                 ft1.addToBackStack(null).commit();
+            }
+
+        });
+        Back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                ChallengesListFragment fragment1 = new ChallengesListFragment();
+                FragmentTransaction ft1 = getFragmentManager().beginTransaction();
+                ft1.replace(R.id.content,fragment1,TAG_FRAGMENT);
+                ft1.addToBackStack(null).commit();
+
             }
 
         });
