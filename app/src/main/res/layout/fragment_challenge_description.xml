@@ -15,7 +15,7 @@
 
         android:text="Challenge Title"
         android:textColor="#000"
-        android:textSize="40sp"
+        android:textSize="30sp"
 
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/imagegholder"
@@ -45,11 +45,12 @@
         android:text="Description"
         android:textColor="#000"
         android:textSize="25sp"
+        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imagegholder"
-        app:layout_constraintVertical_bias="0.446" />
+        app:layout_constraintVertical_bias="0.363" />
 
     <TextView
         android:id="@+id/duration"
@@ -59,24 +60,40 @@
         android:text="Challenge duration"
         android:textColor="#000"
         android:textSize="25sp"
+        android:gravity="center"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.524"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imagegholder"
-        app:layout_constraintVertical_bias="0.098" />
+        app:layout_constraintVertical_bias="0.073" />
 
     <Button
         android:id="@+id/buttonjoin"
         android:layout_width="211dp"
         android:layout_height="40dp"
         android:text="Join challenge"
+        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.521"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imagegholder"
-        app:layout_constraintVertical_bias="0.785" />
+        app:layout_constraintVertical_bias="0.591" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="96dp"
+        android:layout_height="38dp"
+        android:text="Back"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonjoin"
+        app:layout_constraintVertical_bias="0.227" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

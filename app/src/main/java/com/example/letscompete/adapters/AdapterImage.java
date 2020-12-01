@@ -53,7 +53,8 @@ public class AdapterImage extends RecyclerView.Adapter<AdapterImage.HolderImage>
         holder.textView.setText("User:"+" "+"Challenge:"+modelImage.getChallengeTitle());
         try{
             //if image is recieved then set
-            Picasso.get().load(modelImage.getImageUrl()).into(holder.imageView);
+            Picasso.get().load(modelImage.getImageUrl()).resize(372, 200).into(holder.imageView);
+
         }catch(Exception e){
             //if there is any exception in getting image
             Picasso.get().load(R.drawable.ic_default_img_black).into(holder.imageView);
