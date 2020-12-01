@@ -20,6 +20,7 @@ import java.util.List;
 
 public class AdapterChallengesLeaderboard extends RecyclerView.Adapter<AdapterChallengesLeaderboard.MyHolder> {
 
+    private static int PICTURE_SIZE = 50;
     private Context mContext;
     List<UserLeaderBoardChallenges> modelChallengeList;
 
@@ -54,7 +55,7 @@ public class AdapterChallengesLeaderboard extends RecyclerView.Adapter<AdapterCh
         {
             try{
                 //if image is recieved then set
-                Picasso.get().load(pic).into(holder.mPic);
+                Picasso.get().load(pic).resize(PICTURE_SIZE,PICTURE_SIZE).onlyScaleDown().into(holder.mPic);
             }catch(Exception e){
                 //if there is any exception in getting image
                 Picasso.get().load(R.drawable.ic_profile_black).into(holder.mPic);

@@ -19,6 +19,7 @@ import java.util.List;
 public class LeaderBoardAdapter extends RecyclerView.Adapter<LeaderBoardAdapter.ViewHolder> {
     private List<UserLeaderBoardStats> rankings;
     private final static String TAG = "LeaderBoardAdapter";
+    private static int PICTURE_SIZE = 70;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView rank;
@@ -82,7 +83,7 @@ public class LeaderBoardAdapter extends RecyclerView.Adapter<LeaderBoardAdapter.
             Log.i(TAG, pic);
             if(pic != null && !pic.isEmpty())
             {
-                Picasso.get().load(pic).into(viewHolder.getProfilePic());
+                Picasso.get().load(pic).resize(PICTURE_SIZE,PICTURE_SIZE).onlyScaleDown().into(viewHolder.getProfilePic());
             }
             else
             {
