@@ -12,6 +12,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import com.example.letscompete.AppDatabase;
 import com.example.letscompete.entities.UserLeaderBoardStats;
 import com.example.letscompete.fragments.LeaderBoardFragment;
+import com.example.letscompete.models.ModelActivityChallenge;
 import com.example.letscompete.models.ModelChallengeGeneric;
 import com.example.letscompete.models.ModelParticipant;
 import com.example.letscompete.models.ModelScoreChallenge;
@@ -35,6 +36,7 @@ public class LeaderBoardDatabaseService extends Service {
     private final static String TAG = "LeaderBoardDatabaseService";
     private final static String TIMED_BASED = "Time based";
     private final static String SCORE_BASED = "Score based";
+    private final static String ACTIVITY_BASED = "Activity based";
     FirebaseDatabase database;
     AppDatabase localDatabase;
     List<ModelParticipant> userList;
@@ -112,6 +114,10 @@ public class LeaderBoardDatabaseService extends Service {
         {
             a= database.getReference("ScoreChallenge");
         }
+        else if(type.equals(ACTIVITY_BASED))
+        {
+            a= database.getReference("ActivityChallenge");
+        }
         else {
             a = database.getReference("Participants");
         }
@@ -120,7 +126,7 @@ public class LeaderBoardDatabaseService extends Service {
         {
             localDatabase.userDao().deleteAll();
         }
-        if(type.equals(TIMED_BASED) || type.equals(SCORE_BASED))
+        if(type.equals(TIMED_BASED) || type.equals(SCORE_BASED) || type.equals(ACTIVITY_BASED) )
         {
             query.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -132,6 +138,10 @@ public class LeaderBoardDatabaseService extends Service {
                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
                         if(type.equals(TIMED_BASED)) {
                             modelUser = ds.getValue(ModelTimeChallenge.class);
+                        }
+                        else if(type.equals(ACTIVITY_BASED))
+                        {
+                            modelUser = ds.getValue(ModelActivityChallenge.class);
                         }
                         else
                         {
@@ -152,6 +162,10 @@ public class LeaderBoardDatabaseService extends Service {
                         try {
                             if (type.equals(TIMED_BASED)) {
                                 stat = Integer.parseInt(((ModelTimeChallenge) userList2.get(i)).getTime());
+                            }
+                            else if(type.equals(ACTIVITY_BASED))
+                            {
+                                stat = Integer.parseInt(((ModelActivityChallenge) userList2.get(i)).getCounter());
                             } else {
                                 stat = Integer.parseInt(((ModelScoreChallenge) userList2.get(i)).getScore());
                             }
@@ -177,6 +191,12 @@ public class LeaderBoardDatabaseService extends Service {
                     }
                     localDatabase.userDao().insertAllList(users);
                     getUserProfilePic(users);
+                    if(type.equals("Time based")) {
+                        updateRank(name, "asc");
+                    }
+                    else {
+                        updateRank(name, "desc");
+                    }
                     //stopSelf();
                 }
 
@@ -232,7 +252,7 @@ public class LeaderBoardDatabaseService extends Service {
                     if(type.equals("Time based")) {
                         updateRank(name, "asc");
                     }
-                    else if(type.equals("Score based")) {
+                    else {
                         updateRank(name, "desc");
                     }
                     //stopSelf();
