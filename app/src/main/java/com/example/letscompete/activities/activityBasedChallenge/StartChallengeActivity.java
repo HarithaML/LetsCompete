@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -24,11 +25,14 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.letscompete.R;
+import com.example.letscompete.activities.DashBoardActivity;
 import com.example.letscompete.models.ModelActivityChallenge;
 import com.example.letscompete.models.ModelImage;
 import com.example.letscompete.models.ModelParticipant;
@@ -73,9 +77,11 @@ public class StartChallengeActivity extends AppCompatActivity{
     private static final int STORAGE_REQUEST_CODE = 200;
     private static final int IMAGE_PICK_GALLERY_REQUEST_CODE = 300;
     private static final int IMAGE_PICK_CAMERA_REQUEST_CODE=400;
+    private static final int ACTIVITY_REQUEST_CODE=500;
     //arrays of permissions to be requested
     String []cameraPermissions;
     String []storagePermissions;
+    String []activityPermissions;
     ///firebase
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference ;
@@ -102,6 +108,7 @@ public class StartChallengeActivity extends AppCompatActivity{
 
 
 
+    @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -136,6 +143,7 @@ public class StartChallengeActivity extends AppCompatActivity{
         //init arrays of Permissions
         cameraPermissions = new String[]{Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE};
         storagePermissions = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        activityPermissions = new String[]{Manifest.permission.ACTIVITY_RECOGNITION};
         //firebase
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("ChallengeImages");
@@ -178,8 +186,6 @@ public class StartChallengeActivity extends AppCompatActivity{
 
         init(); // Call view initialisation method.
 
-
-
     }
 
 
@@ -197,7 +203,7 @@ public class StartChallengeActivity extends AppCompatActivity{
                         ds.getRef().child("status").setValue("Completed");
                         Toast.makeText(StartChallengeActivity.this, "status has been set", Toast.LENGTH_LONG);
                         startActivity(new Intent(StartChallengeActivity.this,
-                                                 ActivityBasedChallengeActivity.class));
+                                                 DashBoardActivity.class));
                     }
                 }
             }
@@ -316,6 +322,17 @@ public class StartChallengeActivity extends AppCompatActivity{
                 } else
                 {
                     Toast.makeText(StartChallengeActivity.this, "The app was not allowed to write to your storage. Hence, it cannot function properly. Please consider granting it this permission", Toast.LENGTH_LONG).show();
+                }
+            }
+            break;
+            case ACTIVITY_REQUEST_CODE: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                {
+                    //reload my activity with permission granted or use the features what required the permission
+                    Toast.makeText(StartChallengeActivity.this, "The app was allowed to access activity", Toast.LENGTH_LONG).show();
+                } else
+                {
+                    Toast.makeText(StartChallengeActivity.this, "The app was not allowed to activity. Hence, it cannot function properly. Please consider granting it this permission", Toast.LENGTH_LONG).show();
                 }
             }
         }
