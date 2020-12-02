@@ -45,6 +45,7 @@ public class LeaderBoardFragment extends Fragment {
     private static final String TAG = "LeaderBoardFragment";
     public static final String UPDATE_DATA = "asdnjoasndosan";
     private static int PICTURE_SIZE = 50;
+    private List<UserLeaderBoardStats> listUser;
     private TextView rank, username, number, challengeName, challengeType, challengeDuration;
     private ImageView challengePicture, profilePic;
     private AppDatabase database;
@@ -54,6 +55,7 @@ public class LeaderBoardFragment extends Fragment {
     private Intent sIntent;
     private boolean mBound = false;
     private RecieverData r;
+    private LeaderBoardAdapter ad;
 
     private class RecieverData extends BroadcastReceiver {
 
@@ -129,6 +131,7 @@ public class LeaderBoardFragment extends Fragment {
         database = AppDatabase.getInstance(getActivity());
         firebaseAuth = FirebaseAuth.getInstance();
         user = firebaseAuth.getCurrentUser();
+        listUser = new ArrayList<>();
         r = new RecieverData();
 
     }
@@ -188,7 +191,7 @@ public class LeaderBoardFragment extends Fragment {
                 changeFrags();
             }
         });
-        //setLeaderboardStats(view);
+        setLeaderboardStats(view);
         return view;
     }
 
@@ -230,7 +233,7 @@ public class LeaderBoardFragment extends Fragment {
         {
             username.setText(ownStats.get(0).getUsername());
             rank.setText("Your Rank: " + (ok.indexOf(ownStats.get(0)) + 1 ));
-            number.setText(ownStats.get(0).getStat());
+            number.setText(ownStats.get(0).getStat() + "");
             try{
                 Picasso.get().load(ownStats.get(0).getPicture()).resize(PICTURE_SIZE,PICTURE_SIZE).onlyScaleDown().into(profilePic);
             }
@@ -244,7 +247,7 @@ public class LeaderBoardFragment extends Fragment {
             rank.setText("Your Rank: No data");
             number.setText("N/A");
         }
-        LeaderBoardAdapter ad = new LeaderBoardAdapter(ok);
+        ad = new LeaderBoardAdapter(ok);
         content.setAdapter(ad);
         content.setLayoutManager(new LinearLayoutManager(view.getContext()));
     }
@@ -276,9 +279,36 @@ public class LeaderBoardFragment extends Fragment {
         FragmentTransaction fm = getFragmentManager().beginTransaction().setCustomAnimations
                 (R.anim.slide_in_right,R.anim.fade_out, R.anim.fade_in, R.anim.slide_out_right);
         ChallengeSelectionFragment fragment5 = new ChallengeSelectionFragment();
-        fm.replace(R.id.content,fragment5,"");
+        fm.replace(R.id.content,fragment5,TAG);
         fm.commit();
 
+    }
+
+    private void updateList()
+    {
+        listUser.clear();
+        if(getArguments().getString("Type").equals("Score based"))
+        {
+            listUser.addAll(database.userDao().getAll());
+        }
+        else
+        {
+            listUser.addAll(database.userDao().getAllAsc());
+        }
+        List<UserLeaderBoardStats> ownStats = database.userDao().getUser(user.getEmail());
+        if(ownStats.size() == 1)
+        {
+            username.setText(ownStats.get(0).getUsername());
+            rank.setText("Your Rank: " + (listUser.indexOf(ownStats.get(0)) + 1 ));
+            number.setText(ownStats.get(0).getStat() + "");
+            try{
+                Picasso.get().load(ownStats.get(0).getPicture()).resize(PICTURE_SIZE,PICTURE_SIZE).onlyScaleDown().into(profilePic);
+            }
+            catch (Exception e)
+            {
+            }
+        }
+        ad.notifyDataSetChanged();
     }
 
 

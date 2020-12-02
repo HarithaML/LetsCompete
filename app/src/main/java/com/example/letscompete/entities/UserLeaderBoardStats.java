@@ -18,7 +18,7 @@ public class UserLeaderBoardStats {
     public int rank;
 
     @ColumnInfo(name = "stat")
-    public String stat;
+    public int stat;
 
     @ColumnInfo(name = "picture")
     String picture;
@@ -40,11 +40,11 @@ public class UserLeaderBoardStats {
         this.rank = rank;
     }
 
-    public String getStat() {
+    public int getStat() {
         return stat;
     }
 
-    public void setStat(String stat) {
+    public void setStat(int stat) {
         this.stat = stat;
     }
 

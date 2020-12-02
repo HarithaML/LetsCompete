@@ -53,8 +53,7 @@ public class LeaderBoardAdapter extends RecyclerView.Adapter<LeaderBoardAdapter.
     }
 
     public LeaderBoardAdapter(List<UserLeaderBoardStats> rankings) {
-        this.rankings = new ArrayList<>();
-        this.rankings.addAll(rankings);
+        this.rankings = rankings;
         Log.i("calling", "ok");
     }
 
@@ -77,7 +76,7 @@ public class LeaderBoardAdapter extends RecyclerView.Adapter<LeaderBoardAdapter.
         Log.i("position", position + "");
         viewHolder.getRank().setText("Ranking: " + (position + 1));
         viewHolder.getUser().setText(rankings.get(position).getUsername());
-        viewHolder.getStat().setText(rankings.get(position).getStat());
+        viewHolder.getStat().setText(rankings.get(position).getStat() + "");
         try {
             String pic = rankings.get(position).getPicture();
             Log.i(TAG, pic);
