@@ -149,12 +149,16 @@ public class LeaderBoardDatabaseService extends Service {
                     for (int i = 0; i < userList2.size(); i++) {
                         users.add(new UserLeaderBoardStats());
                         int stat = 0;
-                        if(type.equals(TIMED_BASED))
-                        {
-                            stat = Integer.parseInt(((ModelTimeChallenge) userList2.get(i)).getTime());
+                        try {
+                            if (type.equals(TIMED_BASED)) {
+                                stat = Integer.parseInt(((ModelTimeChallenge) userList2.get(i)).getTime());
+                            } else {
+                                stat = Integer.parseInt(((ModelScoreChallenge) userList2.get(i)).getScore());
+                            }
                         }
-                        else {
-                            stat = Integer.parseInt(((ModelScoreChallenge) userList2.get(i)).getScore());
+                        catch (Exception e)
+                        {
+                            stat = 0;
                         }
                         String username = userList2.get(i).getUserName();
                         if (username != null) {
