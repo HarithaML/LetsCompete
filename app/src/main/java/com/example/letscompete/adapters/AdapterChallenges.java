@@ -51,7 +51,7 @@ public class AdapterChallenges extends RecyclerView.Adapter<AdapterChallenges.My
         holder.ChalName.setText(ChalName);
         holder.ChalDuration.setText(ChalDuration);
         holder.ChalDesc.setText(challengeDescription);
-        Picasso.get().load(imageURL).into(holder.img1);
+        Picasso.get().load(imageURL).resize(0,376).into(holder.img1);
 
 
         //click challenge item on Home fragment
