@@ -210,9 +210,17 @@ public class LeaderBoardDatabaseService extends Service {
                         } else {
                             users.get(i).setUsername("none");
                         }
-                        if (rank != null && !rank.isEmpty()) {
-                            users.get(i).setStat(Integer.parseInt(rank));
-                        } else {
+                        try {
+
+
+                            if (rank != null && !rank.isEmpty()) {
+                                users.get(i).setStat(Integer.parseInt(rank));
+                            } else {
+                                users.get(i).setStat(0);
+                            }
+                        }
+                        catch (Exception e)
+                        {
                             users.get(i).setStat(0);
                         }
                         //localDatabase.userDao().insertAll(user);
