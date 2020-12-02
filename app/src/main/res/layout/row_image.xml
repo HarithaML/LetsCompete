@@ -22,7 +22,7 @@
         android:id="@+id/image_profile_view"
         android:layout_below="@id/challengeTitle"
         android:background="@color/colorSecondaryVariant"
-        android:layout_width="372dp"
+        android:layout_width="match_parent"
         android:layout_centerHorizontal="true"
         android:layout_height="200dp" />
 

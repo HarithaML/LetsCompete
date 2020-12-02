@@ -53,7 +53,6 @@ public class JoinDetailActivity extends AppCompatActivity {
         challengeImageURL = intent.getStringExtra("challengeImageURL");
         //intia view
         Button button = findViewById(R.id.join_activity);
-        Button Back = findViewById(R.id.back_activity);
         TextView name = findViewById(R.id.challengetitle_activity);
         TextView ChalDuration = findViewById(R.id.duration_activity);
         TextView ChalDescription = findViewById(R.id.description_activity);
@@ -88,14 +87,6 @@ public class JoinDetailActivity extends AppCompatActivity {
 
         });
 
-        Back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v){
-                startActivity(new Intent(JoinDetailActivity.this, JoinChallengeActivity.class));
-                JoinDetailActivity.this.finish();
-            }
-
-        });
 
     }//ends onCreate
 
