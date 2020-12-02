@@ -245,7 +245,7 @@ public class OngoingFragment extends Fragment {
                     searchChallenges(newText);
                 }else{
                     System.out.println("Ongoing fragment - getAllongoing - 2");
-                    //getAllOngoing();
+                    getAllOngoing();
                 }
 
 
