@@ -14,7 +14,6 @@
         android:icon="@mipmap/logo12"
         android:label="@string/app_name"
         android:networkSecurityConfig="@xml/config"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.LetsCompete">
         <activity android:name=".activities.JoinChallengeActivity"></activity>

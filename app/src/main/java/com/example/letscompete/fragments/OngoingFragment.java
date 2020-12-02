@@ -214,9 +214,7 @@ public class OngoingFragment extends Fragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-//        //inflating menu
-//        inflater.inflate(R.menu.menu_main,menu);
+    public void onPrepareOptionsMenu(@NonNull Menu menu) {
         menu.findItem(R.id.action_search_challenge).setVisible(false);
         //SearchView
         MenuItem item = menu.findItem(R.id.action_Search).setVisible(true);
@@ -252,10 +250,52 @@ public class OngoingFragment extends Fragment {
                 return false;
             }
         });
-        super.onCreateOptionsMenu(menu,inflater);
+        super.onPrepareOptionsMenu(menu);
     }
 
-    /* handle menu item clicks*/
+//    @Override
+//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+////        //inflating menu
+////        inflater.inflate(R.menu.menu_main,menu);
+//        menu.findItem(R.id.action_search_challenge).setVisible(false);
+//        //SearchView
+//        MenuItem item = menu.findItem(R.id.action_Search).setVisible(true);
+//        SearchView searchView = (SearchView) item.getActionView();
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                //called when user presses search button from keyboard
+//                if(!TextUtils.isEmpty(query.trim())){
+//                    //search text contains text,
+//                    // search it
+//                    searchChallenges(query);
+//                }else{
+//                    getAllOngoing();
+//                }
+//
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                //called when user presses any single letter
+//                if(!TextUtils.isEmpty(newText.trim())){
+//                    //search text contains text, search it
+//
+//                    searchChallenges(newText);
+//                }else{
+//                    System.out.println("Ongoing fragment - getAllongoing - 2");
+//                    getAllOngoing();
+//                }
+//
+//
+//                return false;
+//            }
+//        });
+//        super.onCreateOptionsMenu(menu,inflater);
+//    }
+//
+//    /* handle menu item clicks*/
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
